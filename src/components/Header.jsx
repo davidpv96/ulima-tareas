@@ -1,0 +1,178 @@
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { 
+  Menu, 
+  Search, 
+  Calendar, 
+  ChevronDown,
+  User,
+  LogOut,
+  Settings
+} from 'lucide-react'
+
+const Header = ({ 
+  onMenuClick, 
+  currentView, 
+  onViewChange, 
+  selectedDate, 
+  onDateChange,
+  tasks 
+}) => {
+  const [showDatePicker, setShowDatePicker] = useState(false)
+  const [showUserMenu, setShowUserMenu] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const formatDate = (date) => {
+    const months = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ]
+    return `${months[date.getMonth()]} ${date.getFullYear()}`
+  }
+
+  const getTodayButton = () => {
+    const today = new Date()
+    const isToday = selectedDate.toDateString() === today.toDateString()
+    return today.getDate()
+  }
+
+  const handleTodayClick = () => {
+    onDateChange(new Date())
+  }
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value)
+    // Implementar búsqueda de tareas
+  }
+
+  const handleLogout = () => {
+    // Implementar logout
+    console.log('Logout')
+    setShowUserMenu(false)
+  }
+
+  return (
+    <motion.header 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100"
+    >
+      <div className="flex items-center justify-between px-4 py-3">
+        {/* Left side - Menu and Date */}
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={onMenuClick}
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          >
+            <Menu className="w-5 h-5 text-gray-700" />
+          </button>
+          
+          <div className="relative">
+            <button
+              onClick={() => setShowDatePicker(!showDatePicker)}
+              className="flex items-center space-x-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              <span className="font-medium text-gray-900">
+                {formatDate(selectedDate)}
+              </span>
+              <ChevronDown className="w-4 h-4 text-gray-500" />
+            </button>
+            
+            {showDatePicker && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 p-4"
+              >
+                <div className="space-y-2">
+                  <h3 className="font-medium text-gray-900 mb-2">Seleccionar vista</h3>
+                  {['agenda', 'día', 'semana', 'mes'].map((view) => (
+                    <button
+                      key={view}
+                      onClick={() => {
+                        onViewChange(view)
+                        setShowDatePicker(false)
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
+                        currentView === view 
+                          ? 'bg-soft-blue text-white' 
+                          : 'hover:bg-gray-100'
+                      }`}
+                    >
+                      {view.charAt(0).toUpperCase() + view.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </div>
+
+        {/* Center - Search */}
+        <div className="flex-1 max-w-md mx-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Buscar tareas..."
+              value={searchQuery}
+              onChange={handleSearch}
+              className="w-full pl-10 pr-4 py-2 bg-gray-50 rounded-lg border border-gray-200 focus:ring-2 focus:ring-soft-blue focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        {/* Right side - Today button and User menu */}
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={handleTodayClick}
+            className="flex items-center space-x-2 px-3 py-2 bg-soft-blue text-white rounded-lg hover:bg-blue-400 transition-colors"
+          >
+            <Calendar className="w-4 h-4" />
+            <span className="font-medium">{getTodayButton()}</span>
+          </button>
+
+          <div className="relative">
+            <button
+              onClick={() => setShowUserMenu(!showUserMenu)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              <User className="w-5 h-5 text-gray-700" />
+            </button>
+            
+            {showUserMenu && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2"
+              >
+                <div className="px-4 py-2 border-b border-gray-100">
+                  <p className="text-sm font-medium text-gray-900">Usuario</p>
+                  <p className="text-xs text-gray-500">usuario@ejemplo.com</p>
+                </div>
+                <button
+                  onClick={() => setShowUserMenu(false)}
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                >
+                  <Settings className="w-4 h-4" />
+                  <span>Ajustes</span>
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Cerrar sesión</span>
+                </button>
+              </motion.div>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.header>
+  )
+}
+
+export default Header

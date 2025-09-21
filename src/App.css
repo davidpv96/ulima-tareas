@@ -1,0 +1,64 @@
+/* Custom animations and styles for SPHERE app */
+.sphere-card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100;
+}
+
+.sphere-button {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+}
+
+.sphere-button-primary {
+  @apply bg-soft-blue text-white hover:bg-blue-400;
+}
+
+.sphere-button-secondary {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+}
+
+.sphere-input {
+  @apply w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent;
+}
+
+/* Sphere colors for categories */
+.sphere-personal { @apply bg-gray-100 text-gray-800; }
+.sphere-grow { @apply bg-light-green text-green-800; }
+.sphere-thrive { @apply bg-soft-orange text-orange-800; }
+.sphere-connect { @apply bg-soft-blue text-blue-800; }
+.sphere-create { @apply bg-pastel-lilac text-purple-800; }
+.sphere-universidad { @apply bg-soft-orange text-orange-800; }
+.sphere-familia { @apply bg-soft-blue text-blue-800; }
+.sphere-trabajo { @apply bg-gray-100 text-gray-800; }
+.sphere-pareja { @apply bg-soft-pink text-pink-800; }
+.sphere-gym { @apply bg-light-green text-green-800; }
+.sphere-bienestar { @apply bg-gray-100 text-gray-800; }
+.sphere-deporte { @apply bg-soft-blue text-blue-800; }
+.sphere-viajes { @apply bg-soft-orange text-orange-800; }
+.sphere-social { @apply bg-soft-orange text-orange-800; }
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
