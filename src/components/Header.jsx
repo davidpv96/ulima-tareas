@@ -70,12 +70,14 @@ const Header = ({
             <Menu className="w-5 h-5 text-gray-700" />
           </button>
           
-          {/* Date Picker */}
-          <DatePicker 
-            selectedDate={selectedDate}
-            onDateChange={onDateChange}
-            currentView={currentView}
-          />
+          {/* Date Picker - Solo mostrar si no estamos en inicio */}
+          {currentView !== 'inicio' && (
+            <DatePicker 
+              selectedDate={selectedDate}
+              onDateChange={onDateChange}
+              currentView={currentView}
+            />
+          )}
         </div>
 
         {/* Center - Search */}

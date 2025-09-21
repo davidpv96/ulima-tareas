@@ -13,11 +13,13 @@ import {
   User,
   LogOut,
   Settings,
-  BarChart3
+  BarChart3,
+  Home
 } from 'lucide-react'
 
 const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
   const viewOptions = [
+    { id: 'inicio', label: 'Inicio', icon: Home },
     { id: 'agenda', label: 'Agenda', icon: Calendar },
     { id: 'día', label: 'Día', icon: CalendarDays },
     { id: 'semana', label: 'Semana', icon: CalendarRange },

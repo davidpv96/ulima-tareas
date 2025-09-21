@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
+import HomeView from './components/HomeView'
 import CalendarView from './components/CalendarView'
 import TaskModal from './components/TaskModal'
 import SearchModal from './components/SearchModal'
@@ -14,7 +15,7 @@ function App() {
   const [showSplash, setShowSplash] = useState(true)
   const [showDownloadPrompt, setShowDownloadPrompt] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentView, setCurrentView] = useState('mes')
+  const [currentView, setCurrentView] = useState('inicio')
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
@@ -97,16 +98,28 @@ function App() {
       />
       
       <main className="flex-1 pt-20">
-        <CalendarView 
-          currentView={currentView}
-          selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
-          tasks={tasks}
-          onEditTask={handleEditTask}
-          onToggleTask={handleToggleTask}
-          onDeleteTask={deleteTask}
-          onViewChange={setCurrentView}
-        />
+        {currentView === 'inicio' ? (
+          <HomeView 
+            tasks={tasks}
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+            onViewChange={setCurrentView}
+            onNewTask={handleAddTask}
+            onEditTask={handleEditTask}
+            onToggleTask={handleToggleTask}
+          />
+        ) : (
+          <CalendarView 
+            currentView={currentView}
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+            tasks={tasks}
+            onEditTask={handleEditTask}
+            onToggleTask={handleToggleTask}
+            onDeleteTask={deleteTask}
+            onViewChange={setCurrentView}
+          />
+        )}
       </main>
       
       <FloatingButton onClick={handleAddTask} />
