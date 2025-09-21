@@ -165,6 +165,8 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
                           // Navegar a la vista correspondiente
                           if (button.id === 'planner') {
                             onViewChange('planner')
+                          } else if (button.id === 'motivacion') {
+                            onViewChange('motivacion')
                           } else {
                             // Implementar funcionalidad específica para otros botones
                             console.log(`Clicked ${button.id}`)
