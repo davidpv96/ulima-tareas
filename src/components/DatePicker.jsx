@@ -13,9 +13,14 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
   const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - 5 + i)
 
   const formatDisplayDate = () => {
+    const shortMonths = [
+      'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+      'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+    ]
+    
     switch (currentView) {
       case 'día':
-        return `${selectedDate.getDate()} de ${months[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
+        return `${selectedDate.getDate()} ${shortMonths[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
       case 'semana':
         const startOfWeek = new Date(selectedDate)
         startOfWeek.setDate(selectedDate.getDate() - selectedDate.getDay())
@@ -23,16 +28,16 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
         endOfWeek.setDate(startOfWeek.getDate() + 6)
         
         if (startOfWeek.getMonth() === endOfWeek.getMonth()) {
-          return `${startOfWeek.getDate()} - ${endOfWeek.getDate()} de ${months[startOfWeek.getMonth()]} ${startOfWeek.getFullYear()}`
+          return `${startOfWeek.getDate()}-${endOfWeek.getDate()} ${shortMonths[startOfWeek.getMonth()]} ${startOfWeek.getFullYear()}`
         } else {
-          return `${startOfWeek.getDate()} de ${months[startOfWeek.getMonth()]} - ${endOfWeek.getDate()} de ${months[endOfWeek.getMonth()]} ${startOfWeek.getFullYear()}`
+          return `${startOfWeek.getDate()} ${shortMonths[startOfWeek.getMonth()]} - ${endOfWeek.getDate()} ${shortMonths[endOfWeek.getMonth()]} ${startOfWeek.getFullYear()}`
         }
       case 'mes':
-        return `${months[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
+        return `${shortMonths[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
       case 'agenda':
-        return `${months[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
+        return `${shortMonths[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
       default:
-        return `${months[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
+        return `${shortMonths[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
     }
   }
 
@@ -97,13 +102,13 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
         {/* Date picker button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          className="flex items-center space-x-1 px-2 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
         >
           <Calendar className="w-4 h-4 text-gray-500" />
-          <span className="font-medium text-gray-900 text-sm">
+          <span className="font-medium text-gray-900 text-sm whitespace-nowrap">
             {formatDisplayDate()}
           </span>
-          <ChevronRight className="w-4 h-4 text-gray-400" />
+          <ChevronRight className="w-3 h-3 text-gray-400" />
         </button>
 
         {/* Next button */}
