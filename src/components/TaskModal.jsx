@@ -71,20 +71,25 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.15, ease: "easeOut" }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+      animate={{ opacity: 1, backdropFilter: "blur(4px)" }}
+      exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+      transition={{ duration: 0.25 }}
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40"
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.96, opacity: 0, y: 8 }}
+        initial={{ scale: 1, opacity: 0, y: "100%" }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.96, opacity: 0, y: 8 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
+        exit={{ scale: 1, opacity: 0, y: "100%" }}
+        transition={{ 
+          type: "spring",
+          damping: 25,
+          stiffness: 300,
+          mass: 0.8
+        }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-md bg-white rounded-xl shadow-xl"
+        className="w-full max-w-md bg-white rounded-t-xl sm:rounded-xl shadow-2xl max-h-[90vh] sm:max-h-none overflow-hidden flex flex-col"
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
@@ -100,7 +105,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6 overflow-y-auto flex-1">
           {/* Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">

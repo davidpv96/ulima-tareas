@@ -174,10 +174,10 @@ const CalendarView = ({
       <div className="flex-1 overflow-hidden">
         <motion.div
           key={`${currentView}-${localDate.getTime()}`}
-          initial={{ opacity: 0, x: 8 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -8 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }}
           className="h-full"
         >
           {renderView()}

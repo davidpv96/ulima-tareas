@@ -92,20 +92,25 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.15, ease: "easeOut" }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+      animate={{ opacity: 1, backdropFilter: "blur(4px)" }}
+      exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+      transition={{ duration: 0.25 }}
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40"
       onClick={handleClose}
     >
       <motion.div
-        initial={{ scale: 0.96, opacity: 0, y: 8 }}
+        initial={{ scale: 1, opacity: 0, y: "100%" }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.96, opacity: 0, y: 8 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
+        exit={{ scale: 1, opacity: 0, y: "100%" }}
+        transition={{ 
+          type: "spring",
+          damping: 25,
+          stiffness: 300,
+          mass: 0.8
+        }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-2xl bg-white rounded-xl shadow-xl max-h-[80vh] flex flex-col"
+        className="w-full max-w-2xl bg-white rounded-t-xl sm:rounded-xl shadow-2xl max-h-[90vh] sm:max-h-[80vh] flex flex-col"
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
@@ -156,9 +161,9 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
               {searchResults.map((task, index) => (
                 <motion.div
                   key={task.id}
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.15, ease: "easeOut", delay: index * 0.02 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2, ease: [0.4, 0.0, 0.2, 1], delay: index * 0.03 }}
                   className="flex items-start space-x-3 p-4 bg-white rounded-lg border border-gray-100 hover:shadow-md transition-shadow"
                 >
                   {/* Checkbox */}
