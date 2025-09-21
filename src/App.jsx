@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar'
 import HomeView from './components/HomeView'
 import WeekPlannerView from './components/WeekPlannerView'
 import MotivationView from './components/MotivationView'
+import VisionBoardView from './components/VisionBoardView'
 import CalendarView from './components/CalendarView'
 import TaskModal from './components/TaskModal'
 import SearchModal from './components/SearchModal'
@@ -114,6 +115,8 @@ function App() {
           <WeekPlannerView />
         ) : currentView === 'motivacion' ? (
           <MotivationView />
+        ) : currentView === 'visionboard' ? (
+          <VisionBoardView />
         ) : (
           <CalendarView 
             currentView={currentView}
