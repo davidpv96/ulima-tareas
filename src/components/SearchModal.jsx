@@ -92,22 +92,20 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
 
   return (
     <motion.div
-      initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-      animate={{ opacity: 1, backdropFilter: "blur(4px)" }}
-      exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-      transition={{ duration: 0.25 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40"
       onClick={handleClose}
     >
       <motion.div
-        initial={{ scale: 1, opacity: 0, y: "100%" }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 1, opacity: 0, y: "100%" }}
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
         transition={{ 
-          type: "spring",
-          damping: 25,
-          stiffness: 300,
-          mass: 0.8
+          duration: 0.3,
+          ease: "easeOut"
         }}
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-2xl bg-white rounded-t-xl sm:rounded-xl shadow-2xl max-h-[90vh] sm:max-h-[80vh] flex flex-col"
@@ -161,14 +159,9 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
               {searchResults.map((task, index) => (
                 <motion.div
                   key={task.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    type: "spring",
-                    damping: 25,
-                    stiffness: 300,
-                    delay: index * 0.02
-                  }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2, delay: index * 0.03 }}
                   className="flex items-start space-x-3 p-4 bg-white rounded-lg border border-gray-100 hover:shadow-md transition-shadow"
                 >
                   {/* Checkbox */}

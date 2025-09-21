@@ -96,14 +96,9 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
         {groupedTasks.map((group) => (
           <motion.div
             key={`${group.year}-${group.month}`}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              type: "spring",
-              damping: 25,
-              stiffness: 300,
-              delay: 0.1
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             className="space-y-4"
           >
             {/* Month Header */}
@@ -121,14 +116,9 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
                 return (
                   <motion.div
                     key={task.id}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ 
-                      type: "spring",
-                      damping: 25,
-                      stiffness: 300,
-                      delay: 0.05
-                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2, delay: 0.05 }}
                     className="flex items-start space-x-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
                   >
                     {/* Date */}

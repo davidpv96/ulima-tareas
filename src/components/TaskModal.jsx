@@ -71,22 +71,20 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-      animate={{ opacity: 1, backdropFilter: "blur(4px)" }}
-      exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-      transition={{ duration: 0.25 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40"
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 1, opacity: 0, y: "100%" }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 1, opacity: 0, y: "100%" }}
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
         transition={{ 
-          type: "spring",
-          damping: 25,
-          stiffness: 300,
-          mass: 0.8
+          duration: 0.3,
+          ease: "easeOut"
         }}
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-md bg-white rounded-t-xl sm:rounded-xl shadow-2xl max-h-[90vh] sm:max-h-none overflow-hidden flex flex-col"

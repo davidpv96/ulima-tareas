@@ -81,26 +81,16 @@ const Statistics = ({ tasks }) => {
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ 
-        type: "spring",
-        damping: 30,
-        stiffness: 400,
-        mass: 0.8
-      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       className="p-4 space-y-6"
     >
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          type: "spring",
-          damping: 25,
-          stiffness: 300,
-          delay: 0.1
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
         className="text-center"
       >
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Estadísticas</h2>
@@ -110,14 +100,9 @@ const Statistics = ({ tasks }) => {
       {/* Overview Cards */}
       <div className="grid grid-cols-2 gap-4">
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            type: "spring",
-            damping: 25,
-            stiffness: 300,
-            delay: 0.15
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.15 }}
           className="bg-white p-4 rounded-xl shadow-sm border border-gray-100"
         >
           <div className="flex items-center space-x-3">
@@ -132,14 +117,9 @@ const Statistics = ({ tasks }) => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            type: "spring",
-            damping: 25,
-            stiffness: 300,
-            delay: 0.2
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
           className="bg-white p-4 rounded-xl shadow-sm border border-gray-100"
         >
           <div className="flex items-center space-x-3">
@@ -156,14 +136,9 @@ const Statistics = ({ tasks }) => {
 
       {/* Progress Ring */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          type: "spring",
-          damping: 25,
-          stiffness: 300,
-          delay: 0.25
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.25 }}
         className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center"
       >
         <div className="relative w-32 h-32 mx-auto mb-4">
@@ -201,14 +176,9 @@ const Statistics = ({ tasks }) => {
 
       {/* Sphere Statistics */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          type: "spring",
-          damping: 25,
-          stiffness: 300,
-          delay: 0.3
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.3 }}
         className="bg-white rounded-xl shadow-sm border border-gray-100"
       >
         <div className="p-4 border-b border-gray-100">
@@ -228,14 +198,9 @@ const Statistics = ({ tasks }) => {
             stats.sphereStats.map((sphere, index) => (
               <motion.div
                 key={sphere.sphere}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ 
-                  type: "spring",
-                  damping: 25,
-                  stiffness: 300,
-                  delay: 0.35 + index * 0.03
-                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2, delay: 0.35 + index * 0.05 }}
                 className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center space-x-3">
@@ -268,14 +233,9 @@ const Statistics = ({ tasks }) => {
       {/* Motivational Message */}
       {stats.completionRate > 0 && (
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            type: "spring",
-            damping: 25,
-            stiffness: 300,
-            delay: 0.4
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
           className="bg-gradient-to-r from-soft-blue to-blue-400 p-4 rounded-xl text-white text-center"
         >
           <TrendingUp className="w-8 h-8 mx-auto mb-2" />
