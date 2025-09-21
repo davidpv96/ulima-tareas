@@ -113,15 +113,19 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask 
                     <div
                       key={task.id}
                       className={`
-                        p-2 rounded-lg transition-all
+                        p-2 rounded-lg transition-all border-l-2
                         ${getSphereColor(task.sphere)}
                         ${task.completed ? 'opacity-60' : ''}
-                        hover:shadow-sm
+                        hover:shadow-sm cursor-pointer
                       `}
+                      onClick={() => onEditTask(task)}
                     >
                       <div className="flex items-start space-x-1">
                         <button
-                          onClick={() => onToggleTask(task.id)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onToggleTask(task.id)
+                          }}
                           className={`mt-0.5 transition-colors ${
                             task.completed 
                               ? 'text-green-600 hover:text-green-700' 
@@ -147,21 +151,27 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask 
                           {task.startTime && task.endTime && (
                             <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
                               <Clock className="w-2 h-2" />
-                              <span>{formatTime(task.startTime)}-{formatTime(task.endTime)}</span>
+                              <span>{formatTime(task.startTime)}</span>
                             </div>
                           )}
                         </div>
 
                         <div className="flex items-center space-x-1">
                           <button
-                            onClick={() => onEditTask(task)}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              onEditTask(task)
+                            }}
                             className="p-0.5 rounded hover:bg-gray-100 transition-colors"
                             title="Editar"
                           >
                             <Edit className="w-3 h-3 text-gray-500" />
                           </button>
                           <button
-                            onClick={() => onDeleteTask(task.id)}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              onDeleteTask(task.id)
+                            }}
                             className="p-0.5 rounded hover:bg-red-100 transition-colors"
                             title="Eliminar"
                           >

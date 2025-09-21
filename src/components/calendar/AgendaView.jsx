@@ -1,7 +1,18 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { Check, Circle, Edit, Trash2, Clock } from 'lucide-react'
 
 const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
+  const [currentTime, setCurrentTime] = useState(new Date())
+
+  // Actualizar tiempo cada minuto
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 60000) // Cada minuto
+
+    return () => clearInterval(timer)
+  }, [])
+
   const { groupedTasks, currentMonthTasks } = useMemo(() => {
     // Filtrar tareas del mes actual y siguientes
     const currentMonth = selectedDate.getMonth()
@@ -10,21 +21,29 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     const filteredTasks = tasks.filter(task => {
       const taskDate = new Date(task.date)
       return taskDate >= new Date(currentYear, currentMonth, 1)
-    }).sort((a, b) => new Date(a.date) - new Date(b.date))
+    }).sort((a, b) => {
+      // Ordenar por fecha y luego por hora
+      const dateCompare = new Date(a.date) - new Date(b.date)
+      if (dateCompare !== 0) return dateCompare
+      
+      if (a.startTime && b.startTime) {
+        return a.startTime.localeCompare(b.startTime)
+      }
+      return 0
+    })
 
-    // Agrupar tareas por mes
+    // Agrupar tareas por día
     const grouped = filteredTasks.reduce((acc, task) => {
       const taskDate = new Date(task.date)
-      const monthKey = `${taskDate.getFullYear()}-${taskDate.getMonth()}`
+      const dayKey = taskDate.toISOString().split('T')[0]
       
-      if (!acc[monthKey]) {
-        acc[monthKey] = {
-          month: taskDate.getMonth(),
-          year: taskDate.getFullYear(),
+      if (!acc[dayKey]) {
+        acc[dayKey] = {
+          date: taskDate,
           tasks: []
         }
       }
-      acc[monthKey].tasks.push(task)
+      acc[dayKey].tasks.push(task)
       return acc
     }, {})
 
@@ -75,6 +94,49 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     return timeStr.substring(0, 5) // HH:MM
   }
 
+  const getTimeUntilTask = (taskDate, startTime) => {
+    if (!startTime) return null
+    
+    const today = new Date()
+    const taskDateTime = new Date(`${taskDate}T${startTime}`)
+    
+    // Si la tarea ya pasó, no mostrar contador
+    if (taskDateTime < today) return null
+    
+    const diffMs = taskDateTime - today
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
+    const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))
+    
+    if (diffHours > 24) {
+      const days = Math.floor(diffHours / 24)
+      return `En ${days} día${days > 1 ? 's' : ''}`
+    } else if (diffHours > 0) {
+      return `En ${diffHours}h ${diffMinutes}m`
+    } else if (diffMinutes > 0) {
+      return `En ${diffMinutes} min`
+    } else {
+      return '¡Ahora!'
+    }
+  }
+
+  const formatDateHeader = (date) => {
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    
+    if (date.toDateString() === today.toDateString()) {
+      return 'Hoy'
+    } else if (date.toDateString() === tomorrow.toDateString()) {
+      return 'Mañana'
+    } else {
+      const months = [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+      ]
+      return `${date.getDate()} de ${months[date.getMonth()]}`
+    }
+  }
+
   if (currentMonthTasks.length === 0) {
     return (
       <div className="h-full flex items-start justify-center pt-16">
@@ -94,21 +156,23 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
       <div className="p-4 space-y-6">
         {groupedTasks.map((group) => (
           <div
-            key={`${group.year}-${group.month}`}
+            key={group.date.toISOString()}
             className="space-y-4"
           >
-            {/* Month Header */}
+            {/* Day Header */}
             <div className="flex items-center space-x-3">
               <h3 className="text-xl font-semibold text-gray-900">
-                {formatMonthYear(group.month, group.year)}
+                {formatDateHeader(group.date)}
               </h3>
               <div className="flex-1 h-px bg-gray-200"></div>
             </div>
 
-            {/* Tasks for this month */}
+            {/* Tasks for this day */}
             <div className="space-y-3">
               {group.tasks.map((task) => {
                 const { dayName, dayNumber } = formatTaskDate(task.date)
+                const timeUntil = getTimeUntilTask(task.date, task.startTime)
+                
                 return (
                   <div
                     key={task.id}
@@ -163,6 +227,14 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
                             <div className="flex items-center space-x-1 text-xs text-gray-500 mb-2">
                               <Clock className="w-3 h-3" />
                               <span>{formatTime(task.startTime)} - {formatTime(task.endTime)}</span>
+                            </div>
+                          )}
+
+                          {/* Countdown Timer */}
+                          {timeUntil && !task.completed && (
+                            <div className="flex items-center space-x-1 text-xs text-soft-blue font-medium">
+                              <Clock className="w-3 h-3" />
+                              <span>{timeUntil}</span>
                             </div>
                           )}
                         </div>

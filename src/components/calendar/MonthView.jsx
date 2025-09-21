@@ -128,20 +128,18 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask
                   <div
                     key={task.id}
                     className={`
-                      text-xs p-1 rounded truncate
+                      text-xs p-1 rounded truncate border-l-2 cursor-pointer
                       ${getSphereColor(task.sphere)}
                       ${task.completed ? 'opacity-60 line-through' : ''}
                       hover:opacity-80 transition-opacity
                     `}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onEditTask(task)
+                    }}
                   >
                     <div className="flex items-center justify-between">
-                      <span 
-                        className="cursor-pointer flex-1 truncate"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          onEditTask(task)
-                        }}
-                      >
+                      <span className="flex-1 truncate">
                         {task.title}
                       </span>
                       
