@@ -28,6 +28,8 @@ export const useTasks = () => {
       title: taskData.title,
       description: taskData.description || '',
       date: taskData.date,
+      startTime: taskData.startTime || null,
+      endTime: taskData.endTime || null,
       sphere: taskData.sphere,
       completed: false,
       createdAt: new Date().toISOString(),
@@ -104,6 +106,39 @@ export const useTasks = () => {
     }
   }
 
+  // Validar conflictos de horarios
+  const hasTimeConflict = (date, startTime, endTime, excludeTaskId = null) => {
+    if (!startTime || !endTime) return false
+    
+    const dateStr = date.toISOString().split('T')[0]
+    const tasksOnDate = tasks.filter(task => 
+      task.date === dateStr && 
+      task.id !== excludeTaskId &&
+      task.startTime && 
+      task.endTime
+    )
+
+    return tasksOnDate.some(task => {
+      const taskStart = task.startTime
+      const taskEnd = task.endTime
+      
+      // Verificar si hay solapamiento
+      return (startTime < taskEnd && endTime > taskStart)
+    })
+  }
+
+  // Buscar tareas por texto
+  const searchTasks = (query) => {
+    if (!query.trim()) return tasks
+    
+    const lowercaseQuery = query.toLowerCase()
+    return tasks.filter(task => 
+      task.title.toLowerCase().includes(lowercaseQuery) ||
+      task.description.toLowerCase().includes(lowercaseQuery) ||
+      task.sphere.toLowerCase().includes(lowercaseQuery)
+    )
+  }
+
   return {
     tasks,
     addTask,
@@ -114,6 +149,8 @@ export const useTasks = () => {
     getTasksBySphere,
     getCompletedTasks,
     getPendingTasks,
-    getTasksStats
+    getTasksStats,
+    hasTimeConflict,
+    searchTasks
   }
 }

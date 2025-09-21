@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { X, Calendar, FileText } from 'lucide-react'
+import { X, Calendar, FileText, Clock, AlertCircle } from 'lucide-react'
 
-const TaskModal = ({ task, onSave, onClose }) => {
+const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     date: new Date().toISOString().split('T')[0],
+    startTime: '',
+    endTime: '',
     sphere: 'personal'
   })
+  const [timeConflict, setTimeConflict] = useState(false)
 
   const spheres = [
     { id: 'personal', label: 'Personal', emoji: '👤', color: 'bg-gray-100 text-gray-800' },
@@ -33,14 +36,28 @@ const TaskModal = ({ task, onSave, onClose }) => {
         title: task.title || '',
         description: task.description || '',
         date: task.date || new Date().toISOString().split('T')[0],
+        startTime: task.startTime || '',
+        endTime: task.endTime || '',
         sphere: task.sphere || 'personal'
       })
     }
   }, [task])
 
+  // Validar conflictos de horario cuando cambien los tiempos
+  useEffect(() => {
+    if (formData.startTime && formData.endTime && hasTimeConflict) {
+      const date = new Date(formData.date)
+      const conflict = hasTimeConflict(date, formData.startTime, formData.endTime, task?.id)
+      setTimeConflict(conflict)
+    } else {
+      setTimeConflict(false)
+    }
+  }, [formData.startTime, formData.endTime, formData.date, hasTimeConflict, task?.id])
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!formData.title.trim()) return
+    if (timeConflict) return // No permitir guardar si hay conflicto
     
     onSave(formData)
   }
@@ -57,13 +74,15 @@ const TaskModal = ({ task, onSave, onClose }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-md bg-white rounded-xl shadow-xl"
       >
@@ -126,6 +145,46 @@ const TaskModal = ({ task, onSave, onClose }) => {
             />
           </div>
 
+          {/* Time Range */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              <Clock className="w-4 h-4 inline mr-1" />
+              Horario (opcional)
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Hora inicio</label>
+                <input
+                  type="time"
+                  value={formData.startTime}
+                  onChange={(e) => handleInputChange('startTime', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Hora fin</label>
+                <input
+                  type="time"
+                  value={formData.endTime}
+                  onChange={(e) => handleInputChange('endTime', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent"
+                />
+              </div>
+            </div>
+            
+            {/* Time Conflict Warning */}
+            {timeConflict && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-2 flex items-center space-x-2 text-red-600 bg-red-50 p-2 rounded-lg"
+              >
+                <AlertCircle className="w-4 h-4" />
+                <span className="text-sm">Este horario ya está ocupado</span>
+              </motion.div>
+            )}
+          </div>
+
           {/* Sphere */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -167,7 +226,7 @@ const TaskModal = ({ task, onSave, onClose }) => {
             </button>
             <button
               type="submit"
-              disabled={!formData.title.trim()}
+              disabled={!formData.title.trim() || timeConflict}
               className="flex-1 px-4 py-2 bg-soft-blue text-white rounded-lg hover:bg-blue-400 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {task ? 'Actualizar' : 'Crear'}

@@ -16,11 +16,11 @@ const Header = ({
   onViewChange, 
   selectedDate, 
   onDateChange,
-  tasks 
+  tasks,
+  onSearchClick
 }) => {
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [showUserMenu, setShowUserMenu] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
 
   const formatDate = (date) => {
     const months = [
@@ -40,9 +40,8 @@ const Header = ({
     onDateChange(new Date())
   }
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value)
-    // Implementar búsqueda de tareas
+  const handleSearchClick = () => {
+    onSearchClick()
   }
 
   const handleLogout = () => {
@@ -55,6 +54,7 @@ const Header = ({
     <motion.header 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100"
     >
       <div className="flex items-center justify-between px-4 py-3">
@@ -80,9 +80,10 @@ const Header = ({
             
             {showDatePicker && (
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 p-4"
               >
                 <div className="space-y-2">
@@ -111,16 +112,13 @@ const Header = ({
 
         {/* Center - Search */}
         <div className="flex-1 max-w-md mx-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Buscar tareas..."
-              value={searchQuery}
-              onChange={handleSearch}
-              className="w-full pl-10 pr-4 py-2 bg-gray-50 rounded-lg border border-gray-200 focus:ring-2 focus:ring-soft-blue focus:border-transparent"
-            />
-          </div>
+          <button
+            onClick={handleSearchClick}
+            className="w-full flex items-center space-x-3 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
+          >
+            <Search className="w-4 h-4 text-gray-400" />
+            <span className="text-gray-500">Buscar tareas...</span>
+          </button>
         </div>
 
         {/* Right side - Today button and User menu */}
@@ -143,9 +141,10 @@ const Header = ({
             
             {showUserMenu && (
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2"
               >
                 <div className="px-4 py-2 border-b border-gray-100">

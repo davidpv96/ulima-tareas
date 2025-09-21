@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import CalendarView from './components/CalendarView'
 import TaskModal from './components/TaskModal'
+import SearchModal from './components/SearchModal'
 import FloatingButton from './components/FloatingButton'
 import { useTasks } from './hooks/useTasks'
 import './App.css'
@@ -13,9 +14,10 @@ function App() {
   const [currentView, setCurrentView] = useState('month')
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
   const [editingTask, setEditingTask] = useState(null)
   
-  const { tasks, addTask, updateTask, deleteTask } = useTasks()
+  const { tasks, addTask, updateTask, deleteTask, hasTimeConflict, searchTasks } = useTasks()
 
   const handleAddTask = () => {
     setEditingTask(null)
@@ -41,6 +43,21 @@ function App() {
     handleCloseTaskModal()
   }
 
+  const handleSearchClick = () => {
+    setIsSearchModalOpen(true)
+  }
+
+  const handleCloseSearchModal = () => {
+    setIsSearchModalOpen(false)
+  }
+
+  const handleToggleTask = (taskId) => {
+    const task = tasks.find(t => t.id === taskId)
+    if (task) {
+      updateTask(taskId, { completed: !task.completed })
+    }
+  }
+
   return (
     <div className="App min-h-screen bg-cream">
       <Header 
@@ -50,6 +67,7 @@ function App() {
         selectedDate={selectedDate}
         onDateChange={setSelectedDate}
         tasks={tasks}
+        onSearchClick={handleSearchClick}
       />
       
       <Sidebar 
@@ -59,14 +77,15 @@ function App() {
         onViewChange={setCurrentView}
       />
       
-      <main className="flex-1 pt-16">
+      <main className="flex-1 pt-20">
         <CalendarView 
           currentView={currentView}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           tasks={tasks}
           onEditTask={handleEditTask}
-          onToggleTask={updateTask}
+          onToggleTask={handleToggleTask}
+          onDeleteTask={deleteTask}
         />
       </main>
       
@@ -78,6 +97,18 @@ function App() {
             task={editingTask}
             onSave={handleSaveTask}
             onClose={handleCloseTaskModal}
+            hasTimeConflict={hasTimeConflict}
+          />
+        )}
+        
+        {isSearchModalOpen && (
+          <SearchModal
+            isOpen={isSearchModalOpen}
+            onClose={handleCloseSearchModal}
+            tasks={tasks}
+            onEditTask={handleEditTask}
+            onDeleteTask={deleteTask}
+            onToggleTask={handleToggleTask}
           />
         )}
       </AnimatePresence>

@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Check, Circle } from 'lucide-react'
+import { Check, Circle, Edit, Trash2, Clock } from 'lucide-react'
 
-const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
+const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
   const { groupedTasks, currentMonthTasks } = useMemo(() => {
     // Filtrar tareas del mes actual y siguientes
     const currentMonth = selectedDate.getMonth()
@@ -69,6 +69,11 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
     const dayName = days[date.getDay()]
     const dayNumber = date.getDate()
     return { dayName, dayNumber }
+  }
+
+  const formatTime = (timeStr) => {
+    if (!timeStr) return ''
+    return timeStr.substring(0, 5) // HH:MM
   }
 
   if (currentMonthTasks.length === 0) {
@@ -151,18 +156,46 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                           </div>
                           
                           {task.description && (
-                            <p className={`text-sm ${
+                            <p className={`text-sm mb-2 ${
                               task.completed ? 'text-gray-400' : 'text-gray-600'
                             }`}>
                               {task.description}
                             </p>
                           )}
+
+                          {/* Time Display */}
+                          {task.startTime && task.endTime && (
+                            <div className="flex items-center space-x-1 text-xs text-gray-500 mb-2">
+                              <Clock className="w-3 h-3" />
+                              <span>{formatTime(task.startTime)} - {formatTime(task.endTime)}</span>
+                            </div>
+                          )}
                         </div>
 
-                        {/* Sphere Badge */}
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getSphereColor(task.sphere)}`}>
-                          {task.sphere}
-                        </span>
+                        <div className="flex items-center space-x-2">
+                          {/* Actions */}
+                          <div className="flex items-center space-x-1">
+                            <button
+                              onClick={() => onEditTask(task)}
+                              className="p-1 rounded hover:bg-gray-100 transition-colors"
+                              title="Editar"
+                            >
+                              <Edit className="w-4 h-4 text-gray-500" />
+                            </button>
+                            <button
+                              onClick={() => onDeleteTask(task.id)}
+                              className="p-1 rounded hover:bg-red-100 transition-colors"
+                              title="Eliminar"
+                            >
+                              <Trash2 className="w-4 h-4 text-red-500" />
+                            </button>
+                          </div>
+
+                          {/* Sphere Badge */}
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getSphereColor(task.sphere)}`}>
+                            {task.sphere}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </motion.div>

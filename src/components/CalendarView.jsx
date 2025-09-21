@@ -13,7 +13,8 @@ const CalendarView = ({
   onDateChange, 
   tasks, 
   onEditTask, 
-  onToggleTask 
+  onToggleTask,
+  onDeleteTask
 }) => {
   const [localDate, setLocalDate] = useState(selectedDate)
 
@@ -96,6 +97,7 @@ const CalendarView = ({
             tasks={tasks}
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
+            onDeleteTask={onDeleteTask}
           />
         )
       case 'día':
@@ -175,7 +177,7 @@ const CalendarView = ({
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
           className="h-full"
         >
           {renderView()}
