@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react'
 
-const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
+const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask, onDateChange, onViewChange }) => {
   const { calendarDays, monthName, year } = useMemo(() => {
     const year = selectedDate.getFullYear()
     const month = selectedDate.getMonth()
@@ -107,8 +107,9 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask
                 ${isTodayDate ? 'bg-soft-blue/10' : ''}
               `}
               onClick={() => {
-                // Aquí se podría implementar navegación a vista de día
-                console.log('Day clicked:', date)
+                // Navegar a vista de día para esta fecha
+                onDateChange(date)
+                onViewChange('día')
               }}
             >
               {/* Date number */}

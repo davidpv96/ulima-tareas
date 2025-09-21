@@ -105,6 +105,7 @@ function App() {
           onEditTask={handleEditTask}
           onToggleTask={handleToggleTask}
           onDeleteTask={deleteTask}
+          onViewChange={setCurrentView}
         />
       </main>
       

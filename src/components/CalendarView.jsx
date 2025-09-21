@@ -13,7 +13,8 @@ const CalendarView = ({
   tasks, 
   onEditTask, 
   onToggleTask,
-  onDeleteTask
+  onDeleteTask,
+  onViewChange
 }) => {
   const [localDate, setLocalDate] = useState(selectedDate)
 
@@ -117,6 +118,8 @@ const CalendarView = ({
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
             onDeleteTask={onDeleteTask}
+            onDateChange={onDateChange}
+            onViewChange={onViewChange}
           />
         )
       case 'mes':
@@ -127,12 +130,14 @@ const CalendarView = ({
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
             onDeleteTask={onDeleteTask}
+            onDateChange={onDateChange}
+            onViewChange={onViewChange}
           />
         )
       case 'estadísticas':
         return <Statistics tasks={tasks} />
       default:
-        return <MonthView selectedDate={localDate} tasks={tasks} onEditTask={onEditTask} onToggleTask={onToggleTask} onDeleteTask={onDeleteTask} />
+        return <MonthView selectedDate={localDate} tasks={tasks} onEditTask={onEditTask} onToggleTask={onToggleTask} onDeleteTask={onDeleteTask} onDateChange={onDateChange} onViewChange={onViewChange} />
     }
   }
 

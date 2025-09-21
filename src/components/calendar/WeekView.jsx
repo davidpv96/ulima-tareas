@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Check, Circle, Edit, Trash2, Clock } from 'lucide-react'
 
-const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
+const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask, onDateChange, onViewChange }) => {
   const { weekDays, weekTasks } = useMemo(() => {
     // Encontrar el primer día de la semana (domingo)
     const startOfWeek = new Date(selectedDate)
@@ -94,10 +94,15 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask 
             <div
               key={index}
               className={`
-                min-h-[400px] border-r border-gray-200 last:border-r-0 p-2
+                min-h-[500px] border-r border-gray-200 last:border-r-0 p-2 cursor-pointer
                 ${isToday(day) ? 'bg-soft-blue/5' : 'bg-white'}
                 hover:bg-gray-50 transition-colors
               `}
+              onClick={() => {
+                // Navegar a vista de día para esta fecha
+                onDateChange(day)
+                onViewChange('día')
+              }}
             >
               {/* Day content */}
               <div className="space-y-2">
@@ -113,12 +118,15 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask 
                     <div
                       key={task.id}
                       className={`
-                        p-2 rounded-lg transition-all border-l-2
+                        p-2 rounded-lg transition-all border-l-2 mb-1
                         ${getSphereColor(task.sphere)}
                         ${task.completed ? 'opacity-60' : ''}
                         hover:shadow-sm cursor-pointer
                       `}
-                      onClick={() => onEditTask(task)}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onEditTask(task)
+                      }}
                     >
                       <div className="flex items-start space-x-1">
                         <button
