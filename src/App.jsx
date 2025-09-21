@@ -6,11 +6,13 @@ import TaskModal from './components/TaskModal'
 import SearchModal from './components/SearchModal'
 import FloatingButton from './components/FloatingButton'
 import SplashScreen from './components/SplashScreen'
+import DownloadPrompt from './components/DownloadPrompt'
 import { useTasks } from './hooks/useTasks'
 import './App.css'
 
 function App() {
   const [showSplash, setShowSplash] = useState(true)
+  const [showDownloadPrompt, setShowDownloadPrompt] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentView, setCurrentView] = useState('mes')
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -61,6 +63,14 @@ function App() {
 
   const handleSplashFinish = () => {
     setShowSplash(false)
+    // Mostrar download prompt después del splash (solo si no es PWA)
+    setTimeout(() => {
+      setShowDownloadPrompt(true)
+    }, 500)
+  }
+
+  const handleDownloadPromptClose = () => {
+    setShowDownloadPrompt(false)
   }
 
   if (showSplash) {
@@ -118,6 +128,10 @@ function App() {
           onDeleteTask={deleteTask}
           onToggleTask={handleToggleTask}
         />
+      )}
+      
+      {showDownloadPrompt && (
+        <DownloadPrompt onClose={handleDownloadPromptClose} />
       )}
     </div>
   )
