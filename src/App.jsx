@@ -13,6 +13,7 @@ import FloatingButton from './components/FloatingButton'
 import SplashScreen from './components/SplashScreen'
 import DownloadPrompt from './components/DownloadPrompt'
 import { useTasks } from './hooks/useTasks'
+import { useGoals } from './hooks/useGoals'
 import './App.css'
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
   const [editingTask, setEditingTask] = useState(null)
   
   const { tasks, addTask, updateTask, deleteTask, hasTimeConflict, searchTasks } = useTasks()
+  const { goals, getGoalsAsTasks } = useGoals()
+
+  // Combinar tareas y metas para el calendario
+  const allCalendarItems = [...tasks, ...getGoalsAsTasks()]
 
   const handleAddTask = () => {
     setEditingTask(null)
@@ -104,7 +109,7 @@ function App() {
       <main className="flex-1 pt-20">
         {currentView === 'inicio' ? (
           <HomeView 
-            tasks={tasks}
+            tasks={allCalendarItems}
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
             onViewChange={setCurrentView}
@@ -125,7 +130,7 @@ function App() {
             currentView={currentView}
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
-            tasks={tasks}
+            tasks={allCalendarItems}
             onEditTask={handleEditTask}
             onToggleTask={handleToggleTask}
             onDeleteTask={deleteTask}
@@ -149,7 +154,7 @@ function App() {
         <SearchModal
           isOpen={isSearchModalOpen}
           onClose={handleCloseSearchModal}
-          tasks={tasks}
+          tasks={allCalendarItems}
           onEditTask={handleEditTask}
           onDeleteTask={deleteTask}
           onToggleTask={handleToggleTask}

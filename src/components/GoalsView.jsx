@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { 
   Plus, 
   Target, 
@@ -10,106 +10,56 @@ import {
   ArrowUp,
   Clock
 } from 'lucide-react'
+import { useGoals } from '../hooks/useGoals'
 
 const GoalsView = () => {
-  const [goals, setGoals] = useState([])
+  const { goals, addGoal, deleteGoal, addStep, deleteStep, toggleStep } = useGoals()
   const [selectedGoal, setSelectedGoal] = useState(null)
   const [showAddGoal, setShowAddGoal] = useState(false)
   const [showAddStep, setShowAddStep] = useState(false)
   const [newGoal, setNewGoal] = useState({ title: '', date: '', description: '' })
   const [newStep, setNewStep] = useState({ title: '', description: '', completed: false })
 
-  // Cargar metas guardadas al montar el componente
-  useEffect(() => {
-    const savedGoals = localStorage.getItem('sphere-goals-2025')
-    if (savedGoals) {
-      setGoals(JSON.parse(savedGoals))
-    }
-  }, [])
-
-  // Guardar metas cuando cambien
-  useEffect(() => {
-    localStorage.setItem('sphere-goals-2025', JSON.stringify(goals))
-  }, [goals])
-
   // Función para agregar una nueva meta
-  const addGoal = () => {
+  const handleAddGoal = () => {
     if (!newGoal.title.trim() || !newGoal.date) {
       alert('Por favor completa el título y la fecha de la meta')
       return
     }
 
-    const goal = {
-      id: Date.now().toString(),
-      title: newGoal.title,
-      date: newGoal.date,
-      description: newGoal.description,
-      steps: [],
-      completed: false,
-      createdAt: new Date().toISOString()
-    }
-
-    setGoals(prev => [goal, ...prev])
+    addGoal(newGoal)
     setNewGoal({ title: '', date: '', description: '' })
     setShowAddGoal(false)
   }
 
   // Función para eliminar una meta
-  const deleteGoal = (goalId) => {
-    setGoals(prev => prev.filter(goal => goal.id !== goalId))
+  const handleDeleteGoal = (goalId) => {
+    deleteGoal(goalId)
     if (selectedGoal && selectedGoal.id === goalId) {
       setSelectedGoal(null)
     }
   }
 
   // Función para agregar un paso a una meta
-  const addStep = () => {
+  const handleAddStep = () => {
     if (!newStep.title.trim()) {
       alert('Por favor completa el título del paso')
       return
     }
 
-    const step = {
-      id: Date.now().toString(),
-      title: newStep.title,
-      description: newStep.description,
-      completed: false,
-      createdAt: new Date().toISOString()
-    }
-
-    setGoals(prev => prev.map(goal => 
-      goal.id === selectedGoal.id 
-        ? { ...goal, steps: [...goal.steps, step] }
-        : goal
-    ))
-
+    addStep(selectedGoal.id, newStep)
     setNewStep({ title: '', description: '', completed: false })
     setShowAddStep(false)
   }
 
   // Función para eliminar un paso
-  const deleteStep = (goalId, stepId) => {
-    setGoals(prev => prev.map(goal => 
-      goal.id === goalId 
-        ? { ...goal, steps: goal.steps.filter(step => step.id !== stepId) }
-        : goal
-    ))
+  const handleDeleteStep = (goalId, stepId) => {
+    deleteStep(goalId, stepId)
   }
 
   // Función para marcar un paso como completado
-  const toggleStep = (goalId, stepId) => {
-    setGoals(prev => prev.map(goal => 
-      goal.id === goalId 
-        ? { 
-            ...goal, 
-            steps: goal.steps.map(step => 
-              step.id === stepId 
-                ? { ...step, completed: !step.completed }
-                : step
-            )
-          }
-        : goal
-    ))
+  const handleToggleStep = (goalId, stepId) => {
+    toggleStep(goalId, stepId)
   }
 
   // Función para formatear fecha
@@ -157,7 +107,9 @@ const GoalsView = () => {
           </div>
 
           <div className="space-y-4">
-            {goals.map((goal) => (
+            {goals
+              .sort((a, b) => new Date(a.date) - new Date(b.date))
+              .map((goal) => (
               <div
                 key={goal.id}
                 className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
@@ -197,7 +149,7 @@ const GoalsView = () => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
-                      deleteGoal(goal.id)
+                      handleDeleteGoal(goal.id)
                     }}
                     className="p-2 text-gray-400 hover:text-red-500 transition-colors"
                   >
@@ -253,7 +205,7 @@ const GoalsView = () => {
                         </div>
                         <div className="flex items-center space-x-2 ml-4">
                           <button
-                            onClick={() => toggleStep(selectedGoal.id, step.id)}
+                            onClick={() => handleToggleStep(selectedGoal.id, step.id)}
                             className={`p-2 rounded-full transition-colors ${
                               step.completed 
                                 ? 'bg-green-500 text-white' 
@@ -263,7 +215,7 @@ const GoalsView = () => {
                             <Check className="w-4 h-4" />
                           </button>
                           <button
-                            onClick={() => deleteStep(selectedGoal.id, step.id)}
+                            onClick={() => handleDeleteStep(selectedGoal.id, step.id)}
                             className="p-2 text-gray-400 hover:text-red-500 transition-colors"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -348,7 +300,7 @@ const GoalsView = () => {
 
               <div className="flex space-x-3 pt-4">
                 <button
-                  onClick={addGoal}
+                  onClick={handleAddGoal}
                   className="flex-1 bg-soft-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors font-medium"
                 >
                   Agregar Meta
@@ -408,7 +360,7 @@ const GoalsView = () => {
 
               <div className="flex space-x-3 pt-4">
                 <button
-                  onClick={addStep}
+                  onClick={handleAddStep}
                   className="flex-1 bg-soft-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors font-medium"
                 >
                   Agregar Paso
