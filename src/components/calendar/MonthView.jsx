@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Clock } from 'lucide-react'
 
-const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
+const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
   const { calendarDays, monthName, year } = useMemo(() => {
     const year = selectedDate.getFullYear()
     const month = selectedDate.getMonth()
@@ -74,6 +74,11 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
 
   const weekDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
+  const formatTime = (timeStr) => {
+    if (!timeStr) return ''
+    return timeStr.substring(0, 5) // HH:MM
+  }
+
   return (
     <div className="h-full flex flex-col">
       {/* Week days header */}
@@ -122,18 +127,32 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                 {dayTasks.slice(0, 3).map((task) => (
                   <div
                     key={task.id}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      onEditTask(task)
-                    }}
                     className={`
-                      text-xs p-1 rounded truncate cursor-pointer
+                      text-xs p-1 rounded truncate
                       ${getSphereColor(task.sphere)}
                       ${task.completed ? 'opacity-60 line-through' : ''}
                       hover:opacity-80 transition-opacity
                     `}
                   >
-                    {task.title}
+                    <div className="flex items-center justify-between">
+                      <span 
+                        className="cursor-pointer flex-1 truncate"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onEditTask(task)
+                        }}
+                      >
+                        {task.title}
+                      </span>
+                      
+                      {/* Time Display */}
+                      {task.startTime && task.endTime && (
+                        <div className="flex items-center space-x-1 text-xs text-gray-500 ml-1">
+                          <Clock className="w-2 h-2" />
+                          <span className="text-xs">{formatTime(task.startTime)}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
                 {dayTasks.length > 3 && (

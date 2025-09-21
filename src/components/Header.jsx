@@ -8,6 +8,7 @@ import {
   LogOut,
   Settings
 } from 'lucide-react'
+import DatePicker from './DatePicker'
 
 const Header = ({ 
   onMenuClick, 
@@ -18,7 +19,7 @@ const Header = ({
   tasks,
   onSearchClick
 }) => {
-  const [showDatePicker, setShowDatePicker] = useState(false)
+  const [showViewPicker, setShowViewPicker] = useState(false)
   const [showUserMenu, setShowUserMenu] = useState(false)
 
   const formatDate = (date) => {
@@ -61,27 +62,39 @@ const Header = ({
             <Menu className="w-5 h-5 text-gray-700" />
           </button>
           
+          {/* Date Picker */}
+          <DatePicker 
+            selectedDate={selectedDate}
+            onDateChange={onDateChange}
+            currentView={currentView}
+          />
+          
+          {/* View Picker */}
           <div className="relative">
             <button
-              onClick={() => setShowDatePicker(!showDatePicker)}
+              onClick={() => setShowViewPicker(!showViewPicker)}
               className="flex items-center space-x-1 px-2 md:px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <span className="font-medium text-gray-900 text-sm md:text-base">
-                {formatDate(selectedDate)}
+              <span className="font-medium text-gray-900 text-sm md:text-base capitalize">
+                {currentView === 'mes' ? 'Mes' : 
+                 currentView === 'día' ? 'Día' :
+                 currentView === 'semana' ? 'Semana' :
+                 currentView === 'agenda' ? 'Agenda' :
+                 currentView === 'estadísticas' ? 'Estadísticas' : currentView}
               </span>
               <ChevronDown className="w-4 h-4 text-gray-500" />
             </button>
             
-            {showDatePicker && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 p-4">
+            {showViewPicker && (
+              <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 p-4">
                 <div className="space-y-2">
-                  <h3 className="font-medium text-gray-900 mb-2">Seleccionar vista</h3>
+                  <h3 className="font-medium text-gray-900 mb-2">Vista</h3>
                   {['agenda', 'día', 'semana', 'mes'].map((view) => (
                     <button
                       key={view}
                       onClick={() => {
                         onViewChange(view)
-                        setShowDatePicker(false)
+                        setShowViewPicker(false)
                       }}
                       className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                         currentView === view 

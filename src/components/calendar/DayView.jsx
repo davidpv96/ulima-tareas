@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import { Check, Circle, Plus } from 'lucide-react'
+import { Check, Circle, Plus, Edit, Trash2, Clock } from 'lucide-react'
 
-const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
+const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
   const { dayTasks, dateInfo } = useMemo(() => {
     const dateStr = selectedDate.toISOString().split('T')[0]
     const dayTasks = tasks.filter(task => task.date === dateStr)
@@ -60,6 +60,11 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
       'social': '👥'
     }
     return emojis[sphere] || '📝'
+  }
+
+  const formatTime = (timeStr) => {
+    if (!timeStr) return ''
+    return timeStr.substring(0, 5) // HH:MM
   }
 
   const groupedTasks = useMemo(() => {
@@ -128,16 +133,12 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                         p-4 rounded-lg border-l-4 shadow-sm
                         ${getSphereColor(task.sphere)}
                         ${task.completed ? 'opacity-60' : ''}
-                        hover:shadow-md transition-all cursor-pointer
+                        hover:shadow-md transition-all
                       `}
-                      onClick={() => onEditTask(task)}
                     >
                       <div className="flex items-start space-x-3">
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onToggleTask(task.id)
-                          }}
+                          onClick={() => onToggleTask(task.id)}
                           className={`mt-1 p-1 rounded-full transition-colors ${
                             task.completed 
                               ? 'text-green-600 hover:text-green-700' 
@@ -152,19 +153,48 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                         </button>
                         
                         <div className="flex-1 min-w-0">
-                          <h4 className={`font-medium mb-1 ${
-                            task.completed ? 'line-through text-gray-500' : 'text-gray-900'
-                          }`}>
-                            {task.title}
-                          </h4>
-                          
-                          {task.description && (
-                            <p className={`text-sm ${
-                              task.completed ? 'text-gray-400' : 'text-gray-600'
-                            }`}>
-                              {task.description}
-                            </p>
-                          )}
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className={`font-medium mb-1 ${
+                                task.completed ? 'line-through text-gray-500' : 'text-gray-900'
+                              }`}>
+                                {task.title}
+                              </h4>
+                              
+                              {task.description && (
+                                <p className={`text-sm mb-2 ${
+                                  task.completed ? 'text-gray-400' : 'text-gray-600'
+                                }`}>
+                                  {task.description}
+                                </p>
+                              )}
+
+                              {/* Time Display */}
+                              {task.startTime && task.endTime && (
+                                <div className="flex items-center space-x-1 text-xs text-gray-500 mb-2">
+                                  <Clock className="w-3 h-3" />
+                                  <span>{formatTime(task.startTime)} - {formatTime(task.endTime)}</span>
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="flex items-center space-x-1">
+                              <button
+                                onClick={() => onEditTask(task)}
+                                className="p-1 rounded hover:bg-gray-100 transition-colors"
+                                title="Editar"
+                              >
+                                <Edit className="w-4 h-4 text-gray-500" />
+                              </button>
+                              <button
+                                onClick={() => onDeleteTask(task.id)}
+                                className="p-1 rounded hover:bg-red-100 transition-colors"
+                                title="Eliminar"
+                              >
+                                <Trash2 className="w-4 h-4 text-red-500" />
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

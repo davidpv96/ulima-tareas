@@ -12,7 +12,7 @@ import './App.css'
 function App() {
   const [showSplash, setShowSplash] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentView, setCurrentView] = useState('month')
+  const [currentView, setCurrentView] = useState('mes')
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)

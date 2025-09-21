@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import { Check, Circle } from 'lucide-react'
+import { Check, Circle, Edit, Trash2, Clock } from 'lucide-react'
 
-const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
+const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
   const { weekDays, weekTasks } = useMemo(() => {
     // Encontrar el primer día de la semana (domingo)
     const startOfWeek = new Date(selectedDate)
@@ -54,6 +54,11 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
   }
 
   const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+
+  const formatTime = (timeStr) => {
+    if (!timeStr) return ''
+    return timeStr.substring(0, 5) // HH:MM
+  }
 
   return (
     <div className="h-full flex flex-col bg-cream">
@@ -108,19 +113,15 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                     <div
                       key={task.id}
                       className={`
-                        p-2 rounded-lg cursor-pointer transition-all
+                        p-2 rounded-lg transition-all
                         ${getSphereColor(task.sphere)}
                         ${task.completed ? 'opacity-60' : ''}
                         hover:shadow-sm
                       `}
-                      onClick={() => onEditTask(task)}
                     >
                       <div className="flex items-start space-x-1">
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onToggleTask(task.id)
-                          }}
+                          onClick={() => onToggleTask(task.id)}
                           className={`mt-0.5 transition-colors ${
                             task.completed 
                               ? 'text-green-600 hover:text-green-700' 
@@ -141,6 +142,31 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                           `}>
                             {task.title}
                           </h4>
+                          
+                          {/* Time Display */}
+                          {task.startTime && task.endTime && (
+                            <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
+                              <Clock className="w-2 h-2" />
+                              <span>{formatTime(task.startTime)}-{formatTime(task.endTime)}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex items-center space-x-1">
+                          <button
+                            onClick={() => onEditTask(task)}
+                            className="p-0.5 rounded hover:bg-gray-100 transition-colors"
+                            title="Editar"
+                          >
+                            <Edit className="w-3 h-3 text-gray-500" />
+                          </button>
+                          <button
+                            onClick={() => onDeleteTask(task.id)}
+                            className="p-0.5 rounded hover:bg-red-100 transition-colors"
+                            title="Eliminar"
+                          >
+                            <Trash2 className="w-3 h-3 text-red-500" />
+                          </button>
                         </div>
                       </div>
                     </div>

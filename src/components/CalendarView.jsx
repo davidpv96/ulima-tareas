@@ -106,6 +106,7 @@ const CalendarView = ({
             tasks={tasks}
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
+            onDeleteTask={onDeleteTask}
           />
         )
       case 'semana':
@@ -115,6 +116,7 @@ const CalendarView = ({
             tasks={tasks}
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
+            onDeleteTask={onDeleteTask}
           />
         )
       case 'mes':
@@ -124,51 +126,18 @@ const CalendarView = ({
             tasks={tasks}
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
+            onDeleteTask={onDeleteTask}
           />
         )
       case 'estadísticas':
         return <Statistics tasks={tasks} />
       default:
-        return <MonthView selectedDate={localDate} tasks={tasks} onEditTask={onEditTask} onToggleTask={onToggleTask} />
+        return <MonthView selectedDate={localDate} tasks={tasks} onEditTask={onEditTask} onToggleTask={onToggleTask} onDeleteTask={onDeleteTask} />
     }
   }
 
   return (
     <div className="h-full flex flex-col">
-      {/* Navigation Header */}
-      {currentView !== 'estadísticas' && (
-        <div className="flex items-center justify-between px-4 py-4 bg-white border-b border-gray-100">
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={() => navigateDate(-1)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5 text-gray-600" />
-          </button>
-          
-          <button
-            onClick={() => navigateDate(1)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            <ChevronRight className="w-5 h-5 text-gray-600" />
-          </button>
-        </div>
-
-        <div className="flex-1 text-center">
-          <h2 className="text-lg font-semibold text-gray-900">
-            {formatDateHeader()}
-          </h2>
-        </div>
-
-        <button
-          onClick={goToToday}
-          className="px-4 py-2 bg-soft-blue text-white rounded-lg hover:bg-blue-400 transition-colors font-medium"
-        >
-          Hoy
-        </button>
-      </div>
-      )}
-
       {/* Calendar Content */}
       <div className="flex-1 overflow-hidden">
         <div
