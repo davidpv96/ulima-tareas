@@ -59,7 +59,6 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
     { 
       id: 'actividades', 
       label: 'Sugerencia Actividades',
-      sublabel: 'Generador Planes',
       icon: Lightbulb,
       iconColor: 'bg-soft-orange',
       bgColor: 'bg-orange-50',

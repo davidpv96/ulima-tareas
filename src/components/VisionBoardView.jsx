@@ -42,14 +42,14 @@ const VisionBoardView = () => {
       return
     }
 
-    files.forEach(file => {
+    files.forEach((file, index) => {
       if (file.type.startsWith('image/')) {
         const reader = new FileReader()
         reader.onload = (e) => {
           const newImage = {
-            id: Date.now() + Math.random(),
+            id: Date.now() + Math.random() + index,
             src: e.target.result,
-            title: newImageTitle || `Imagen ${images.length + 1}`,
+            title: newImageTitle || `Imagen ${images.length + index + 1}`,
             description: newImageDescription || '',
             uploadedAt: new Date().toISOString(),
             file: file
