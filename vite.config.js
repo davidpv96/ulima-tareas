@@ -13,8 +13,8 @@ export default defineConfig({
       },
       includeAssets: ['favicon.ico'],
       manifest: {
-        name: 'SPHERE - Calendar & Goals',
-        short_name: 'SPHERE',
+        name: 'Sphere - Calendar & Goals',
+        short_name: 'Sphere',
         description: 'Una aplicación de calendario y gestión de metas con esferas de vida',
         theme_color: '#AEE0F6',
         background_color: '#FFF9F3',
