@@ -82,7 +82,9 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
   }
 
   const formatTaskDate = (dateStr) => {
-    const date = new Date(dateStr)
+    // Crear fecha sin problemas de zona horaria
+    const [year, month, day] = dateStr.split('-').map(Number)
+    const date = new Date(year, month - 1, day) // month - 1 porque los meses van de 0-11
     const days = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB']
     const dayName = days[date.getDay()]
     const dayNumber = date.getDate()
@@ -98,7 +100,10 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     if (!startTime) return null
     
     const today = new Date()
-    const taskDateTime = new Date(`${taskDate}T${startTime}`)
+    // Crear fecha sin problemas de zona horaria
+    const [year, month, day] = taskDate.split('-').map(Number)
+    const [hours, minutes] = startTime.split(':').map(Number)
+    const taskDateTime = new Date(year, month - 1, day, hours, minutes)
     
     // Si la tarea ya pasó, no mostrar contador
     if (taskDateTime < today) return null
@@ -124,9 +129,14 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     const tomorrow = new Date(today)
     tomorrow.setDate(tomorrow.getDate() + 1)
     
-    if (date.toDateString() === today.toDateString()) {
+    // Comparar solo la fecha sin la hora
+    const todayStr = today.toISOString().split('T')[0]
+    const tomorrowStr = tomorrow.toISOString().split('T')[0]
+    const dateStr = date.toISOString().split('T')[0]
+    
+    if (dateStr === todayStr) {
       return 'Hoy'
-    } else if (date.toDateString() === tomorrow.toDateString()) {
+    } else if (dateStr === tomorrowStr) {
       return 'Mañana'
     } else {
       const months = [

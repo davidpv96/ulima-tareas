@@ -5,7 +5,6 @@ import {
   CheckCircle, 
   Target, 
   TrendingUp,
-  Plus,
   CalendarDays,
   CalendarRange,
   Grid3X3,
@@ -31,8 +30,7 @@ const HomeView = ({
     
     // Tareas de hoy
     const todayTasks = tasks.filter(task => {
-      const taskDate = new Date(task.date)
-      return taskDate.toISOString().split('T')[0] === todayStr
+      return task.date === todayStr
     })
     
     const todayCompleted = todayTasks.filter(t => t.completed).length
@@ -40,8 +38,8 @@ const HomeView = ({
     
     // Próximas tareas (próximas 3)
     const upcomingTasks = tasks
-      .filter(task => !task.completed && new Date(task.date) >= today)
-      .sort((a, b) => new Date(a.date) - new Date(b.date))
+      .filter(task => !task.completed && task.date >= todayStr)
+      .sort((a, b) => a.date.localeCompare(b.date))
       .slice(0, 3)
     
     // Tareas por esfera
@@ -118,14 +116,21 @@ const HomeView = ({
   }
 
   const formatDate = (dateStr) => {
-    const date = new Date(dateStr)
+    // Crear fecha sin problemas de zona horaria
+    const [year, month, day] = dateStr.split('-').map(Number)
+    const date = new Date(year, month - 1, day)
     const today = new Date()
     const tomorrow = new Date(today)
     tomorrow.setDate(today.getDate() + 1)
     
-    if (date.toDateString() === today.toDateString()) {
+    // Comparar solo la fecha sin la hora
+    const todayStr = today.toISOString().split('T')[0]
+    const tomorrowStr = tomorrow.toISOString().split('T')[0]
+    const dateStrOnly = dateStr
+    
+    if (dateStrOnly === todayStr) {
       return 'Hoy'
-    } else if (date.toDateString() === tomorrow.toDateString()) {
+    } else if (dateStrOnly === tomorrowStr) {
       return 'Mañana'
     } else {
       return date.toLocaleDateString('es-ES', { 
@@ -331,16 +336,6 @@ const HomeView = ({
         </div>
       </div>
 
-      {/* Add Task Button */}
-      <div className="text-center">
-        <button
-          onClick={onNewTask}
-          className="inline-flex items-center space-x-2 bg-soft-blue text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium"
-        >
-          <Plus className="w-5 h-5" />
-          <span>Nueva tarea</span>
-        </button>
-      </div>
     </div>
   )
 }
