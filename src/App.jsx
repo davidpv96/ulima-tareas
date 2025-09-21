@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import HomeView from './components/HomeView'
+import WeekPlannerView from './components/WeekPlannerView'
 import CalendarView from './components/CalendarView'
 import TaskModal from './components/TaskModal'
 import SearchModal from './components/SearchModal'
@@ -108,6 +109,8 @@ function App() {
             onEditTask={handleEditTask}
             onToggleTask={handleToggleTask}
           />
+        ) : currentView === 'planner' ? (
+          <WeekPlannerView />
         ) : (
           <CalendarView 
             currentView={currentView}

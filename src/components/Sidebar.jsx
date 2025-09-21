@@ -162,11 +162,18 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
                       <button
                         key={button.id}
                         onClick={() => {
-                          // Implementar funcionalidad específica para cada botón
-                          console.log(`Clicked ${button.id}`)
+                          // Navegar a la vista correspondiente
+                          if (button.id === 'planner') {
+                            onViewChange('planner')
+                          } else {
+                            // Implementar funcionalidad específica para otros botones
+                            console.log(`Clicked ${button.id}`)
+                          }
                           onClose()
                         }}
-                        className={`w-full flex items-center space-x-3 px-3 py-3 rounded-lg text-left transition-colors ${button.bgColor} ${button.textColor} ${button.hoverColor}`}
+                        className={`w-full flex items-center space-x-3 px-3 py-3 rounded-lg text-left transition-colors ${button.bgColor} ${button.textColor} ${button.hoverColor} ${
+                          currentView === button.id ? 'ring-2 ring-soft-blue ring-opacity-50' : ''
+                        }`}
                       >
                         <div className={`p-2 rounded-lg ${button.iconColor}`}>
                           <Icon className="w-5 h-5 text-white" />
