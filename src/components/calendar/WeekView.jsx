@@ -55,11 +55,45 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
 
   const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
+  // Generar horas del día (6 AM a 11 PM)
+  const generateTimeSlots = () => {
+    const hours = []
+    for (let i = 6; i <= 23; i++) {
+      hours.push(i)
+    }
+    return hours
+  }
+
+  const timeSlots = generateTimeSlots()
+
+  // Función para obtener tareas en un horario específico
+  const getTasksAtTime = (day, hour) => {
+    const dateStr = day.toISOString().split('T')[0]
+    const dayTasks = weekTasks[dateStr] || []
+    return dayTasks.filter(task => {
+      if (!task.startTime) return false
+      const taskHour = parseInt(task.startTime.split(':')[0])
+      return taskHour === hour
+    })
+  }
+
+  // Función para obtener tareas sin horario
+  const getTasksWithoutTime = (day) => {
+    const dateStr = day.toISOString().split('T')[0]
+    const dayTasks = weekTasks[dateStr] || []
+    return dayTasks.filter(task => !task.startTime)
+  }
 
   return (
     <div className="h-full flex flex-col bg-cream">
       {/* Week header */}
-      <div className="grid grid-cols-7 bg-white border-b border-gray-200">
+      <div className="grid grid-cols-8 bg-white border-b border-gray-200">
+        {/* Time column header */}
+        <div className="p-3 text-center border-r border-gray-200 bg-gray-100">
+          <div className="text-sm font-medium text-gray-600">Hora</div>
+        </div>
+        
+        {/* Day headers */}
         {weekDays.map((day, index) => (
           <div
             key={index}
@@ -80,64 +114,92 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
         ))}
       </div>
 
-      {/* Week content */}
-      <div className="flex-1 grid grid-cols-7">
-        {weekDays.map((day, index) => {
-          const dateStr = day.toISOString().split('T')[0]
-          const dayTasks = weekTasks[dateStr] || []
-          
-          return (
-            <div
-              key={index}
-              className={`
-                min-h-[500px] border-r border-gray-200 last:border-r-0 p-2 cursor-pointer
-                ${isToday(day) ? 'bg-soft-blue/5' : 'bg-white'}
-                hover:bg-gray-50 transition-colors
-              `}
-              onClick={() => {
-                // Navegar a vista de día para esta fecha
-                onDateChange(day)
-                onViewChange('día')
-              }}
-            >
-              {/* Day content */}
-              <div className="space-y-2">
-                {dayTasks.length === 0 ? (
-                  <div className="text-center py-8">
-                    <div className="w-8 h-8 mx-auto mb-2 bg-gray-100 rounded-full flex items-center justify-center">
-                      <Circle className="w-4 h-4 text-gray-400" />
-                    </div>
-                    <p className="text-xs text-gray-400">Sin tareas</p>
-                  </div>
-                ) : (
-                  dayTasks.map((task, taskIndex) => (
+      {/* Week content with time slots */}
+      <div className="flex-1 grid grid-cols-8">
+        {/* Time column */}
+        <div className="border-r border-gray-200 bg-gray-50">
+          {timeSlots.map((hour) => (
+            <div key={hour} className="h-12 border-b border-gray-200 flex items-center justify-center">
+              <span className="text-xs text-gray-500 font-medium">
+                {hour.toString().padStart(2, '0')}:00
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Day columns */}
+        {weekDays.map((day, index) => (
+          <div key={index} className="border-r border-gray-200 last:border-r-0">
+            {/* Time slots */}
+            {timeSlots.map((hour) => {
+              const tasksAtTime = getTasksAtTime(day, hour)
+              
+              return (
+                <div key={hour} className="h-12 border-b border-gray-200 p-1">
+                  {tasksAtTime.map((task) => (
                     <div
                       key={task.id}
                       className={`
-                        p-2 rounded-lg transition-all border-l-2 mb-1
+                        w-full h-full rounded transition-all border-l-2
                         ${getSphereColor(task.sphere)}
                         ${task.completed ? 'opacity-60' : ''}
                         hover:shadow-sm cursor-pointer
                       `}
                       onClick={(e) => {
                         e.stopPropagation()
-                        // Navegar a vista de día para esta fecha
                         onDateChange(day)
                         onViewChange('día')
                       }}
                     >
-                      <div className="flex items-center justify-center">
-                        <span className="text-lg font-bold">
+                      <div className="flex items-center justify-center h-full">
+                        <span className="text-sm font-bold">
                           {task.sphere}
                         </span>
                       </div>
                     </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )
-        })}
+                  ))}
+                </div>
+              )
+            })}
+            
+            {/* Tasks without time at the bottom */}
+            {(() => {
+              const tasksWithoutTime = getTasksWithoutTime(day)
+              if (tasksWithoutTime.length > 0) {
+                return (
+                  <div className="p-2 border-t-2 border-gray-300 bg-gray-100">
+                    <div className="text-xs text-gray-500 font-medium mb-1">Sin horario</div>
+                    <div className="space-y-1">
+                      {tasksWithoutTime.map((task) => (
+                        <div
+                          key={task.id}
+                          className={`
+                            p-1 rounded transition-all border-l-2
+                            ${getSphereColor(task.sphere)}
+                            ${task.completed ? 'opacity-60' : ''}
+                            hover:shadow-sm cursor-pointer
+                          `}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onDateChange(day)
+                            onViewChange('día')
+                          }}
+                        >
+                          <div className="flex items-center justify-center">
+                            <span className="text-xs font-bold">
+                              {task.sphere}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+              }
+              return null
+            })()}
+          </div>
+        ))}
       </div>
 
       {/* Week summary */}
