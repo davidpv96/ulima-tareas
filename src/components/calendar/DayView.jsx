@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { Check, Circle, Plus } from 'lucide-react'
 
 const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
@@ -78,11 +77,7 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
     <div className="h-full overflow-y-auto bg-cream">
       <div className="p-4">
         {/* Date Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-6"
-        >
+        <div className="mb-6">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-gray-900 mb-1">
               {dateInfo.dayNumber}
@@ -91,15 +86,11 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
               {dateInfo.dayName}, {dateInfo.monthName} {dateInfo.year}
             </h2>
           </div>
-        </motion.div>
+        </div>
 
         {/* Tasks Section */}
         {dayTasks.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-12"
-          >
+          <div className="text-center py-12">
             <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
               <Plus className="w-12 h-12 text-gray-400" />
             </div>
@@ -109,14 +100,12 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
             <p className="text-gray-500 mb-4">
               Toca el botón + para añadir una nueva tarea
             </p>
-          </motion.div>
+          </div>
         ) : (
           <div className="space-y-4">
             {Object.entries(groupedTasks).map(([sphere, sphereTasks]) => (
-              <motion.div
+              <div
                 key={sphere}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
                 className="space-y-3"
               >
                 {/* Sphere Header */}
@@ -133,11 +122,8 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                 {/* Tasks in this sphere */}
                 <div className="space-y-2">
                   {sphereTasks.map((task, index) => (
-                    <motion.div
+                    <div
                       key={task.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
                       className={`
                         p-4 rounded-lg border-l-4 shadow-sm
                         ${getSphereColor(task.sphere)}
@@ -181,22 +167,17 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                           )}
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}
 
         {/* Progress Summary */}
         {dayTasks.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="mt-6 p-4 bg-white rounded-lg shadow-sm border border-gray-100"
-          >
+          <div className="mt-6 p-4 bg-white rounded-lg shadow-sm border border-gray-100">
             <h4 className="font-medium text-gray-900 mb-2">Resumen del día</h4>
             <div className="flex items-center space-x-4 text-sm">
               <div className="flex items-center space-x-1">
@@ -212,7 +193,7 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                 </span>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
     </div>

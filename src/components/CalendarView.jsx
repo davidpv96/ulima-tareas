@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import AgendaView from './calendar/AgendaView'
 import DayView from './calendar/DayView'

@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { Check, Circle } from 'lucide-react'
 
 const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
@@ -87,11 +86,8 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
           const dayTasks = weekTasks[dateStr] || []
           
           return (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
               className={`
                 min-h-[400px] border-r border-gray-200 last:border-r-0 p-2
                 ${isToday(day) ? 'bg-soft-blue/5' : 'bg-white'}
@@ -109,11 +105,8 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                   </div>
                 ) : (
                   dayTasks.map((task, taskIndex) => (
-                    <motion.div
+                    <div
                       key={task.id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: (index * 0.05) + (taskIndex * 0.1) }}
                       className={`
                         p-2 rounded-lg cursor-pointer transition-all
                         ${getSphereColor(task.sphere)}
@@ -150,11 +143,11 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                           </h4>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   ))
                 )}
               </div>
-            </motion.div>
+            </div>
           )
         })}
       </div>

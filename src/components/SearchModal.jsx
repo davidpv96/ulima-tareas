@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { X, Search, Calendar, Clock, Check, Circle, Edit, Trash2 } from 'lucide-react'
 
 const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggleTask }) => {

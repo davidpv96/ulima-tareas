@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
@@ -94,11 +93,8 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
           const isTodayDate = isToday(date)
           
           return (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.01 }}
               className={`
                 min-h-[100px] border-l border-t border-gray-200 p-2 cursor-pointer
                 hover:bg-gray-50 transition-colors
@@ -146,7 +142,7 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask }) => {
                   </div>
                 )}
               </div>
-            </motion.div>
+            </div>
           )
         })}
       </div>

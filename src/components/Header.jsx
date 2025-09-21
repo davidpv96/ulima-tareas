@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
 import { 
   Menu, 
   Search, 
@@ -51,12 +50,7 @@ const Header = ({
   }
 
   return (
-    <motion.header 
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100"
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
       <div className="flex items-center justify-between px-2 md:px-4 py-3">
         {/* Left side - Menu and Date */}
         <div className="flex items-center space-x-2 md:space-x-3">
@@ -79,13 +73,7 @@ const Header = ({
             </button>
             
             {showDatePicker && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2, ease: [0.4, 0.0, 0.2, 1] }}
-                className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 p-4"
-              >
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 p-4">
                 <div className="space-y-2">
                   <h3 className="font-medium text-gray-900 mb-2">Seleccionar vista</h3>
                   {['agenda', 'día', 'semana', 'mes'].map((view) => (
@@ -105,7 +93,7 @@ const Header = ({
                     </button>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             )}
           </div>
         </div>
@@ -140,13 +128,7 @@ const Header = ({
             </button>
             
             {showUserMenu && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2, ease: [0.4, 0.0, 0.2, 1] }}
-                className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2"
-              >
+              <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
                 <div className="px-4 py-2 border-b border-gray-100">
                   <p className="text-sm font-medium text-gray-900">Usuario</p>
                   <p className="text-xs text-gray-500">usuario@ejemplo.com</p>
@@ -165,12 +147,12 @@ const Header = ({
                   <LogOut className="w-4 h-4" />
                   <span>Cerrar sesión</span>
                 </button>
-              </motion.div>
+              </div>
             )}
           </div>
         </div>
       </div>
-    </motion.header>
+    </header>
   )
 }
 

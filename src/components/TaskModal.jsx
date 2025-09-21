@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { X, Calendar, FileText, Clock, AlertCircle } from 'lucide-react'
 
 const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
@@ -166,14 +165,10 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
             
             {/* Time Conflict Warning */}
             {timeConflict && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-2 flex items-center space-x-2 text-red-600 bg-red-50 p-2 rounded-lg"
-              >
+              <div className="mt-2 flex items-center space-x-2 text-red-600 bg-red-50 p-2 rounded-lg">
                 <AlertCircle className="w-4 h-4" />
                 <span className="text-sm">Este horario ya está ocupado</span>
-              </motion.div>
+              </div>
             )}
           </div>
 

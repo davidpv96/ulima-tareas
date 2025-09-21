@@ -1,5 +1,4 @@
 import React from 'react'
-import { motion } from 'framer-motion'
 import { TrendingUp, Target, CheckCircle, Clock, BarChart3 } from 'lucide-react'
 
 const Statistics = ({ tasks }) => {

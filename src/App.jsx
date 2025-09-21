@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import CalendarView from './components/CalendarView'
@@ -91,27 +90,25 @@ function App() {
       
       <FloatingButton onClick={handleAddTask} />
       
-      <AnimatePresence>
-        {isTaskModalOpen && (
-          <TaskModal
-            task={editingTask}
-            onSave={handleSaveTask}
-            onClose={handleCloseTaskModal}
-            hasTimeConflict={hasTimeConflict}
-          />
-        )}
-        
-        {isSearchModalOpen && (
-          <SearchModal
-            isOpen={isSearchModalOpen}
-            onClose={handleCloseSearchModal}
-            tasks={tasks}
-            onEditTask={handleEditTask}
-            onDeleteTask={deleteTask}
-            onToggleTask={handleToggleTask}
-          />
-        )}
-      </AnimatePresence>
+      {isTaskModalOpen && (
+        <TaskModal
+          task={editingTask}
+          onSave={handleSaveTask}
+          onClose={handleCloseTaskModal}
+          hasTimeConflict={hasTimeConflict}
+        />
+      )}
+      
+      {isSearchModalOpen && (
+        <SearchModal
+          isOpen={isSearchModalOpen}
+          onClose={handleCloseSearchModal}
+          tasks={tasks}
+          onEditTask={handleEditTask}
+          onDeleteTask={deleteTask}
+          onToggleTask={handleToggleTask}
+        />
+      )}
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Calendar, 
   CalendarDays, 
@@ -68,26 +67,17 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
   }
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
         <>
           {/* Overlay */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             onClick={onClose}
             className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           />
           
           {/* Sidebar */}
-          <motion.aside
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed left-0 top-0 bottom-0 w-80 bg-white shadow-xl z-50 overflow-y-auto"
-          >
+          <aside className="fixed left-0 top-0 bottom-0 w-80 bg-white shadow-xl z-50 overflow-y-auto">
             <div className="p-6">
               {/* Header */}
               <div className="flex items-center justify-between mb-8">
@@ -210,10 +200,10 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
                 </div>
               </div>
             </div>
-          </motion.aside>
+          </aside>
         </>
       )}
-    </AnimatePresence>
+    </>
   )
 }
 

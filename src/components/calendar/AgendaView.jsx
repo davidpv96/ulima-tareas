@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { Check, Circle, Edit, Trash2, Clock } from 'lucide-react'
 
 const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
