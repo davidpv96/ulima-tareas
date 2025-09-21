@@ -5,10 +5,12 @@ import CalendarView from './components/CalendarView'
 import TaskModal from './components/TaskModal'
 import SearchModal from './components/SearchModal'
 import FloatingButton from './components/FloatingButton'
+import SplashScreen from './components/SplashScreen'
 import { useTasks } from './hooks/useTasks'
 import './App.css'
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentView, setCurrentView] = useState('month')
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -55,6 +57,14 @@ function App() {
     if (task) {
       updateTask(taskId, { completed: !task.completed })
     }
+  }
+
+  const handleSplashFinish = () => {
+    setShowSplash(false)
+  }
+
+  if (showSplash) {
+    return <SplashScreen onFinish={handleSplashFinish} />
   }
 
   return (
