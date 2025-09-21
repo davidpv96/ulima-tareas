@@ -15,6 +15,7 @@ const VisionBoardView = () => {
   const [showUploadModal, setShowUploadModal] = useState(false)
   const [newImageTitle, setNewImageTitle] = useState('')
   const [newImageDescription, setNewImageDescription] = useState('')
+  const [isProcessing, setIsProcessing] = useState(false)
   const fileInputRef = useRef(null)
 
   // Límite de imágenes (configurable)
@@ -42,25 +43,65 @@ const VisionBoardView = () => {
       return
     }
 
-    files.forEach((file, index) => {
-      if (file.type.startsWith('image/')) {
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          const newImage = {
-            id: Date.now() + Math.random() + index,
-            src: e.target.result,
-            title: newImageTitle || `Imagen ${images.length + index + 1}`,
-            description: newImageDescription || '',
-            uploadedAt: new Date().toISOString(),
-            file: file
+    // Procesar archivos uno por uno para evitar problemas
+    const processFiles = async () => {
+      setIsProcessing(true)
+      const newImages = []
+      
+      try {
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i]
+          
+          if (file.type.startsWith('image/')) {
+            try {
+              const reader = new FileReader()
+              
+              // Crear una promesa para cada archivo
+              const imagePromise = new Promise((resolve) => {
+                reader.onload = (e) => {
+                  const newImage = {
+                    id: Date.now() + Math.random() + i,
+                    src: e.target.result,
+                    title: newImageTitle || `Imagen ${images.length + i + 1}`,
+                    description: newImageDescription || '',
+                    uploadedAt: new Date().toISOString(),
+                    file: file
+                  }
+                  resolve(newImage)
+                }
+                reader.onerror = () => {
+                  console.error('Error al leer el archivo:', file.name)
+                  resolve(null)
+                }
+              })
+              
+              reader.readAsDataURL(file)
+              const result = await imagePromise
+              
+              if (result) {
+                newImages.push(result)
+              }
+            } catch (error) {
+              console.error('Error procesando archivo:', file.name, error)
+            }
+          } else {
+            alert(`El archivo ${file.name} no es una imagen válida`)
           }
-          setImages(prev => [...prev, newImage])
         }
-        reader.readAsDataURL(file)
-      } else {
-        alert('Solo se permiten archivos de imagen (JPG, PNG, GIF, etc.)')
+        
+        // Agregar todas las imágenes de una vez
+        if (newImages.length > 0) {
+          setImages(prev => [...prev, ...newImages])
+        }
+      } catch (error) {
+        console.error('Error general procesando archivos:', error)
+        alert('Error al procesar las imágenes. Intenta de nuevo.')
+      } finally {
+        setIsProcessing(false)
       }
-    })
+    }
+
+    processFiles()
 
     // Limpiar el input y cerrar modal
     setNewImageTitle('')
@@ -256,11 +297,17 @@ const VisionBoardView = () => {
                   accept="image/*"
                   multiple
                   onChange={handleFileUpload}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent"
+                  disabled={isProcessing}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Puedes seleccionar múltiples imágenes a la vez
                 </p>
+                {isProcessing && (
+                  <p className="text-xs text-blue-600 mt-1">
+                    Procesando imágenes...
+                  </p>
+                )}
               </div>
             </div>
           </div>
