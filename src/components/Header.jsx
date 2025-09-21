@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { 
   Menu, 
   Search, 
@@ -20,6 +20,7 @@ const Header = ({
   onSearchClick
 }) => {
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const userMenuRef = useRef(null)
 
   const getTodayButton = () => {
     const today = new Date()
@@ -39,6 +40,23 @@ const Header = ({
     console.log('Logout')
     setShowUserMenu(false)
   }
+
+  // Detectar clicks fuera del menú de usuario para cerrarlo
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setShowUserMenu(false)
+      }
+    }
+
+    if (showUserMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showUserMenu])
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
@@ -91,7 +109,7 @@ const Header = ({
             <Calendar className="w-4 h-4" />
           </button>
 
-          <div className="relative">
+          <div className="relative" ref={userMenuRef}>
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors"

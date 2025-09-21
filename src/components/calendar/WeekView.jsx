@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Check, Circle, Edit, Trash2, Clock } from 'lucide-react'
+import { Circle } from 'lucide-react'
 
 const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask, onDateChange, onViewChange }) => {
   const { weekDays, weekTasks } = useMemo(() => {
@@ -55,10 +55,6 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
 
   const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
-  const formatTime = (timeStr) => {
-    if (!timeStr) return ''
-    return timeStr.substring(0, 5) // HH:MM
-  }
 
   return (
     <div className="h-full flex flex-col bg-cream">
@@ -130,41 +126,10 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
                         onViewChange('día')
                       }}
                     >
-                      <div className="flex items-start space-x-1">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onToggleTask(task.id)
-                          }}
-                          className={`mt-0.5 transition-colors ${
-                            task.completed 
-                              ? 'text-green-600 hover:text-green-700' 
-                              : 'text-gray-400 hover:text-gray-600'
-                          }`}
-                        >
-                          {task.completed ? (
-                            <Check className="w-3 h-3" />
-                          ) : (
-                            <Circle className="w-3 h-3" />
-                          )}
-                        </button>
-                        
-                        <div className="flex-1 min-w-0">
-                          <h4 className={`
-                            text-xs font-medium truncate
-                            ${task.completed ? 'line-through text-gray-500' : 'text-gray-900'}
-                          `}>
-                            {task.title}
-                          </h4>
-                          
-                          {/* Time Display */}
-                          {task.startTime && task.endTime && (
-                            <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
-                              <Clock className="w-2 h-2" />
-                              <span>{formatTime(task.startTime)}</span>
-                            </div>
-                          )}
-                        </div>
+                      <div className="flex items-center justify-center">
+                        <span className="text-lg font-bold">
+                          {task.sphere}
+                        </span>
                       </div>
                     </div>
                   ))

@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react'
 
 const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [tempDate, setTempDate] = useState(selectedDate)
+  const pickerRef = useRef(null)
 
   const months = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -71,8 +72,25 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
     setIsOpen(false)
   }
 
+  // Detectar clicks fuera del DatePicker para cerrarlo
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (pickerRef.current && !pickerRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
+
   return (
-    <div className="relative">
+    <div className="relative" ref={pickerRef}>
       <div className="flex items-center space-x-1">
         {/* Previous button */}
         <button
