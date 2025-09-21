@@ -36,79 +36,50 @@ const VisionBoardView = () => {
 
   // Función para manejar la subida de archivos
   const handleFileUpload = (event) => {
-    const files = Array.from(event.target.files)
+    const file = event.target.files[0] // Solo tomar la primera imagen
     
-    if (images.length + files.length > MAX_IMAGES) {
-      alert(`Solo puedes subir máximo ${MAX_IMAGES} imágenes. Actualmente tienes ${images.length}.`)
+    if (!file) return
+    
+    if (images.length >= MAX_IMAGES) {
+      alert(`Solo puedes subir máximo ${MAX_IMAGES} imágenes.`)
       return
     }
 
-    // Procesar archivos uno por uno para evitar problemas
-    const processFiles = async () => {
+    if (file.type.startsWith('image/')) {
       setIsProcessing(true)
-      const newImages = []
       
-      try {
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i]
-          
-          if (file.type.startsWith('image/')) {
-            try {
-              const reader = new FileReader()
-              
-              // Crear una promesa para cada archivo
-              const imagePromise = new Promise((resolve) => {
-                reader.onload = (e) => {
-                  const newImage = {
-                    id: Date.now() + Math.random() + i,
-                    src: e.target.result,
-                    title: newImageTitle || `Imagen ${images.length + i + 1}`,
-                    description: newImageDescription || '',
-                    uploadedAt: new Date().toISOString(),
-                    file: file
-                  }
-                  resolve(newImage)
-                }
-                reader.onerror = () => {
-                  console.error('Error al leer el archivo:', file.name)
-                  resolve(null)
-                }
-              })
-              
-              reader.readAsDataURL(file)
-              const result = await imagePromise
-              
-              if (result) {
-                newImages.push(result)
-              }
-            } catch (error) {
-              console.error('Error procesando archivo:', file.name, error)
-            }
-          } else {
-            alert(`El archivo ${file.name} no es una imagen válida`)
-          }
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const newImage = {
+          id: Date.now() + Math.random(),
+          src: e.target.result,
+          title: newImageTitle || `Imagen ${images.length + 1}`,
+          description: newImageDescription || '',
+          uploadedAt: new Date().toISOString(),
+          file: file
         }
         
-        // Agregar todas las imágenes de una vez
-        if (newImages.length > 0) {
-          setImages(prev => [...prev, ...newImages])
+        setImages(prev => [...prev, newImage])
+        setIsProcessing(false)
+        
+        // Limpiar el input y cerrar modal
+        setNewImageTitle('')
+        setNewImageDescription('')
+        setShowUploadModal(false)
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ''
         }
-      } catch (error) {
-        console.error('Error general procesando archivos:', error)
-        alert('Error al procesar las imágenes. Intenta de nuevo.')
-      } finally {
+      }
+      
+      reader.onerror = () => {
+        console.error('Error al leer el archivo:', file.name)
+        alert('Error al cargar la imagen. Intenta de nuevo.')
         setIsProcessing(false)
       }
-    }
-
-    processFiles()
-
-    // Limpiar el input y cerrar modal
-    setNewImageTitle('')
-    setNewImageDescription('')
-    setShowUploadModal(false)
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''
+      
+      reader.readAsDataURL(file)
+    } else {
+      alert('Solo se permiten archivos de imagen (JPG, PNG, GIF, etc.)')
     }
   }
 
@@ -295,17 +266,16 @@ const VisionBoardView = () => {
                   ref={fileInputRef}
                   type="file"
                   accept="image/*"
-                  multiple
                   onChange={handleFileUpload}
                   disabled={isProcessing}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  Puedes seleccionar múltiples imágenes a la vez
+                  Selecciona una imagen a la vez
                 </p>
                 {isProcessing && (
                   <p className="text-xs text-blue-600 mt-1">
-                    Procesando imágenes...
+                    Procesando imagen...
                   </p>
                 )}
               </div>
