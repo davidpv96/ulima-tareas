@@ -31,32 +31,47 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
       label: 'My World on Top', 
       sublabel: 'Metas 2025',
       icon: Target,
-      color: 'bg-soft-blue'
+      iconColor: 'bg-soft-blue',
+      bgColor: 'bg-blue-50',
+      textColor: 'text-blue-800',
+      hoverColor: 'hover:bg-blue-100'
     },
     { 
       id: 'planner', 
       label: 'Semana Planner',
       icon: BookOpen,
-      color: 'bg-pastel-lilac'
+      iconColor: 'bg-pastel-lilac',
+      bgColor: 'bg-purple-50',
+      textColor: 'text-purple-800',
+      hoverColor: 'hover:bg-purple-100'
     },
     { 
       id: 'motivacion', 
       label: 'Motivación',
       icon: Heart,
-      color: 'bg-soft-pink'
+      iconColor: 'bg-soft-pink',
+      bgColor: 'bg-pink-50',
+      textColor: 'text-pink-800',
+      hoverColor: 'hover:bg-pink-100'
     },
     { 
       id: 'actividades', 
       label: 'Sugerencia Actividades',
       sublabel: 'Generador Planes',
       icon: Lightbulb,
-      color: 'bg-soft-orange'
+      iconColor: 'bg-soft-orange',
+      bgColor: 'bg-orange-50',
+      textColor: 'text-orange-800',
+      hoverColor: 'hover:bg-orange-100'
     },
     { 
       id: 'visionboard', 
       label: 'My Visionboard',
       icon: Image,
-      color: 'bg-light-green'
+      iconColor: 'bg-light-green',
+      bgColor: 'bg-green-50',
+      textColor: 'text-green-800',
+      hoverColor: 'hover:bg-green-100'
     }
   ]
 
@@ -81,9 +96,16 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
             <div className="p-6">
               {/* Header */}
               <div className="flex items-center justify-between mb-8">
-                <h1 className="text-2xl font-bold text-gray-900">
-                  SPHERE
-                </h1>
+                <div className="flex items-center space-x-3">
+                  <img 
+                    src="/sphere-icon.png" 
+                    alt="SPHERE" 
+                    className="w-8 h-8 rounded-lg"
+                  />
+                  <h1 className="text-2xl font-bold text-gray-900">
+                    SPHERE
+                  </h1>
+                </div>
                 <button
                   onClick={onClose}
                   className="p-2 rounded-lg hover:bg-gray-100 transition-colors lg:hidden"
@@ -142,17 +164,17 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
                           console.log(`Clicked ${button.id}`)
                           onClose()
                         }}
-                        className="w-full flex items-center space-x-3 px-3 py-3 rounded-lg text-left transition-colors bg-gray-800 text-white hover:bg-gray-700"
+                        className={`w-full flex items-center space-x-3 px-3 py-3 rounded-lg text-left transition-colors ${button.bgColor} ${button.textColor} ${button.hoverColor}`}
                       >
-                        <div className={`p-2 rounded-lg ${button.color}`}>
-                          <Icon className="w-5 h-5" />
+                        <div className={`p-2 rounded-lg ${button.iconColor}`}>
+                          <Icon className="w-5 h-5 text-white" />
                         </div>
                         <div>
                           <div className="font-medium text-sm">
                             {button.label}
                           </div>
                           {button.sublabel && (
-                            <div className="text-xs text-gray-300">
+                            <div className="text-xs opacity-70">
                               {button.sublabel}
                             </div>
                           )}

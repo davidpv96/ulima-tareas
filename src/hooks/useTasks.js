@@ -28,8 +28,8 @@ export const useTasks = () => {
       title: taskData.title,
       description: taskData.description || '',
       date: taskData.date,
-      startTime: taskData.startTime || null,
-      endTime: taskData.endTime || null,
+      startTime: taskData.startTime || '',
+      endTime: taskData.endTime || '',
       sphere: taskData.sphere,
       completed: false,
       createdAt: new Date().toISOString(),
@@ -118,12 +118,21 @@ export const useTasks = () => {
       task.endTime
     )
 
+    // Convertir horarios a minutos para comparación correcta
+    const timeToMinutes = (timeStr) => {
+      const [hours, minutes] = timeStr.split(':').map(Number)
+      return hours * 60 + minutes
+    }
+
+    const newStartMinutes = timeToMinutes(startTime)
+    const newEndMinutes = timeToMinutes(endTime)
+
     return tasksOnDate.some(task => {
-      const taskStart = task.startTime
-      const taskEnd = task.endTime
+      const taskStartMinutes = timeToMinutes(task.startTime)
+      const taskEndMinutes = timeToMinutes(task.endTime)
       
-      // Verificar si hay solapamiento
-      return (startTime < taskEnd && endTime > taskStart)
+      // Verificar si hay solapamiento: nuevo horario se superpone con horario existente
+      return (newStartMinutes < taskEndMinutes && newEndMinutes > taskStartMinutes)
     })
   }
 

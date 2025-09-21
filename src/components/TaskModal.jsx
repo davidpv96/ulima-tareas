@@ -11,6 +11,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
     sphere: 'personal'
   })
   const [timeConflict, setTimeConflict] = useState(false)
+  const [invalidTimeRange, setInvalidTimeRange] = useState(false)
 
   const spheres = [
     { id: 'personal', label: 'Personal', emoji: '👤', color: 'bg-gray-100 text-gray-800' },
@@ -42,9 +43,39 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
     }
   }, [task])
 
-  // Validar conflictos de horario cuando cambien los tiempos
+  // Función para validar si el rango de horarios es válido
+  const validateTimeRange = (startTime, endTime) => {
+    if (!startTime || !endTime) return true // Si no hay horarios, es válido
+    
+    // Validar formato de tiempo
+    const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/
+    if (!timeRegex.test(startTime) || !timeRegex.test(endTime)) {
+      return false
+    }
+    
+    const [startHour, startMin] = startTime.split(':').map(Number)
+    const [endHour, endMin] = endTime.split(':').map(Number)
+    
+    const startMinutes = startHour * 60 + startMin
+    const endMinutes = endHour * 60 + endMin
+    
+    // No permitir horarios que crucen medianoche (más de 24 horas)
+    const duration = endMinutes - startMinutes
+    if (duration <= 0 || duration > 24 * 60) {
+      return false
+    }
+    
+    return true
+  }
+
+  // Validar rango de horarios y conflictos cuando cambien los tiempos
   useEffect(() => {
-    if (formData.startTime && formData.endTime && hasTimeConflict) {
+    // Validar rango de horarios
+    const isValidRange = validateTimeRange(formData.startTime, formData.endTime)
+    setInvalidTimeRange(!isValidRange)
+    
+    // Validar conflictos de horario
+    if (formData.startTime && formData.endTime && hasTimeConflict && isValidRange) {
       const date = new Date(formData.date)
       const conflict = hasTimeConflict(date, formData.startTime, formData.endTime, task?.id)
       setTimeConflict(conflict)
@@ -57,6 +88,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
     e.preventDefault()
     if (!formData.title.trim()) return
     if (timeConflict) return // No permitir guardar si hay conflicto
+    if (invalidTimeRange) return // No permitir guardar si el rango de horarios es inválido
     
     onSave(formData)
   }
@@ -163,6 +195,31 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
               </div>
             </div>
             
+            {/* Time Range Validation Warning */}
+            {invalidTimeRange && (
+              <div className="mt-2 flex items-center space-x-2 text-red-600 bg-red-50 p-2 rounded-lg">
+                <AlertCircle className="w-4 h-4" />
+                <span className="text-sm">
+                  {formData.startTime && formData.endTime && 
+                   (() => {
+                     const [startHour] = formData.startTime.split(':').map(Number)
+                     const [endHour] = formData.endTime.split(':').map(Number)
+                     const duration = (endHour * 60 + parseInt(formData.endTime.split(':')[1])) - 
+                                    (startHour * 60 + parseInt(formData.startTime.split(':')[1]))
+                     
+                     if (duration <= 0) {
+                       return "La hora de fin debe ser posterior a la hora de inicio"
+                     } else if (duration > 24 * 60) {
+                       return "La duración no puede ser mayor a 24 horas"
+                     } else {
+                       return "Formato de horario inválido"
+                     }
+                   })()
+                  }
+                </span>
+              </div>
+            )}
+            
             {/* Time Conflict Warning */}
             {timeConflict && (
               <div className="mt-2 flex items-center space-x-2 text-red-600 bg-red-50 p-2 rounded-lg">
@@ -213,7 +270,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
             </button>
             <button
               type="submit"
-              disabled={!formData.title.trim() || timeConflict}
+              disabled={!formData.title.trim() || timeConflict || invalidTimeRange}
               className="flex-1 px-4 py-2 bg-soft-blue text-white rounded-lg hover:bg-blue-400 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {task ? 'Actualizar' : 'Crear'}

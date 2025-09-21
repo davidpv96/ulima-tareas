@@ -77,7 +77,7 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
 
   if (currentMonthTasks.length === 0) {
     return (
-      <div className="h-full flex items-center justify-center">
+      <div className="h-full flex items-start justify-center pt-16">
         <div className="text-center">
           <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
             <Circle className="w-12 h-12 text-gray-400" />
