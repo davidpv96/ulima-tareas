@@ -27,10 +27,11 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
         const endOfWeek = new Date(startOfWeek)
         endOfWeek.setDate(startOfWeek.getDate() + 6)
         
+        // Versión más compacta para móviles
         if (startOfWeek.getMonth() === endOfWeek.getMonth()) {
-          return `${startOfWeek.getDate()}-${endOfWeek.getDate()} ${shortMonths[startOfWeek.getMonth()]} ${startOfWeek.getFullYear()}`
+          return `${startOfWeek.getDate()}-${endOfWeek.getDate()} ${shortMonths[startOfWeek.getMonth()]}`
         } else {
-          return `${startOfWeek.getDate()} ${shortMonths[startOfWeek.getMonth()]} - ${endOfWeek.getDate()} ${shortMonths[endOfWeek.getMonth()]} ${startOfWeek.getFullYear()}`
+          return `${startOfWeek.getDate()} ${shortMonths[startOfWeek.getMonth()]} - ${endOfWeek.getDate()} ${shortMonths[endOfWeek.getMonth()]}`
         }
       case 'mes':
         return `${shortMonths[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
@@ -93,10 +94,10 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
             }
             onDateChange(newDate)
           }}
-          className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          className="p-1.5 md:p-2 rounded-lg hover:bg-gray-100 transition-colors"
           title="Anterior"
         >
-          <ChevronLeft className="w-4 h-4 text-gray-600" />
+          <ChevronLeft className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-600" />
         </button>
 
         {/* Date picker button */}
@@ -105,7 +106,7 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
           className="flex items-center space-x-1 px-2 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
         >
           <Calendar className="w-4 h-4 text-gray-500" />
-          <span className="font-medium text-gray-900 text-sm whitespace-nowrap">
+          <span className="font-medium text-gray-900 text-xs md:text-sm whitespace-nowrap">
             {formatDisplayDate()}
           </span>
           <ChevronRight className="w-3 h-3 text-gray-400" />
@@ -131,10 +132,10 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
             }
             onDateChange(newDate)
           }}
-          className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          className="p-1.5 md:p-2 rounded-lg hover:bg-gray-100 transition-colors"
           title="Siguiente"
         >
-          <ChevronRight className="w-4 h-4 text-gray-600" />
+          <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-600" />
         </button>
       </div>
 

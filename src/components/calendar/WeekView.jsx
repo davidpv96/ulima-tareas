@@ -125,7 +125,9 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
                       `}
                       onClick={(e) => {
                         e.stopPropagation()
-                        onEditTask(task)
+                        // Navegar a vista de día para esta fecha
+                        onDateChange(day)
+                        onViewChange('día')
                       }}
                     >
                       <div className="flex items-start space-x-1">
@@ -162,29 +164,6 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
                               <span>{formatTime(task.startTime)}</span>
                             </div>
                           )}
-                        </div>
-
-                        <div className="flex items-center space-x-1">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              onEditTask(task)
-                            }}
-                            className="p-0.5 rounded hover:bg-gray-100 transition-colors"
-                            title="Editar"
-                          >
-                            <Edit className="w-3 h-3 text-gray-500" />
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              onDeleteTask(task.id)
-                            }}
-                            className="p-0.5 rounded hover:bg-red-100 transition-colors"
-                            title="Eliminar"
-                          >
-                            <Trash2 className="w-3 h-3 text-red-500" />
-                          </button>
                         </div>
                       </div>
                     </div>

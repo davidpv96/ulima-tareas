@@ -136,7 +136,9 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask
                     `}
                     onClick={(e) => {
                       e.stopPropagation()
-                      onEditTask(task)
+                      // Navegar a vista de día para esta fecha
+                      onDateChange(date)
+                      onViewChange('día')
                     }}
                   >
                     <div className="flex items-center justify-between">
