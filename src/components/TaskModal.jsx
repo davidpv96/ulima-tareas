@@ -87,6 +87,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!formData.title.trim()) return
+    if (!formData.startTime || !formData.endTime) return // Horario obligatorio
     if (timeConflict) return // No permitir guardar si hay conflicto
     if (invalidTimeRange) return // No permitir guardar si el rango de horarios es inválido
     
@@ -172,28 +173,37 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <Clock className="w-4 h-4 inline mr-1" />
-              Horario (opcional)
+              Horario *
             </label>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Hora inicio</label>
+                <label className="block text-xs text-gray-500 mb-1">Hora inicio *</label>
                 <input
                   type="time"
                   value={formData.startTime}
                   onChange={(e) => handleInputChange('startTime', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent"
+                  required
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Hora fin</label>
+                <label className="block text-xs text-gray-500 mb-1">Hora fin *</label>
                 <input
                   type="time"
                   value={formData.endTime}
                   onChange={(e) => handleInputChange('endTime', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent"
+                  required
                 />
               </div>
             </div>
+            
+            {/* Required time message */}
+            {(!formData.startTime || !formData.endTime) && (
+              <div className="mt-2 text-xs text-gray-500">
+                * El horario es obligatorio
+              </div>
+            )}
             
             {/* Time Range Validation Warning */}
             {invalidTimeRange && (
@@ -270,7 +280,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
             </button>
             <button
               type="submit"
-              disabled={!formData.title.trim() || timeConflict || invalidTimeRange}
+              disabled={!formData.title.trim() || !formData.startTime || !formData.endTime || timeConflict || invalidTimeRange}
               className="flex-1 px-4 py-2 bg-soft-blue text-white rounded-lg hover:bg-blue-400 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {task ? 'Actualizar' : 'Crear'}
