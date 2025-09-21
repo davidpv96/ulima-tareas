@@ -161,9 +161,14 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
               {searchResults.map((task, index) => (
                 <motion.div
                   key={task.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2, ease: [0.4, 0.0, 0.2, 1], delay: index * 0.03 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    type: "spring",
+                    damping: 25,
+                    stiffness: 300,
+                    delay: index * 0.02
+                  }}
                   className="flex items-start space-x-3 p-4 bg-white rounded-lg border border-gray-100 hover:shadow-md transition-shadow"
                 >
                   {/* Checkbox */}
