@@ -81,7 +81,7 @@ const Header = ({
         </div>
 
         {/* Center - Search */}
-        <div className="flex-1 flex justify-center md:justify-start md:max-w-md md:mx-4">
+        <div className={`flex-1 flex ${currentView === 'inicio' ? 'justify-end' : 'justify-center md:justify-start'} md:max-w-md md:mx-4`}>
           <button
             onClick={handleSearchClick}
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors md:w-full md:flex md:items-center md:space-x-3 md:px-4 md:py-2 md:bg-gray-50 md:border md:border-gray-200 md:hover:bg-gray-100"
