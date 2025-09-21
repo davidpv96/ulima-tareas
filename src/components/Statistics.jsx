@@ -80,31 +80,15 @@ const Statistics = ({ tasks }) => {
   }
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="p-4 space-y-6"
-    >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
-        className="text-center"
-      >
+    <div className="p-4 space-y-6">
+      <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Estadísticas</h2>
         <p className="text-gray-600">Tu progreso en las diferentes esferas de vida</p>
-      </motion.div>
+      </div>
 
       {/* Overview Cards */}
       <div className="grid grid-cols-2 gap-4">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.15 }}
-          className="bg-white p-4 rounded-xl shadow-sm border border-gray-100"
-        >
+        <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <div className="flex items-center space-x-3">
             <div className="p-2 bg-green-100 rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-600" />
@@ -114,14 +98,9 @@ const Statistics = ({ tasks }) => {
               <p className="text-sm text-gray-600">Completadas</p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
-          className="bg-white p-4 rounded-xl shadow-sm border border-gray-100"
-        >
+        <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <div className="flex items-center space-x-3">
             <div className="p-2 bg-orange-100 rounded-lg">
               <Clock className="w-5 h-5 text-orange-600" />
@@ -131,16 +110,11 @@ const Statistics = ({ tasks }) => {
               <p className="text-sm text-gray-600">Pendientes</p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Progress Ring */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, delay: 0.25 }}
-        className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center"
-      >
+      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
         <div className="relative w-32 h-32 mx-auto mb-4">
           <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 120 120">
             <circle
@@ -172,15 +146,10 @@ const Statistics = ({ tasks }) => {
         </div>
         <h3 className="text-lg font-semibold text-gray-900 mb-1">Progreso general</h3>
         <p className="text-sm text-gray-600">{stats.completed} de {stats.total} tareas completadas</p>
-      </motion.div>
+      </div>
 
       {/* Sphere Statistics */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, delay: 0.3 }}
-        className="bg-white rounded-xl shadow-sm border border-gray-100"
-      >
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="p-4 border-b border-gray-100">
           <div className="flex items-center space-x-2">
             <BarChart3 className="w-5 h-5 text-gray-600" />
@@ -196,11 +165,8 @@ const Statistics = ({ tasks }) => {
             </div>
           ) : (
             stats.sphereStats.map((sphere, index) => (
-              <motion.div
+              <div
                 key={sphere.sphere}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2, delay: 0.35 + index * 0.05 }}
                 className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center space-x-3">
@@ -224,20 +190,15 @@ const Statistics = ({ tasks }) => {
                     {sphere.completionRate}%
                   </span>
                 </div>
-              </motion.div>
+              </div>
             ))
           )}
         </div>
-      </motion.div>
+      </div>
 
       {/* Motivational Message */}
       {stats.completionRate > 0 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
-          className="bg-gradient-to-r from-soft-blue to-blue-400 p-4 rounded-xl text-white text-center"
-        >
+        <div className="bg-gradient-to-r from-soft-blue to-blue-400 p-4 rounded-xl text-white text-center">
           <TrendingUp className="w-8 h-8 mx-auto mb-2" />
           <h4 className="font-semibold mb-1">
             {stats.completionRate >= 80 
@@ -255,9 +216,9 @@ const Statistics = ({ tasks }) => {
               : 'Cada paso cuenta hacia tus metas'
             }
           </p>
-        </motion.div>
+        </div>
       )}
-    </motion.div>
+    </div>
   )
 }
 

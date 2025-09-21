@@ -70,22 +70,11 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
+    <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40"
       onClick={onClose}
     >
-      <motion.div
-        initial={{ y: "100%" }}
-        animate={{ y: 0 }}
-        exit={{ y: "100%" }}
-        transition={{ 
-          duration: 0.3,
-          ease: "easeOut"
-        }}
+      <div
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-md bg-white rounded-t-xl sm:rounded-xl shadow-2xl max-h-[90vh] sm:max-h-none overflow-hidden flex flex-col"
       >
@@ -236,8 +225,8 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
             </button>
           </div>
         </form>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }
 

@@ -91,22 +91,11 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
   if (!isOpen) return null
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
+    <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40"
       onClick={handleClose}
     >
-      <motion.div
-        initial={{ y: "100%" }}
-        animate={{ y: 0 }}
-        exit={{ y: "100%" }}
-        transition={{ 
-          duration: 0.3,
-          ease: "easeOut"
-        }}
+      <div
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-2xl bg-white rounded-t-xl sm:rounded-xl shadow-2xl max-h-[90vh] sm:max-h-[80vh] flex flex-col"
       >
@@ -157,11 +146,8 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
               </p>
               
               {searchResults.map((task, index) => (
-                <motion.div
+                <div
                   key={task.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2, delay: index * 0.03 }}
                   className="flex items-start space-x-3 p-4 bg-white rounded-lg border border-gray-100 hover:shadow-md transition-shadow"
                 >
                   {/* Checkbox */}
@@ -239,13 +225,13 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
                       <span className="capitalize">{task.sphere}</span>
                     </span>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }
 
