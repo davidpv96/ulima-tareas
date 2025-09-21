@@ -168,6 +168,8 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
                             onViewChange('motivacion')
                           } else if (button.id === 'visionboard') {
                             onViewChange('visionboard')
+                          } else if (button.id === 'metas') {
+                            onViewChange('metas')
                           } else {
                             // Implementar funcionalidad específica para otros botones
                             console.log(`Clicked ${button.id}`)
