@@ -95,15 +95,15 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.15, ease: "easeOut" }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
       onClick={handleClose}
     >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+        initial={{ scale: 0.96, opacity: 0, y: 8 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        exit={{ scale: 0.96, opacity: 0, y: 8 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-2xl bg-white rounded-xl shadow-xl max-h-[80vh] flex flex-col"
       >
@@ -153,11 +153,12 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
                 {searchResults.length} resultado{searchResults.length !== 1 ? 's' : ''} encontrado{searchResults.length !== 1 ? 's' : ''}
               </p>
               
-              {searchResults.map((task) => (
+              {searchResults.map((task, index) => (
                 <motion.div
                   key={task.id}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.15, ease: "easeOut", delay: index * 0.02 }}
                   className="flex items-start space-x-3 p-4 bg-white rounded-lg border border-gray-100 hover:shadow-md transition-shadow"
                 >
                   {/* Checkbox */}
