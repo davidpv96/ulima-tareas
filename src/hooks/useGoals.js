@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { formatDateToString, normalizeDateString } from '../utils/dateUtils'
+import { formatDateToString } from '../utils/dateUtils'
 
 export const useGoals = () => {
   const [goals, setGoals] = useState([])
@@ -9,26 +9,7 @@ export const useGoals = () => {
     const savedGoals = localStorage.getItem('sphere-goals-2025')
     if (savedGoals) {
       try {
-        const parsedGoals = JSON.parse(savedGoals)
-        console.log('=== DEBUG: Loading existing goals ===')
-        console.log('Raw goals from localStorage:', parsedGoals)
-        
-        // Limpiar fechas de metas existentes para corregir problemas de zona horaria
-        const cleanedGoals = parsedGoals.map(goal => {
-          const originalDate = goal.date
-          const normalizedDate = normalizeDateString(goal.date)
-          console.log(`Goal "${goal.title}": ${originalDate} -> ${normalizedDate}`)
-          
-          return {
-            ...goal,
-            date: normalizedDate
-          }
-        })
-        
-        console.log('Cleaned goals:', cleanedGoals)
-        console.log('=== END DEBUG ===')
-        
-        setGoals(cleanedGoals)
+        setGoals(JSON.parse(savedGoals))
       } catch (error) {
         console.error('Error loading goals:', error)
       }
@@ -42,23 +23,15 @@ export const useGoals = () => {
 
   // Función para agregar una nueva meta
   const addGoal = (goalData) => {
-    console.log('=== DEBUG: Adding goal ===')
-    console.log('Original date from input:', goalData.date)
-    const normalizedDate = normalizeDateString(goalData.date)
-    console.log('Normalized date:', normalizedDate)
-    
     const goal = {
       id: Date.now().toString(),
       title: goalData.title,
-      date: normalizedDate,
+      date: goalData.date, // Usar la fecha tal como viene, igual que en tareas
       description: goalData.description,
       steps: [],
       completed: false,
       createdAt: new Date().toISOString()
     }
-
-    console.log('Final goal object:', goal)
-    console.log('=== END DEBUG ===')
 
     setGoals(prev => [goal, ...prev])
     return goal
@@ -68,12 +41,7 @@ export const useGoals = () => {
   const updateGoal = (goalId, goalData) => {
     setGoals(prev => prev.map(goal => 
       goal.id === goalId 
-        ? { 
-            ...goal, 
-            ...goalData,
-            // Normalizar la fecha si se está actualizando
-            ...(goalData.date && { date: normalizeDateString(goalData.date) })
-          }
+        ? { ...goal, ...goalData } // Usar la fecha tal como viene, igual que en tareas
         : goal
     ))
   }
