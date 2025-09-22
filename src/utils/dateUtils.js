@@ -47,7 +47,14 @@ export const getTodayString = () => {
 export const normalizeDateString = (dateString) => {
   if (!dateString) return getTodayString()
   
-  // Si ya está en formato YYYY-MM-DD, devolverlo tal como está
-  // ya que los inputs de tipo date siempre devuelven fechas en formato local
-  return dateString
+  // Si la fecha ya está en formato YYYY-MM-DD, parsearla y reformatearla
+  // para asegurar que esté en zona horaria local
+  if (dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+    const [year, month, day] = dateString.split('-').map(Number)
+    const localDate = new Date(year, month - 1, day)
+    return formatDateToString(localDate)
+  }
+  
+  // Si no está en el formato esperado, devolver la fecha de hoy
+  return getTodayString()
 }

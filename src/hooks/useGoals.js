@@ -10,11 +10,24 @@ export const useGoals = () => {
     if (savedGoals) {
       try {
         const parsedGoals = JSON.parse(savedGoals)
+        console.log('=== DEBUG: Loading existing goals ===')
+        console.log('Raw goals from localStorage:', parsedGoals)
+        
         // Limpiar fechas de metas existentes para corregir problemas de zona horaria
-        const cleanedGoals = parsedGoals.map(goal => ({
-          ...goal,
-          date: normalizeDateString(goal.date)
-        }))
+        const cleanedGoals = parsedGoals.map(goal => {
+          const originalDate = goal.date
+          const normalizedDate = normalizeDateString(goal.date)
+          console.log(`Goal "${goal.title}": ${originalDate} -> ${normalizedDate}`)
+          
+          return {
+            ...goal,
+            date: normalizedDate
+          }
+        })
+        
+        console.log('Cleaned goals:', cleanedGoals)
+        console.log('=== END DEBUG ===')
+        
         setGoals(cleanedGoals)
       } catch (error) {
         console.error('Error loading goals:', error)
@@ -29,15 +42,23 @@ export const useGoals = () => {
 
   // Función para agregar una nueva meta
   const addGoal = (goalData) => {
+    console.log('=== DEBUG: Adding goal ===')
+    console.log('Original date from input:', goalData.date)
+    const normalizedDate = normalizeDateString(goalData.date)
+    console.log('Normalized date:', normalizedDate)
+    
     const goal = {
       id: Date.now().toString(),
       title: goalData.title,
-      date: normalizeDateString(goalData.date), // Normalizar la fecha para evitar problemas de zona horaria
+      date: normalizedDate,
       description: goalData.description,
       steps: [],
       completed: false,
       createdAt: new Date().toISOString()
     }
+
+    console.log('Final goal object:', goal)
+    console.log('=== END DEBUG ===')
 
     setGoals(prev => [goal, ...prev])
     return goal
