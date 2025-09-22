@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { formatDateToString } from '../utils/dateUtils'
 
 export const useGoals = () => {
   const [goals, setGoals] = useState([])
@@ -90,7 +91,7 @@ export const useGoals = () => {
 
   // Función para obtener metas de una fecha específica
   const getGoalsByDate = (date) => {
-    const dateString = date.toISOString().split('T')[0]
+    const dateString = formatDateToString(date)
     return goals.filter(goal => goal.date === dateString)
   }
 

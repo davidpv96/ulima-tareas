@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { Circle } from 'lucide-react'
 import { useLanguage } from '../../contexts/LanguageContext'
+import { formatDateToString } from '../../utils/dateUtils'
 
 const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask, onDateChange, onViewChange }) => {
   const { t } = useLanguage()
@@ -20,7 +21,7 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
     // Obtener tareas para cada día de la semana
     const tasksByDay = {}
     days.forEach(day => {
-      const dateStr = day.toISOString().split('T')[0]
+      const dateStr = formatDateToString(day)
       tasksByDay[dateStr] = tasks.filter(task => task.date === dateStr)
     })
     
@@ -107,7 +108,7 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
       {/* Week content */}
       <div className="flex-1 grid grid-cols-7">
         {weekDays.map((day, index) => {
-          const dateStr = day.toISOString().split('T')[0]
+          const dateStr = formatDateToString(day)
           const dayTasks = weekTasks[dateStr] || []
           
           return (
@@ -172,7 +173,7 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               <span className="text-gray-600">
                 {weekDays.reduce((acc, day) => {
-                  const dateStr = day.toISOString().split('T')[0]
+                  const dateStr = formatDateToString(day)
                   return acc + (weekTasks[dateStr]?.filter(t => t.completed).length || 0)
                 }, 0)} completadas esta semana
               </span>
@@ -181,7 +182,7 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
               <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
               <span className="text-gray-600">
                 {weekDays.reduce((acc, day) => {
-                  const dateStr = day.toISOString().split('T')[0]
+                  const dateStr = formatDateToString(day)
                   return acc + (weekTasks[dateStr]?.filter(t => !t.completed).length || 0)
                 }, 0)} pendientes
               </span>
@@ -190,7 +191,7 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
           
           <div className="text-gray-500">
             {weekDays.reduce((acc, day) => {
-              const dateStr = day.toISOString().split('T')[0]
+              const dateStr = formatDateToString(day)
               return acc + (weekTasks[dateStr]?.length || 0)
             }, 0)} tareas totales
           </div>

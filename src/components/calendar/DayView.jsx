@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react'
 import { Check, Circle, Plus, Edit, Trash2, Clock } from 'lucide-react'
 import { useLanguage } from '../../contexts/LanguageContext'
+import { formatDateToString } from '../../utils/dateUtils'
 
 const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
   const { t } = useLanguage()
   const { dayTasks, dateInfo } = useMemo(() => {
-    const dateStr = selectedDate.toISOString().split('T')[0]
+    const dateStr = formatDateToString(selectedDate)
     const dayTasks = tasks.filter(task => task.date === dateStr)
     
     const days = [

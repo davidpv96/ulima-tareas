@@ -11,6 +11,8 @@ import {
   BarChart3
 } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
+import { getSpheresArray } from '../data/spheres'
+import { formatDateToString } from '../utils/dateUtils'
 
 const HomeView = ({ 
   tasks, 
@@ -19,12 +21,13 @@ const HomeView = ({
   onViewChange, 
   onNewTask,
   onEditTask,
-  onToggleTask
+  onToggleTask,
+  onSphereClick
 }) => {
   const { t, formatDateShort } = useLanguage()
   const stats = useMemo(() => {
     const today = new Date()
-    const todayStr = today.toISOString().split('T')[0]
+    const todayStr = formatDateToString(today)
     
     const totalTasks = tasks.length
     const completedTasks = tasks.filter(t => t.completed).length
@@ -77,44 +80,17 @@ const HomeView = ({
     }
   }, [tasks])
 
-  const getSphereEmoji = (sphere) => {
-    const emojis = {
-      'personal': '👤',
-      'grow': '🌱',
-      'thrive': '🚀',
-      'connect': '👻',
-      'create': '🎨',
-      'universidad': '🎓',
-      'familia': '👨‍👩‍👧‍👦',
-      'trabajo': '💼',
-      'pareja': '💕',
-      'gym': '💪',
-      'bienestar': '🧘',
-      'deporte': '🏄‍♂️',
-      'viajes': '✈️',
-      'social': '👥'
-    }
-    return emojis[sphere] || '📝'
+  const getSphereEmoji = (sphereId) => {
+    const sphere = getSpheresArray().find(s => s.id === sphereId)
+    return sphere?.emoji || '📝'
   }
 
-  const getSphereColor = (sphere) => {
-    const colors = {
-      'personal': 'bg-blue-100 border-blue-200 text-blue-800',
-      'grow': 'bg-green-100 border-green-200 text-green-800',
-      'thrive': 'bg-purple-100 border-purple-200 text-purple-800',
-      'connect': 'bg-pink-100 border-pink-200 text-pink-800',
-      'create': 'bg-orange-100 border-orange-200 text-orange-800',
-      'universidad': 'bg-indigo-100 border-indigo-200 text-indigo-800',
-      'familia': 'bg-red-100 border-red-200 text-red-800',
-      'trabajo': 'bg-gray-100 border-gray-200 text-gray-800',
-      'pareja': 'bg-rose-100 border-rose-200 text-rose-800',
-      'gym': 'bg-yellow-100 border-yellow-200 text-yellow-800',
-      'bienestar': 'bg-teal-100 border-teal-200 text-teal-800',
-      'deporte': 'bg-cyan-100 border-cyan-200 text-cyan-800',
-      'viajes': 'bg-sky-100 border-sky-200 text-sky-800',
-      'social': 'bg-emerald-100 border-emerald-200 text-emerald-800'
+  const getSphereColor = (sphereId) => {
+    const sphere = getSpheresArray().find(s => s.id === sphereId)
+    if (sphere) {
+      return `bg-[${sphere.color}]/20 border-[${sphere.color}]/30 text-gray-800`
     }
-    return colors[sphere] || 'bg-gray-100 border-gray-200 text-gray-800'
+    return 'bg-gray-100 border-gray-200 text-gray-800'
   }
 
   const formatDate = (dateStr) => {
@@ -126,8 +102,8 @@ const HomeView = ({
     tomorrow.setDate(today.getDate() + 1)
     
     // Comparar solo la fecha sin la hora
-    const todayStr = today.toISOString().split('T')[0]
-    const tomorrowStr = tomorrow.toISOString().split('T')[0]
+    const todayStr = formatDateToString(today)
+    const tomorrowStr = formatDateToString(tomorrow)
     const dateStrOnly = dateStr
     
     if (dateStrOnly === todayStr) {
@@ -302,10 +278,14 @@ const HomeView = ({
           <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('home.mostActiveSpheres')}</h2>
           <div className="space-y-3">
             {stats.topSpheres.map((sphere) => (
-              <div key={sphere.sphere} className="flex items-center justify-between">
+              <div 
+                key={sphere.sphere} 
+                className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                onClick={() => onSphereClick && onSphereClick(sphere.sphere)}
+              >
                 <div className="flex items-center space-x-3">
                   <span className="text-xl">{getSphereEmoji(sphere.sphere)}</span>
-                  <span className="font-medium text-sm capitalize">{sphere.sphere}</span>
+                  <span className="font-medium text-sm capitalize">{t(`spheres.${sphere.sphere}`)}</span>
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-medium">{sphere.completed}/{sphere.total}</p>

@@ -12,9 +12,12 @@ import SearchModal from './components/SearchModal'
 import FloatingButton from './components/FloatingButton'
 import SplashScreen from './components/SplashScreen'
 import DownloadPrompt from './components/DownloadPrompt'
+import SphereDetailView from './components/SphereDetailView'
 import { useTasks } from './hooks/useTasks'
 import { useGoals } from './hooks/useGoals'
+import { getSpheresArray } from './data/spheres'
 import { LanguageProvider } from './contexts/LanguageContext'
+import { formatDateToString } from './utils/dateUtils'
 import './App.css'
 
 function App() {
@@ -23,6 +26,7 @@ function App() {
   const [isPWA, setIsPWA] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentView, setCurrentView] = useState('inicio')
+  const [selectedSphere, setSelectedSphere] = useState(null)
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
@@ -40,16 +44,20 @@ function App() {
     setIsPWA(pwaCheck)
     
     // Si NO es PWA, mostrar download prompt inmediatamente
-    if (!pwaCheck) {
-      setShowDownloadPrompt(true)
-    }
+    // COMENTADO PARA DESARROLLO
+    // if (!pwaCheck) {
+    //   setShowDownloadPrompt(true)
+    // }
   }, [])
 
   // Combinar tareas y metas para el calendario
   const allCalendarItems = [...tasks, ...getGoalsAsTasks()]
 
   const handleAddTask = () => {
-    setEditingTask(null)
+    setEditingTask({
+      isNewTask: true,
+      date: formatDateToString(selectedDate) // Usar la fecha seleccionada actual
+    })
     setIsTaskModalOpen(true)
   }
 
@@ -61,6 +69,7 @@ function App() {
   const handleCloseTaskModal = () => {
     setIsTaskModalOpen(false)
     setEditingTask(null)
+    // No cambiar selectedSphere para mantener la página actual
   }
 
   const handleSaveTask = (taskData) => {
@@ -96,6 +105,39 @@ function App() {
     setShowDownloadPrompt(false)
   }
 
+  const handleSphereClick = (sphereId) => {
+    console.log('Sphere clicked:', sphereId)
+    
+    // Solo abrir página de detalle si la esfera tiene subcategorías
+    const spheres = getSpheresArray()
+    const sphere = spheres.find(s => s.id === sphereId)
+    if (sphere && sphere.hasSubcategories) {
+      setSelectedSphere(sphereId)
+    } else {
+      console.log('Sphere has no subcategories, not opening detail page')
+    }
+  }
+
+  const handleBackFromSphere = () => {
+    setSelectedSphere(null)
+  }
+
+  const handleAddTaskFromSphere = (sphereData) => {
+    // Si viene desde una esfera, crear un objeto de tarea nueva con la esfera pre-seleccionada
+    if (sphereData.source === 'sphere-detail') {
+      setEditingTask({
+        sphere: sphereData.sphere,
+        isNewTask: true,
+        date: formatDateToString(selectedDate) // Usar la fecha seleccionada actual
+      })
+    } else {
+      // Si es una tarea existente, usar los datos tal como vienen
+      setEditingTask(sphereData)
+    }
+    setIsTaskModalOpen(true)
+    // No cambiar selectedSphere para mantener la página actual
+  }
+
   // Si hay download prompt, mostrarlo con prioridad absoluta
   if (showDownloadPrompt) {
     return (
@@ -107,6 +149,28 @@ function App() {
 
   if (showSplash) {
     return <SplashScreen onFinish={handleSplashFinish} />
+  }
+
+  // Si hay una esfera seleccionada, mostrar su vista detallada
+  if (selectedSphere) {
+    return (
+      <LanguageProvider>
+        <SphereDetailView
+          sphereId={selectedSphere}
+          onBack={handleBackFromSphere}
+          onAddTask={handleAddTaskFromSphere}
+        />
+        
+        {isTaskModalOpen && (
+          <TaskModal
+            task={editingTask}
+            onSave={handleSaveTask}
+            onClose={handleCloseTaskModal}
+            hasTimeConflict={hasTimeConflict}
+          />
+        )}
+      </LanguageProvider>
+    )
   }
 
   return (
@@ -123,10 +187,11 @@ function App() {
         />
         
         <Sidebar 
-          isOpen={sidebarOpen}
+          isOpen={sidebarOpen} 
           onClose={() => setSidebarOpen(false)}
           currentView={currentView}
           onViewChange={setCurrentView}
+          onSphereClick={handleSphereClick}
         />
         
         <main className="flex-1 pt-20">
@@ -139,6 +204,7 @@ function App() {
               onNewTask={handleAddTask}
               onEditTask={handleEditTask}
               onToggleTask={handleToggleTask}
+              onSphereClick={handleSphereClick}
             />
           ) : currentView === 'planner' ? (
             <WeekPlannerView />

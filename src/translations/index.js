@@ -30,7 +30,8 @@ export const translations = {
       goals: "Mi Mundo en la Cima",
       planner: "Planificador Semanal",
       motivation: "Motivación",
-      visionBoard: "Mi Tablero de Visión"
+      visionBoard: "Mi Tablero de Visión",
+      spheres: "Esferas"
     },
 
     // Header
@@ -339,15 +340,152 @@ export const translations = {
 
     // Spheres
     spheres: {
-      work: "Trabajo",
       personal: "Personal",
-      health: "Salud",
-      learning: "Aprendizaje",
-      family: "Familia",
-      finance: "Finanzas",
-      social: "Social",
-      hobby: "Hobby",
-      meta: "Meta"
+      grow: "Grow",
+      thrive: "Thrive",
+      connect: "Connect",
+      create: "Create",
+      universidad: "Universidad",
+      familia: "Familia",
+      trabajo: "Trabajo",
+      pareja: "Pareja",
+      gym: "Gym",
+      bienestar: "Bienestar",
+      deporte: "Deporte",
+      viajes: "Viajes",
+      social: "Social"
+    },
+
+    // Sphere Details
+    sphereDetails: {
+      grow: {
+        title: "Grow",
+        description: "Desarrollo personal y crecimiento continuo",
+        activities: {
+          "Leer un libro a la semana 📚": "Leer un libro a la semana",
+          "Tomar un curso online nuevo 💻": "Tomar un curso online nuevo",
+          "Aprender un idioma 🌍": "Aprender un idioma",
+          "Hacer journaling (escribir reflexiones diarias) ✍️": "Hacer journaling (escribir reflexiones diarias)",
+          "Escuchar un pódcast educativo 🎧": "Escuchar un pódcast educativo",
+          "Mejorar tus habilidades de comunicación 💬": "Mejorar tus habilidades de comunicación",
+          "Asistir a un taller o conferencia 🎓": "Asistir a un taller o conferencia",
+          "Definir metas a corto, mediano y largo plazo 🎯": "Definir metas a corto, mediano y largo plazo",
+          "Crear una rutina de mañana productiva ☀️": "Crear una rutina de mañana productiva",
+          "Crear un tablero de visión (visionboard) 🖼️": "Crear un tablero de visión (visionboard)",
+          "Hacer networking con dos personas a la semana 🤝": "Hacer networking con dos personas a la semana",
+          "Practicar hablar en público 🎤": "Practicar hablar en público",
+          "Hacer un plan financiero personal 💰": "Hacer un plan financiero personal",
+          "Estudiar sobre inteligencia emocional 🧠": "Estudiar sobre inteligencia emocional",
+          "Hacer un reto de 30 días (hábitos positivos) 📅": "Hacer un reto de 30 días (hábitos positivos)"
+        }
+      },
+      thrive: {
+        title: "Thrive",
+        description: "Excelencia académica y profesional",
+        categories: {
+          "Desarrollo Académico": "Desarrollo Académico",
+          "Preparación Profesional": "Preparación Profesional",
+          "Habilidades Transversales": "Habilidades Transversales"
+        },
+        activities: {
+          "Completar lecturas complementarias semanales - Más allá del syllabus obligatorio 📖": "Completar lecturas complementarias semanales - Más allá del syllabus obligatorio",
+          "Formar grupos de estudio interdisciplinarios - Conectar con otras carreras 👥": "Formar grupos de estudio interdisciplinarios - Conectar con otras carreras",
+          "Asistir a conferencias académicas mensuales - Ampliar perspectiva profesional 🎓": "Asistir a conferencias académicas mensuales - Ampliar perspectiva profesional",
+          "Crear un portafolio digital de proyectos - Documentar crecimiento académico 💼": "Crear un portafolio digital de proyectos - Documentar crecimiento académico",
+          "Hacer una investigación personal por ciclo - Profundizar en temas de interés 🔬": "Hacer una investigación personal por ciclo - Profundizar en temas de interés",
+          "Conseguir una práctica pre-profesional relevante - Experiencia real de trabajo 💼": "Conseguir una práctica pre-profesional relevante - Experiencia real de trabajo",
+          "Desarrollar un proyecto de emprendimiento - Aplicar conocimientos teóricos 🚀": "Desarrollar un proyecto de emprendimiento - Aplicar conocimientos teóricos",
+          "Aprender una habilidad técnica nueva - Excel, programación, design thinking 💻": "Aprender una habilidad técnica nueva - Excel, programación, design thinking",
+          "Crear una red de contactos profesionales - LinkedIn y networking eventos 🤝": "Crear una red de contactos profesionales - LinkedIn y networking eventos",
+          "Participar en concursos académicos/empresariales - Como INNOVAULIMA 🏆": "Participar en concursos académicos/empresariales - Como INNOVAULIMA",
+          "Mejorar habilidades de presentación - Fundamental para cualquier carrera 🎤": "Mejorar habilidades de presentación - Fundamental para cualquier carrera",
+          "Aprender un segundo idioma a nivel conversacional - Ventaja competitiva 🌍": "Aprender un segundo idioma a nivel conversacional - Ventaja competitiva",
+          "Desarrollar pensamiento crítico - Análisis de casos y debates 🤔": "Desarrollar pensamiento crítico - Análisis de casos y debates",
+          "Practicar escritura profesional - Informes, propuestas, comunicación ✍️": "Practicar escritura profesional - Informes, propuestas, comunicación",
+          "Estudiar tendencias globales de tu industria - Mantenerse actualizado 📊": "Estudiar tendencias globales de tu industria - Mantenerse actualizado"
+        }
+      },
+      deporte: {
+        title: "Deporte",
+        description: "Actividad física y deportes",
+        activities: {
+          "Fútbol ⚽️": "Fútbol",
+          "Tenis 🥎": "Tenis",
+          "Natación 🏊‍♂️": "Natación",
+          "Surf 🏄‍♂️🌊": "Surf",
+          "Paddle 🏓": "Paddle",
+          "Equitación 🏇": "Equitación",
+          "Muay Thai 🥊": "Muay Thai",
+          "Voleibol 🏐": "Voleibol",
+          "Básquetbol 🏀": "Básquetbol",
+          "Rugby 🏉": "Rugby",
+          "Golf ⛳️🏌️‍♀️": "Golf",
+          "Polo 🥅": "Polo",
+          "Hockey 🏑": "Hockey",
+          "Ballet 🩰": "Ballet",
+          "Gimnasia 🤸": "Gimnasia",
+          "Karate 🥋": "Karate"
+        }
+      },
+      familia: {
+        title: "Familia",
+        description: "Tiempo de calidad con la familia",
+        categories: {
+          "En Casa": "En Casa",
+          "Actividades Culturales": "Actividades Culturales",
+          "Al Aire Libre": "Al Aire Libre",
+          "Aventuras Urbanas": "Aventuras Urbanas",
+          "Deportes y Ejercicio": "Deportes y Ejercicio",
+          "Actividades Estacionales": "Actividades Estacionales",
+          "Proyectos Creativos": "Proyectos Creativos",
+          "Planes Especiales": "Planes Especiales"
+        },
+        activities: {
+          "Noche de películas en familia 🎬": "Noche de películas en familia",
+          "Tarde de juegos de mesa 🎲": "Tarde de juegos de mesa",
+          "Cocinar pizza casera todos juntos 🍕": "Cocinar pizza casera todos juntos",
+          "Karaoke en el salón 🎤": "Karaoke en el salón",
+          "Fortaleza de almohadas y sábanas 🏰": "Fortaleza de almohadas y sábanas",
+          "Noche de talentos familiares 🌟": "Noche de talentos familiares",
+          "Sesión de fotos divertidas 📸": "Sesión de fotos divertidas",
+          "Preparar una receta en familia 🍳": "Preparar una receta en familia",
+          "Día de parrilla/barbacoa 🍖": "Día de parrilla/barbacoa",
+          "Hacer galletas decoradas 🧁": "Hacer galletas decoradas"
+        }
+      }
+    },
+
+    // Sphere Detail View
+    sphereDetail: {
+      back: "Volver",
+      availableActivities: "Actividades disponibles",
+      addActivity: "Agregar Actividad",
+      newCategory: "Nueva Categoría",
+      addNewActivity: "Agregar nueva actividad",
+      selectCategory: "Seleccionar categoría:",
+      selectCategoryPlaceholder: "Selecciona una categoría",
+      activityPlaceholder: "Escribe la nueva actividad...",
+      activityPlaceholderSimple: "Escribe tu nueva actividad (ej: Ping Pong, Karate, etc.)",
+      addActivityButton: "Agregar Actividad",
+      cancel: "Cancelar",
+      editActivity: "Editar actividad",
+      deleteActivity: "Eliminar actividad",
+      editCategory: "Editar categoría",
+      deleteCategory: "Eliminar categoría",
+      newCategoryTitle: "Nueva Categoría",
+      categoryName: "Nombre de la categoría",
+      categoryNamePlaceholder: "Ej: En la Calle",
+      addCategoryButton: "Agregar Categoría",
+      editActivityTitle: "Editar Actividad",
+      activityName: "Nombre de la actividad",
+      activityNamePlaceholder: "Ej: Ping Pong",
+      saveChanges: "Guardar Cambios",
+      editCategoryTitle: "Editar Categoría",
+      saveCategory: "Guardar Categoría",
+      deleteCategoryConfirm: "¿Estás seguro de que quieres eliminar esta categoría?",
+      deleteCategoryWarning: "Esta acción eliminará todas las actividades de esta categoría.",
+      confirmDelete: "Sí, eliminar",
+      cancelDelete: "Cancelar"
     },
 
     // Days of week
@@ -386,7 +524,7 @@ export const translations = {
       feb: "Feb",
       mar: "Mar",
       apr: "Abr",
-      may: "May",
+      mayMonth: "May",
       jun: "Jun",
       jul: "Jul",
       aug: "Ago",
@@ -428,7 +566,8 @@ export const translations = {
       goals: "My World on Top",
       planner: "Week Planner",
       motivation: "Motivation",
-      visionBoard: "My Vision Board"
+      visionBoard: "My Vision Board",
+      spheres: "Spheres"
     },
 
     // Header
@@ -689,13 +828,26 @@ export const translations = {
     // Statistics
     statistics: {
       title: "Statistics",
+      subtitle: "Your progress in the different spheres of life",
       totalTasks: "Total tasks",
-      completedTasks: "Completed tasks",
-      pendingTasks: "Pending tasks",
+      completedTasks: "Completed",
+      pendingTasks: "Pending",
       completionRate: "Completion rate",
       tasksBySphere: "Tasks by sphere",
       tasksByMonth: "Tasks by month",
-      productivity: "Productivity"
+      productivity: "Productivity",
+      generalProgress: "General progress",
+      bySpheres: "By spheres",
+      completed: "completed",
+      of: "of",
+      tasksCompleted: "tasks completed",
+      noTasksMessage: "No tasks to show statistics",
+      excellentWork: "Excellent work! 🎉",
+      goodProgress: "You're on the right track! 💪",
+      keepGoing: "Keep it up! 🌟",
+      dominatingGoals: "You're dominating your goals",
+      keepRythm: "Keep the pace and keep progressing",
+      everyStepCounts: "Every step counts towards your goals"
     },
 
     // Home View
@@ -724,15 +876,152 @@ export const translations = {
 
     // Spheres
     spheres: {
-      work: "Work",
       personal: "Personal",
-      health: "Health",
-      learning: "Learning",
-      family: "Family",
-      finance: "Finance",
-      social: "Social",
-      hobby: "Hobby",
-      meta: "Goal"
+      grow: "Grow",
+      thrive: "Thrive",
+      connect: "Connect",
+      create: "Create",
+      universidad: "University",
+      familia: "Family",
+      trabajo: "Work",
+      pareja: "Relationship",
+      gym: "Gym",
+      bienestar: "Wellness",
+      deporte: "Sports",
+      viajes: "Travel",
+      social: "Social"
+    },
+
+    // Sphere Details
+    sphereDetails: {
+      grow: {
+        title: "Grow",
+        description: "Personal development and continuous growth",
+        activities: {
+          "Leer un libro a la semana 📚": "Read a book per week",
+          "Tomar un curso online nuevo 💻": "Take a new online course",
+          "Aprender un idioma 🌍": "Learn a language",
+          "Hacer journaling (escribir reflexiones diarias) ✍️": "Do journaling (write daily reflections)",
+          "Escuchar un pódcast educativo 🎧": "Listen to educational podcasts",
+          "Mejorar tus habilidades de comunicación 💬": "Improve your communication skills",
+          "Asistir a un taller o conferencia 🎓": "Attend a workshop or conference",
+          "Definir metas a corto, mediano y largo plazo 🎯": "Set short, medium and long term goals",
+          "Crear una rutina de mañana productiva ☀️": "Create a productive morning routine",
+          "Crear un tablero de visión (visionboard) 🖼️": "Create a vision board",
+          "Hacer networking con dos personas a la semana 🤝": "Network with two people per week",
+          "Practicar hablar en público 🎤": "Practice public speaking",
+          "Hacer un plan financiero personal 💰": "Make a personal financial plan",
+          "Estudiar sobre inteligencia emocional 🧠": "Study emotional intelligence",
+          "Hacer un reto de 30 días (hábitos positivos) 📅": "Do a 30-day challenge (positive habits)"
+        }
+      },
+      thrive: {
+        title: "Thrive",
+        description: "Academic and professional excellence",
+        categories: {
+          "Desarrollo Académico": "Academic Development",
+          "Preparación Profesional": "Professional Preparation",
+          "Habilidades Transversales": "Transferable Skills"
+        },
+        activities: {
+          "Completar lecturas complementarias semanales - Más allá del syllabus obligatorio 📖": "Complete weekly supplementary readings - Beyond the mandatory syllabus",
+          "Formar grupos de estudio interdisciplinarios - Conectar con otras carreras 👥": "Form interdisciplinary study groups - Connect with other majors",
+          "Asistir a conferencias académicas mensuales - Ampliar perspectiva profesional 🎓": "Attend monthly academic conferences - Expand professional perspective",
+          "Crear un portafolio digital de proyectos - Documentar crecimiento académico 💼": "Create a digital project portfolio - Document academic growth",
+          "Hacer una investigación personal por ciclo - Profundizar en temas de interés 🔬": "Do personal research per cycle - Deepen topics of interest",
+          "Conseguir una práctica pre-profesional relevante - Experiencia real de trabajo 💼": "Get relevant pre-professional internship - Real work experience",
+          "Desarrollar un proyecto de emprendimiento - Aplicar conocimientos teóricos 🚀": "Develop an entrepreneurship project - Apply theoretical knowledge",
+          "Aprender una habilidad técnica nueva - Excel, programación, design thinking 💻": "Learn a new technical skill - Excel, programming, design thinking",
+          "Crear una red de contactos profesionales - LinkedIn y networking eventos 🤝": "Create professional network - LinkedIn and networking events",
+          "Participar en concursos académicos/empresariales - Como INNOVAULIMA 🏆": "Participate in academic/business competitions - Like INNOVAULIMA",
+          "Mejorar habilidades de presentación - Fundamental para cualquier carrera 🎤": "Improve presentation skills - Fundamental for any career",
+          "Aprender un segundo idioma a nivel conversacional - Ventaja competitiva 🌍": "Learn a second language at conversational level - Competitive advantage",
+          "Desarrollar pensamiento crítico - Análisis de casos y debates 🤔": "Develop critical thinking - Case analysis and debates",
+          "Practicar escritura profesional - Informes, propuestas, comunicación ✍️": "Practice professional writing - Reports, proposals, communication",
+          "Estudiar tendencias globales de tu industria - Mantenerse actualizado 📊": "Study global trends in your industry - Stay updated"
+        }
+      },
+      deporte: {
+        title: "Sports",
+        description: "Physical activity and sports",
+        activities: {
+          "Fútbol ⚽️": "Soccer",
+          "Tenis 🥎": "Tennis",
+          "Natación 🏊‍♂️": "Swimming",
+          "Surf 🏄‍♂️🌊": "Surfing",
+          "Paddle 🏓": "Paddle",
+          "Equitación 🏇": "Horseback Riding",
+          "Muay Thai 🥊": "Muay Thai",
+          "Voleibol 🏐": "Volleyball",
+          "Básquetbol 🏀": "Basketball",
+          "Rugby 🏉": "Rugby",
+          "Golf ⛳️🏌️‍♀️": "Golf",
+          "Polo 🥅": "Polo",
+          "Hockey 🏑": "Hockey",
+          "Ballet 🩰": "Ballet",
+          "Gimnasia 🤸": "Gymnastics",
+          "Karate 🥋": "Karate"
+        }
+      },
+      familia: {
+        title: "Family",
+        description: "Quality time with family",
+        categories: {
+          "En Casa": "At Home",
+          "Actividades Culturales": "Cultural Activities",
+          "Al Aire Libre": "Outdoors",
+          "Aventuras Urbanas": "Urban Adventures",
+          "Deportes y Ejercicio": "Sports and Exercise",
+          "Actividades Estacionales": "Seasonal Activities",
+          "Proyectos Creativos": "Creative Projects",
+          "Planes Especiales": "Special Plans"
+        },
+        activities: {
+          "Noche de películas en familia 🎬": "Family movie night",
+          "Tarde de juegos de mesa 🎲": "Board game afternoon",
+          "Cocinar pizza casera todos juntos 🍕": "Cook homemade pizza together",
+          "Karaoke en el salón 🎤": "Karaoke in the living room",
+          "Fortaleza de almohadas y sábanas 🏰": "Pillow and blanket fort",
+          "Noche de talentos familiares 🌟": "Family talent night",
+          "Sesión de fotos divertidas 📸": "Fun photo session",
+          "Preparar una receta en familia 🍳": "Prepare a family recipe",
+          "Día de parrilla/barbacoa 🍖": "Grill/barbecue day",
+          "Hacer galletas decoradas 🧁": "Make decorated cookies"
+        }
+      }
+    },
+
+    // Sphere Detail View
+    sphereDetail: {
+      back: "Back",
+      availableActivities: "Available activities",
+      addActivity: "Add Activity",
+      newCategory: "New Category",
+      addNewActivity: "Add new activity",
+      selectCategory: "Select category:",
+      selectCategoryPlaceholder: "Select a category",
+      activityPlaceholder: "Write the new activity...",
+      activityPlaceholderSimple: "Write your new activity (e.g.: Ping Pong, Karate, etc.)",
+      addActivityButton: "Add Activity",
+      cancel: "Cancel",
+      editActivity: "Edit activity",
+      deleteActivity: "Delete activity",
+      editCategory: "Edit category",
+      deleteCategory: "Delete category",
+      newCategoryTitle: "New Category",
+      categoryName: "Category name",
+      categoryNamePlaceholder: "E.g.: On the Street",
+      addCategoryButton: "Add Category",
+      editActivityTitle: "Edit Activity",
+      activityName: "Activity name",
+      activityNamePlaceholder: "E.g.: Ping Pong",
+      saveChanges: "Save Changes",
+      editCategoryTitle: "Edit Category",
+      saveCategory: "Save Category",
+      deleteCategoryConfirm: "Are you sure you want to delete this category?",
+      deleteCategoryWarning: "This action will delete all activities in this category.",
+      confirmDelete: "Yes, delete",
+      cancelDelete: "Cancel"
     },
 
     // Days of week
@@ -759,7 +1048,7 @@ export const translations = {
       february: "February",
       march: "March",
       april: "April",
-      may: "May",
+      mayMonth: "May",
       june: "June",
       july: "July",
       august: "August",
@@ -771,7 +1060,7 @@ export const translations = {
       feb: "Feb",
       mar: "Mar",
       apr: "Apr",
-      may: "May",
+      mayMonth: "May",
       jun: "Jun",
       jul: "Jul",
       aug: "Aug",
@@ -779,34 +1068,6 @@ export const translations = {
       oct: "Oct",
       nov: "Nov",
       dec: "Dec"
-    },
-
-    // Statistics (updated section)
-    statistics: {
-      title: "Statistics",
-      subtitle: "Your progress in the different spheres of life",
-      totalTasks: "Total tasks",
-      completedTasks: "Completed",
-      pendingTasks: "Pending",
-      completionRate: "Completion rate",
-      mostProductiveDay: "Most productive day",
-      averageTasksPerDay: "Average tasks per day",
-      tasksBySphere: "Tasks by sphere",
-      weeklyProgress: "Weekly progress",
-      monthlyProgress: "Monthly progress",
-      productivity: "Productivity",
-      generalProgress: "General progress",
-      bySpheres: "By spheres",
-      completed: "completed",
-      of: "of",
-      tasksCompleted: "tasks completed",
-      noTasksMessage: "No tasks to show statistics",
-      excellentWork: "Excellent work! 🎉",
-      goodProgress: "You're on the right track! 💪",
-      keepGoing: "Keep it up! 🌟",
-      dominatingGoals: "You're dominating your goals",
-      keepRythm: "Keep the pace and keep progressing",
-      everyStepCounts: "Every step counts towards your goals"
     }
   }
 }

@@ -1,49 +1,55 @@
 import React, { useState, useEffect } from 'react'
 import { X, Calendar, FileText, Clock, AlertCircle } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
+import { getSpheresArray, getSphereSubcategories, getSphereNestedSubcategories } from '../data/spheres'
+import { useCustomActivities } from '../hooks/useCustomActivities'
+import { formatDateToString, parseDateString, getTodayString } from '../utils/dateUtils'
 
 const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
   const { t } = useLanguage()
+  const { customActivities } = useCustomActivities()
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    date: new Date().toISOString().split('T')[0],
+    date: getTodayString(),
     startTime: '',
     endTime: '',
-    sphere: 'personal'
+    sphere: 'personal',
+    subcategory: '',
+    nestedSubcategory: ''
   })
   const [timeConflict, setTimeConflict] = useState(false)
   const [invalidTimeRange, setInvalidTimeRange] = useState(false)
 
-  const spheres = [
-    { id: 'personal', label: t('spheres.personal'), emoji: '👤', color: 'bg-gray-100 text-gray-800' },
-    { id: 'grow', label: t('spheres.learning'), emoji: '🌱', color: 'bg-light-green text-green-800' },
-    { id: 'thrive', label: t('spheres.work'), emoji: '🚀', color: 'bg-soft-orange text-orange-800' },
-    { id: 'connect', label: t('spheres.social'), emoji: '👻', color: 'bg-soft-blue text-blue-800' },
-    { id: 'create', label: t('spheres.hobby'), emoji: '🎨', color: 'bg-pastel-lilac text-purple-800' },
-    { id: 'universidad', label: t('spheres.learning'), emoji: '🎓', color: 'bg-soft-orange text-orange-800' },
-    { id: 'familia', label: t('spheres.family'), emoji: '👨‍👩‍👧‍👦', color: 'bg-soft-blue text-blue-800' },
-    { id: 'trabajo', label: t('spheres.work'), emoji: '💼', color: 'bg-gray-100 text-gray-800' },
-    { id: 'pareja', label: t('spheres.personal'), emoji: '💕', color: 'bg-soft-pink text-pink-800' },
-    { id: 'gym', label: t('spheres.health'), emoji: '💪', color: 'bg-light-green text-green-800' },
-    { id: 'bienestar', label: t('spheres.health'), emoji: '🧘', color: 'bg-gray-100 text-gray-800' },
-    { id: 'deporte', label: t('spheres.health'), emoji: '🏄‍♂️', color: 'bg-soft-blue text-blue-800' },
-    { id: 'viajes', label: t('spheres.personal'), emoji: '✈️', color: 'bg-soft-orange text-orange-800' },
-    { id: 'social', label: t('spheres.social'), emoji: '👥', color: 'bg-soft-orange text-orange-800' }
-  ]
+  const spheres = getSpheresArray().map(sphere => ({
+    ...sphere,
+    label: t(`spheres.${sphere.id}`),
+    color: `bg-[${sphere.color}] text-gray-800`
+  }))
 
   useEffect(() => {
     if (task) {
       setFormData({
         title: task.title || '',
         description: task.description || '',
-        date: task.date || new Date().toISOString().split('T')[0],
+        date: task.date || getTodayString(),
         startTime: task.startTime || '',
         endTime: task.endTime || '',
-        sphere: task.sphere || 'personal'
+        sphere: task.sphere || 'personal',
+        subcategory: task.subcategory || '',
+        nestedSubcategory: task.nestedSubcategory || ''
       })
     }
   }, [task])
+
+  // Forzar re-render cuando cambien las customActivities
+  useEffect(() => {
+    console.log('=== TaskModal: Custom activities changed ===')
+    console.log('New custom activities:', customActivities)
+    console.log('Current sphere:', formData.sphere)
+    console.log('Custom activities for current sphere:', customActivities[formData.sphere])
+    console.log('=== END TaskModal: Custom activities changed ===')
+  }, [customActivities, formData.sphere])
 
   // Función para validar si el rango de horarios es válido
   const validateTimeRange = (startTime, endTime) => {
@@ -78,7 +84,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
     
     // Validar conflictos de horario
     if (formData.startTime && formData.endTime && hasTimeConflict && isValidRange) {
-      const date = new Date(formData.date)
+      const date = parseDateString(formData.date)
       const conflict = hasTimeConflict(date, formData.startTime, formData.endTime, task?.id)
       setTimeConflict(conflict)
     } else {
@@ -103,6 +109,45 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
     }))
   }
 
+  // Función para manejar cambio de esfera
+  const handleSphereChange = (sphereId) => {
+    setFormData(prev => ({
+      ...prev,
+      sphere: sphereId,
+      subcategory: '',
+      nestedSubcategory: ''
+    }))
+  }
+
+  // Obtener subcategorías de la esfera seleccionada
+  const getAvailableSubcategories = () => {
+    const sphere = spheres.find(s => s.id === formData.sphere)
+    if (!sphere || !sphere.hasSubcategories) return []
+    
+    console.log('=== TaskModal: Getting subcategories ===')
+    console.log('Sphere ID:', formData.sphere)
+    console.log('Custom activities:', customActivities)
+    console.log('Custom activities for this sphere:', customActivities[formData.sphere])
+    
+    const subcategories = getSphereSubcategories(formData.sphere, customActivities)
+    console.log('Final available subcategories:', subcategories)
+    console.log('=== END TaskModal subcategories ===')
+    return subcategories
+  }
+
+  // Obtener subcategorías anidadas
+  const getAvailableNestedSubcategories = () => {
+    console.log('Getting nested subcategories for sphere:', formData.sphere, 'category:', formData.subcategory)
+    console.log('Custom activities:', customActivities)
+    const nestedSubcategories = getSphereNestedSubcategories(formData.sphere, customActivities)
+    console.log('All nested subcategories:', nestedSubcategories)
+    if (formData.subcategory && nestedSubcategories[formData.subcategory]) {
+      console.log('Selected category activities:', nestedSubcategories[formData.subcategory])
+      return nestedSubcategories[formData.subcategory]
+    }
+    return []
+  }
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40"
@@ -115,7 +160,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <h2 className="text-xl font-semibold text-gray-900">
-            {task ? t('tasks.editTask') : t('tasks.newTask')}
+            {task && !task.isNewTask ? t('tasks.editTask') : t('tasks.newTask')}
           </h2>
           <button
             onClick={onClose}
@@ -251,7 +296,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
                 <button
                   key={sphere.id}
                   type="button"
-                  onClick={() => handleInputChange('sphere', sphere.id)}
+                  onClick={() => handleSphereChange(sphere.id)}
                   className={`
                     p-3 rounded-lg border-2 transition-all text-left
                     ${formData.sphere === sphere.id 
@@ -270,6 +315,55 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
               ))}
             </div>
           </div>
+
+          {/* Subcategorías */}
+          {getAvailableSubcategories().length > 0 && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Subcategoría
+              </label>
+              <select
+                value={formData.subcategory}
+                onChange={(e) => setFormData(prev => ({ 
+                  ...prev, 
+                  subcategory: e.target.value,
+                  nestedSubcategory: ''
+                }))}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent"
+              >
+                <option value="">Seleccionar subcategoría</option>
+                {getAvailableSubcategories().map((subcategory, index) => (
+                  <option key={index} value={subcategory}>
+                    {subcategory}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Subcategorías anidadas */}
+          {getAvailableNestedSubcategories().length > 0 && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Actividad específica
+              </label>
+              <select
+                value={formData.nestedSubcategory}
+                onChange={(e) => setFormData(prev => ({ 
+                  ...prev, 
+                  nestedSubcategory: e.target.value 
+                }))}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent"
+              >
+                <option value="">Seleccionar actividad</option>
+                {getAvailableNestedSubcategories().map((nestedSubcategory, index) => (
+                  <option key={index} value={nestedSubcategory}>
+                    {nestedSubcategory}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {/* Actions */}
           <div className="flex space-x-3 pt-4">

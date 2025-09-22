@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react'
 import { useLanguage } from '../../contexts/LanguageContext'
+import { formatDateToString } from '../../utils/dateUtils'
 
 const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask, onDateChange, onViewChange }) => {
   const { t } = useLanguage()
@@ -42,7 +43,7 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask
   }, [selectedDate])
 
   const getTasksForDate = (date) => {
-    const dateStr = date.toISOString().split('T')[0]
+    const dateStr = formatDateToString(date)
     return tasks.filter(task => task.date === dateStr)
   }
 

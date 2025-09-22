@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { formatDateToString, parseDateString } from '../utils/dateUtils'
 
 const STORAGE_KEY = 'sphere-tasks'
 
@@ -63,7 +64,7 @@ export const useTasks = () => {
   }
 
   const getTasksByDate = (date) => {
-    const dateStr = date.toISOString().split('T')[0]
+    const dateStr = formatDateToString(date)
     return tasks.filter(task => task.date === dateStr)
   }
 
@@ -110,7 +111,7 @@ export const useTasks = () => {
   const hasTimeConflict = (date, startTime, endTime, excludeTaskId = null) => {
     if (!startTime || !endTime) return false
     
-    const dateStr = date.toISOString().split('T')[0]
+    const dateStr = formatDateToString(date)
     const tasksOnDate = tasks.filter(task => 
       task.date === dateStr && 
       task.id !== excludeTaskId &&

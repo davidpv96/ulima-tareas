@@ -17,8 +17,9 @@ import {
   Home
 } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
+import { getSpheresArray } from '../data/spheres'
 
-const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
+const Sidebar = ({ isOpen, onClose, currentView, onViewChange, onSphereClick }) => {
   const { t } = useLanguage()
   
   const viewOptions = [
@@ -190,6 +191,40 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
                       </button>
                     )
                   })}
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="border-t border-gray-200 mb-8"></div>
+
+              {/* Spheres */}
+              <div className="mb-8">
+                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                  {t('navigation.spheres')}
+                </h2>
+                <div className="space-y-2">
+                  {getSpheresArray().map((sphere) => (
+                    <button
+                      key={sphere.id}
+                      onClick={() => {
+                        if (onSphereClick) {
+                          onSphereClick(sphere.id)
+                        }
+                        onClose()
+                      }}
+                      className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors hover:bg-gray-50"
+                    >
+                      <div 
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium"
+                        style={{ backgroundColor: sphere.color }}
+                      >
+                        {sphere.emoji}
+                      </div>
+                      <span className="font-medium text-sm text-gray-900">
+                        {t(`spheres.${sphere.id}`)}
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </div>
 

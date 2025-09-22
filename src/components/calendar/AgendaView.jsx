@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { Check, Circle, Edit, Trash2, Clock } from 'lucide-react'
 import { useLanguage } from '../../contexts/LanguageContext'
+import { formatDateToString } from '../../utils/dateUtils'
 
 const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
   const { t } = useLanguage()
@@ -37,7 +38,7 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     // Agrupar tareas por día
     const grouped = filteredTasks.reduce((acc, task) => {
       const taskDate = new Date(task.date)
-      const dayKey = taskDate.toISOString().split('T')[0]
+      const dayKey = formatDateToString(taskDate)
       
       if (!acc[dayKey]) {
         acc[dayKey] = {
@@ -137,9 +138,9 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     tomorrow.setDate(tomorrow.getDate() + 1)
     
     // Comparar solo la fecha sin la hora
-    const todayStr = today.toISOString().split('T')[0]
-    const tomorrowStr = tomorrow.toISOString().split('T')[0]
-    const dateStr = date.toISOString().split('T')[0]
+    const todayStr = formatDateToString(today)
+    const tomorrowStr = formatDateToString(tomorrow)
+    const dateStr = formatDateToString(date)
     
     if (dateStr === todayStr) {
       return t('app.today')
