@@ -310,9 +310,9 @@ const SphereDetailView = ({ sphereId, onBack, onAddTask }) => {
   }
 
   return (
-    <div className="h-full bg-cream p-4 space-y-6 overflow-y-auto">
+    <div className="h-full bg-cream p-4 space-y-6 overflow-y-auto overflow-x-hidden max-w-full">
       {/* Header */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 min-w-0">
         <button
           onClick={onBack}
           className="p-2 rounded-lg hover:bg-white/50 transition-colors"
@@ -341,7 +341,7 @@ const SphereDetailView = ({ sphereId, onBack, onAddTask }) => {
       )}
 
       {/* Content */}
-      <div className="space-y-6">
+      <div className="space-y-6 max-w-full">
         {sphere.hasSubcategories ? (
           // Esfera con subcategorías
           <div className="space-y-4">
@@ -350,14 +350,14 @@ const SphereDetailView = ({ sphereId, onBack, onAddTask }) => {
               <div className="space-y-6">
                 {Object.entries(nestedSubcategories).map(([categoryName, activities]) => (
                   <div key={categoryName} className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="flex items-center space-x-3">
+                    <div className="mb-6">
+                      <div className="flex items-center space-x-3 mb-4">
                         <div className="w-10 h-10 bg-gradient-to-br from-soft-blue to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
                           <Target className="w-5 h-5 text-white" />
                         </div>
-               <h2 className="text-xl font-bold text-gray-900">
-                 {getTranslatedCategoryName(categoryName)}
-               </h2>
+                        <h2 className="text-xl font-bold text-gray-900">
+                          {getTranslatedCategoryName(categoryName)}
+                        </h2>
                       </div>
                       {/* Solo mostrar botones de gestión para categorías personalizadas */}
                       {customActivities[sphereId] && customActivities[sphereId][categoryName] && (
@@ -378,10 +378,10 @@ const SphereDetailView = ({ sphereId, onBack, onAddTask }) => {
                           </button>
                         </div>
                       )}
-                      <div className="flex space-x-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
                         <button
                           onClick={() => setShowAddCategory(true)}
-                          className="px-3 py-1 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-1"
+                          className="px-3 py-1 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center space-x-1 w-full sm:w-auto"
                         >
                           <Plus className="w-4 h-4" />
                           <span>{t('sphereDetail.newCategory')}</span>
@@ -392,26 +392,26 @@ const SphereDetailView = ({ sphereId, onBack, onAddTask }) => {
                             setCustomSubcategory('')
                             setShowAddCustom(true)
                           }}
-                          className="px-4 py-2 bg-gradient-to-r from-soft-blue to-blue-600 text-white text-sm rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 flex items-center space-x-2 shadow-sm hover:shadow-md"
+                          className="px-4 py-2 bg-gradient-to-r from-soft-blue to-blue-600 text-white text-sm rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm hover:shadow-md w-full sm:w-auto"
                         >
                           <Plus className="w-4 h-4" />
                           <span>{t('sphereDetail.addActivity')}</span>
                         </button>
                       </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-full">
                       {activities.map((activity, index) => (
                         <div
                           key={index}
-                          className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-200 group"
+                          className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-200 group min-w-0"
                         >
-                          <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                          <div className="flex items-center space-x-3 min-w-0 flex-1">
+                            <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
                               <span className="text-gray-600 text-sm">{getActivityEmoji(activity)}</span>
                             </div>
-                            <span className="text-sm font-medium text-gray-800">{getTranslatedActivityText(activity)}</span>
+                            <span className="text-sm font-medium text-gray-800 truncate">{getTranslatedActivityText(activity)}</span>
                           </div>
-                          <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                          <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0">
                             <button
                               onClick={() => handleEditActivity(categoryName, activity)}
                               className="p-2 rounded-full hover:bg-yellow-50 transition-colors"
@@ -447,19 +447,19 @@ const SphereDetailView = ({ sphereId, onBack, onAddTask }) => {
                   </div>
                   {/* Botón removido para esferas simples - se usa el de la sección inferior */}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-full">
                   {subcategories.map((subcategory, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-200 group"
+                      className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-200 group min-w-0"
                     >
-                      <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                      <div className="flex items-center space-x-3 min-w-0 flex-1">
+                            <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
                               <span className="text-gray-600 text-sm">{getActivityEmoji(subcategory)}</span>
                             </div>
-                            <span className="text-sm font-medium text-gray-800">{getTranslatedActivityText(subcategory)}</span>
+                            <span className="text-sm font-medium text-gray-800 truncate">{getTranslatedActivityText(subcategory)}</span>
                       </div>
-                      <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0">
                         <button
                           onClick={() => handleEditActivity(null, subcategory)}
                           className="p-2 rounded-full hover:bg-yellow-50 transition-colors"
