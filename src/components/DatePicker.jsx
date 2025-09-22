@@ -1,22 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
+  const { t, getMonthName, getDayName } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   const [tempDate, setTempDate] = useState(selectedDate)
   const pickerRef = useRef(null)
 
   const months = [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    t('months.january'), t('months.february'), t('months.march'), t('months.april'), t('months.may'), t('months.june'),
+    t('months.july'), t('months.august'), t('months.september'), t('months.october'), t('months.november'), t('months.december')
   ]
 
   const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - 5 + i)
 
   const formatDisplayDate = () => {
     const shortMonths = [
-      'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
-      'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+      t('months.jan'), t('months.feb'), t('months.mar'), t('months.apr'), t('months.may'), t('months.jun'),
+      t('months.jul'), t('months.aug'), t('months.sep'), t('months.oct'), t('months.nov'), t('months.dec')
     ]
     
     switch (currentView) {
@@ -113,7 +115,7 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
             onDateChange(newDate)
           }}
           className="p-1.5 md:p-2 rounded-lg hover:bg-gray-100 transition-colors"
-          title="Anterior"
+          title={t('calendar.previous')}
         >
           <ChevronLeft className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-600" />
         </button>
@@ -151,7 +153,7 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
             onDateChange(newDate)
           }}
           className="p-1.5 md:p-2 rounded-lg hover:bg-gray-100 transition-colors"
-          title="Siguiente"
+          title={t('calendar.next')}
         >
           <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-600" />
         </button>
@@ -161,12 +163,12 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
         <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-100">
-            <h3 className="font-semibold text-gray-900">Seleccionar fecha</h3>
+            <h3 className="font-semibold text-gray-900">{t('calendar.selectDate')}</h3>
             <button
               onClick={goToToday}
               className="px-3 py-1 text-sm bg-soft-blue text-white rounded-md hover:bg-blue-400 transition-colors"
             >
-              Hoy
+              {t('app.today')}
             </button>
           </div>
 
@@ -174,7 +176,7 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
           <div className="p-4">
             {/* Year Selector */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Año</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('calendar.year')}</label>
               <div className="grid grid-cols-5 gap-2">
                 {years.map((year) => (
                   <button
@@ -194,7 +196,7 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
 
             {/* Month Selector */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Mes</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('calendar.month')}</label>
               <div className="grid grid-cols-3 gap-2">
                 {months.map((month, index) => (
                   <button
@@ -214,7 +216,7 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
 
             {/* Quick Navigation */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Navegación rápida</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('calendar.quickNavigation')}</label>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => {
@@ -225,7 +227,7 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
                   className="flex items-center justify-center space-x-2 px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4" />
-                  <span>Mes anterior</span>
+                  <span>{t('calendar.previousMonth')}</span>
                 </button>
                 <button
                   onClick={() => {
@@ -235,7 +237,7 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
                   }}
                   className="flex items-center justify-center space-x-2 px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
                 >
-                  <span>Mes siguiente</span>
+                  <span>{t('calendar.nextMonth')}</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
@@ -248,13 +250,13 @@ const DatePicker = ({ selectedDate, onDateChange, currentView }) => {
               onClick={handleCancel}
               className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
             >
-              Cancelar
+              {t('app.cancel')}
             </button>
             <button
               onClick={handleApply}
               className="px-4 py-2 text-sm bg-soft-blue text-white rounded-md hover:bg-blue-400 transition-colors"
             >
-              Aplicar
+              {t('app.apply')}
             </button>
           </div>
         </div>

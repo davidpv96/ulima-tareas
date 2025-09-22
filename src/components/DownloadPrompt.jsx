@@ -4,26 +4,25 @@ import { Download, X, Smartphone, Monitor, Share } from 'lucide-react'
 const DownloadPrompt = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [deferredPrompt, setDeferredPrompt] = useState(null)
+  const [isPWA, setIsPWA] = useState(false)
 
   useEffect(() => {
     // Detectar si estamos en PWA
-    const isPWA = window.matchMedia('(display-mode: standalone)').matches || 
-                  window.navigator.standalone === true ||
-                  document.referrer.includes('android-app://')
+    const pwaCheck = window.matchMedia('(display-mode: standalone)').matches || 
+                     window.navigator.standalone === true ||
+                     document.referrer.includes('android-app://')
+    
+    setIsPWA(pwaCheck)
 
     // Detectar si el navegador soporta PWA
     const supportsPWA = 'serviceWorker' in navigator
 
-    // Verificar si ya se mostró antes (localStorage)
-    const hasShownBefore = localStorage.getItem('sphere-download-shown')
-
-    // Mostrar solo si:
-    // 1. NO estamos en PWA
-    // 2. Soporta PWA
-    // 3. No se ha mostrado antes (o hace más de 7 días)
-    if (!isPWA && supportsPWA && !hasShownBefore) {
+    // Solo mostrar en web, nunca en PWA
+    if (!pwaCheck) {
+      // En web: mostrar siempre
       setIsVisible(true)
     }
+    // En PWA: nunca mostrar
 
     // Escuchar el evento beforeinstallprompt
     const handleBeforeInstallPrompt = (e) => {
@@ -49,25 +48,19 @@ const DownloadPrompt = ({ onClose }) => {
   }
 
   const handleClose = () => {
-    // Marcar que ya se mostró
-    localStorage.setItem('sphere-download-shown', 'true')
-    setIsVisible(false)
-    onClose()
+    // En web no se puede cerrar (esta función no debería ejecutarse nunca en web)
+    // Solo para casos edge o si alguien modifica el código
+    console.log('Close attempted but not allowed in web version')
   }
 
   if (!isVisible) return null
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 bg-black flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
         {/* Header */}
         <div className="relative bg-gradient-to-br from-soft-blue to-blue-400 p-6 text-white">
-          <button
-            onClick={handleClose}
-            className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/20 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {/* No botón de cerrar en web */}
           
           <div className="flex items-center space-x-3 mb-4">
             <img 
@@ -142,12 +135,7 @@ const DownloadPrompt = ({ onClose }) => {
               </button>
             )}
             
-            <button
-              onClick={handleClose}
-              className="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
-            >
-              Continuar en navegador
-            </button>
+            {/* No botón de cerrar en web */}
           </div>
         </div>
       </div>

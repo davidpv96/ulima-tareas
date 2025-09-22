@@ -14,6 +14,7 @@ import SplashScreen from './components/SplashScreen'
 import DownloadPrompt from './components/DownloadPrompt'
 import { useTasks } from './hooks/useTasks'
 import { useGoals } from './hooks/useGoals'
+import { LanguageProvider } from './contexts/LanguageContext'
 import './App.css'
 
 function App() {
@@ -88,83 +89,85 @@ function App() {
   }
 
   return (
-    <div className="App min-h-screen bg-cream">
-      <Header 
-        onMenuClick={() => setSidebarOpen(!sidebarOpen)}
-        currentView={currentView}
-        onViewChange={setCurrentView}
-        selectedDate={selectedDate}
-        onDateChange={setSelectedDate}
-        tasks={tasks}
-        onSearchClick={handleSearchClick}
-      />
-      
-      <Sidebar 
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        currentView={currentView}
-        onViewChange={setCurrentView}
-      />
-      
-      <main className="flex-1 pt-20">
-        {currentView === 'inicio' ? (
-          <HomeView 
-            tasks={allCalendarItems}
-            selectedDate={selectedDate}
-            onDateChange={setSelectedDate}
-            onViewChange={setCurrentView}
-            onNewTask={handleAddTask}
-            onEditTask={handleEditTask}
-            onToggleTask={handleToggleTask}
-          />
-        ) : currentView === 'planner' ? (
-          <WeekPlannerView />
-        ) : currentView === 'motivacion' ? (
-          <MotivationView />
-        ) : currentView === 'visionboard' ? (
-          <VisionBoardView />
-        ) : currentView === 'metas' ? (
-          <GoalsView />
-        ) : (
-          <CalendarView 
-            currentView={currentView}
-            selectedDate={selectedDate}
-            onDateChange={setSelectedDate}
-            tasks={allCalendarItems}
-            onEditTask={handleEditTask}
-            onToggleTask={handleToggleTask}
-            onDeleteTask={deleteTask}
-            onViewChange={setCurrentView}
+    <LanguageProvider>
+      <div className="App min-h-screen bg-cream">
+        <Header 
+          onMenuClick={() => setSidebarOpen(!sidebarOpen)}
+          currentView={currentView}
+          onViewChange={setCurrentView}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+          tasks={tasks}
+          onSearchClick={handleSearchClick}
+        />
+        
+        <Sidebar 
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          currentView={currentView}
+          onViewChange={setCurrentView}
+        />
+        
+        <main className="flex-1 pt-20">
+          {currentView === 'inicio' ? (
+            <HomeView 
+              tasks={allCalendarItems}
+              selectedDate={selectedDate}
+              onDateChange={setSelectedDate}
+              onViewChange={setCurrentView}
+              onNewTask={handleAddTask}
+              onEditTask={handleEditTask}
+              onToggleTask={handleToggleTask}
+            />
+          ) : currentView === 'planner' ? (
+            <WeekPlannerView />
+          ) : currentView === 'motivacion' ? (
+            <MotivationView />
+          ) : currentView === 'visionboard' ? (
+            <VisionBoardView />
+          ) : currentView === 'metas' ? (
+            <GoalsView />
+          ) : (
+            <CalendarView 
+              currentView={currentView}
+              selectedDate={selectedDate}
+              onDateChange={setSelectedDate}
+              tasks={allCalendarItems}
+              onEditTask={handleEditTask}
+              onToggleTask={handleToggleTask}
+              onDeleteTask={deleteTask}
+              onViewChange={setCurrentView}
+            />
+          )}
+        </main>
+        
+        <FloatingButton onClick={handleAddTask} />
+        
+        {isTaskModalOpen && (
+          <TaskModal
+            task={editingTask}
+            onSave={handleSaveTask}
+            onClose={handleCloseTaskModal}
+            hasTimeConflict={hasTimeConflict}
           />
         )}
-      </main>
-      
-      <FloatingButton onClick={handleAddTask} />
-      
-      {isTaskModalOpen && (
-        <TaskModal
-          task={editingTask}
-          onSave={handleSaveTask}
-          onClose={handleCloseTaskModal}
-          hasTimeConflict={hasTimeConflict}
-        />
-      )}
-      
-      {isSearchModalOpen && (
-        <SearchModal
-          isOpen={isSearchModalOpen}
-          onClose={handleCloseSearchModal}
-          tasks={allCalendarItems}
-          onEditTask={handleEditTask}
-          onDeleteTask={deleteTask}
-          onToggleTask={handleToggleTask}
-        />
-      )}
-      
-      {showDownloadPrompt && (
-        <DownloadPrompt onClose={handleDownloadPromptClose} />
-      )}
-    </div>
+        
+        {isSearchModalOpen && (
+          <SearchModal
+            isOpen={isSearchModalOpen}
+            onClose={handleCloseSearchModal}
+            tasks={allCalendarItems}
+            onEditTask={handleEditTask}
+            onDeleteTask={deleteTask}
+            onToggleTask={handleToggleTask}
+          />
+        )}
+        
+        {showDownloadPrompt && (
+          <DownloadPrompt onClose={handleDownloadPromptClose} />
+        )}
+      </div>
+    </LanguageProvider>
   )
 }
 

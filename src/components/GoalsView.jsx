@@ -11,8 +11,10 @@ import {
   Clock
 } from 'lucide-react'
 import { useGoals } from '../hooks/useGoals'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const GoalsView = () => {
+  const { t } = useLanguage()
   const { goals, addGoal, deleteGoal, addStep, deleteStep, toggleStep } = useGoals()
   const [selectedGoal, setSelectedGoal] = useState(null)
   const [showAddGoal, setShowAddGoal] = useState(false)
@@ -23,7 +25,7 @@ const GoalsView = () => {
   // Función para agregar una nueva meta
   const handleAddGoal = () => {
     if (!newGoal.title.trim() || !newGoal.date) {
-      alert('Por favor completa el título y la fecha de la meta')
+      alert(t('goals.required'))
       return
     }
 
@@ -43,7 +45,7 @@ const GoalsView = () => {
   // Función para agregar un paso a una meta
   const handleAddStep = () => {
     if (!newStep.title.trim()) {
-      alert('Por favor completa el título del paso')
+      alert(t('goals.required'))
       return
     }
 
@@ -87,22 +89,22 @@ const GoalsView = () => {
           <div className="p-3 bg-soft-blue rounded-full">
             <ArrowUp className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900">My World on Top</h1>
+          <h1 className="text-4xl font-bold text-gray-900">{t('goals.title')}</h1>
         </div>
-        <h2 className="text-2xl font-semibold text-gray-600">Metas 2025</h2>
+        <h2 className="text-2xl font-semibold text-gray-600">{t('goals.subtitle')}</h2>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Column - Goals */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-semibold text-gray-900">Mis Metas</h3>
+            <h3 className="text-xl font-semibold text-gray-900">{t('goals.myGoals')}</h3>
             <button
               onClick={() => setShowAddGoal(true)}
               className="flex items-center space-x-2 bg-soft-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors shadow-sm"
             >
               <Plus className="w-4 h-4" />
-              <span>Agregar Meta</span>
+              <span>{t('goals.addGoal')}</span>
             </button>
           </div>
 
@@ -162,8 +164,8 @@ const GoalsView = () => {
             {goals.length === 0 && (
               <div className="text-center py-12 text-gray-500">
                 <Target className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                <p className="text-lg">No tienes metas para 2025</p>
-                <p className="text-sm">Agrega tu primera meta para comenzar</p>
+                <p className="text-lg">{t('goals.noGoals')}</p>
+                <p className="text-sm">{t('goals.noGoalsMessage')}</p>
               </div>
             )}
           </div>

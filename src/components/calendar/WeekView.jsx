@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react'
 import { Circle } from 'lucide-react'
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask, onDateChange, onViewChange }) => {
+  const { t } = useLanguage()
   const { weekDays, weekTasks } = useMemo(() => {
     // Encontrar el primer día de la semana (domingo)
     const startOfWeek = new Date(selectedDate)
@@ -53,7 +55,10 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
     return date.toDateString() === today.toDateString()
   }
 
-  const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+  const dayNames = [
+    t('days.sun'), t('days.mon'), t('days.tue'), t('days.wed'), 
+    t('days.thu'), t('days.fri'), t('days.sat')
+  ]
 
   const getSphereEmoji = (sphere) => {
     const emojis = {
@@ -126,7 +131,7 @@ const WeekView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask,
                     <div className="w-8 h-8 mx-auto mb-2 bg-gray-100 rounded-full flex items-center justify-center">
                       <Circle className="w-4 h-4 text-gray-400" />
                     </div>
-                    <p className="text-xs text-gray-400">Sin tareas</p>
+                    <p className="text-xs text-gray-400">{t('tasks.noTasks')}</p>
                   </div>
                 ) : (
                   dayTasks.map((task, taskIndex) => (

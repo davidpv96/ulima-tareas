@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { X, Calendar, FileText, Clock, AlertCircle } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -14,20 +16,20 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
   const [invalidTimeRange, setInvalidTimeRange] = useState(false)
 
   const spheres = [
-    { id: 'personal', label: 'Personal', emoji: '👤', color: 'bg-gray-100 text-gray-800' },
-    { id: 'grow', label: 'Grow', emoji: '🌱', color: 'bg-light-green text-green-800' },
-    { id: 'thrive', label: 'Thrive', emoji: '🚀', color: 'bg-soft-orange text-orange-800' },
-    { id: 'connect', label: 'Connect', emoji: '👻', color: 'bg-soft-blue text-blue-800' },
-    { id: 'create', label: 'Create', emoji: '🎨', color: 'bg-pastel-lilac text-purple-800' },
-    { id: 'universidad', label: 'Universidad', emoji: '🎓', color: 'bg-soft-orange text-orange-800' },
-    { id: 'familia', label: 'Familia', emoji: '👨‍👩‍👧‍👦', color: 'bg-soft-blue text-blue-800' },
-    { id: 'trabajo', label: 'Trabajo', emoji: '💼', color: 'bg-gray-100 text-gray-800' },
-    { id: 'pareja', label: 'Pareja', emoji: '💕', color: 'bg-soft-pink text-pink-800' },
-    { id: 'gym', label: 'Gym', emoji: '💪', color: 'bg-light-green text-green-800' },
-    { id: 'bienestar', label: 'Bienestar', emoji: '🧘', color: 'bg-gray-100 text-gray-800' },
-    { id: 'deporte', label: 'Deporte (Surf)', emoji: '🏄‍♂️', color: 'bg-soft-blue text-blue-800' },
-    { id: 'viajes', label: 'Viajes', emoji: '✈️', color: 'bg-soft-orange text-orange-800' },
-    { id: 'social', label: 'Social (Friends)', emoji: '👥', color: 'bg-soft-orange text-orange-800' }
+    { id: 'personal', label: t('spheres.personal'), emoji: '👤', color: 'bg-gray-100 text-gray-800' },
+    { id: 'grow', label: t('spheres.learning'), emoji: '🌱', color: 'bg-light-green text-green-800' },
+    { id: 'thrive', label: t('spheres.work'), emoji: '🚀', color: 'bg-soft-orange text-orange-800' },
+    { id: 'connect', label: t('spheres.social'), emoji: '👻', color: 'bg-soft-blue text-blue-800' },
+    { id: 'create', label: t('spheres.hobby'), emoji: '🎨', color: 'bg-pastel-lilac text-purple-800' },
+    { id: 'universidad', label: t('spheres.learning'), emoji: '🎓', color: 'bg-soft-orange text-orange-800' },
+    { id: 'familia', label: t('spheres.family'), emoji: '👨‍👩‍👧‍👦', color: 'bg-soft-blue text-blue-800' },
+    { id: 'trabajo', label: t('spheres.work'), emoji: '💼', color: 'bg-gray-100 text-gray-800' },
+    { id: 'pareja', label: t('spheres.personal'), emoji: '💕', color: 'bg-soft-pink text-pink-800' },
+    { id: 'gym', label: t('spheres.health'), emoji: '💪', color: 'bg-light-green text-green-800' },
+    { id: 'bienestar', label: t('spheres.health'), emoji: '🧘', color: 'bg-gray-100 text-gray-800' },
+    { id: 'deporte', label: t('spheres.health'), emoji: '🏄‍♂️', color: 'bg-soft-blue text-blue-800' },
+    { id: 'viajes', label: t('spheres.personal'), emoji: '✈️', color: 'bg-soft-orange text-orange-800' },
+    { id: 'social', label: t('spheres.social'), emoji: '👥', color: 'bg-soft-orange text-orange-800' }
   ]
 
   useEffect(() => {
@@ -113,7 +115,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <h2 className="text-xl font-semibold text-gray-900">
-            {task ? 'Editar tarea' : 'Nueva tarea'}
+            {task ? t('tasks.editTask') : t('tasks.newTask')}
           </h2>
           <button
             onClick={onClose}
@@ -128,13 +130,13 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
           {/* Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Título *
+              {t('tasks.taskTitle')} *
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => handleInputChange('title', e.target.value)}
-              placeholder="¿Qué necesitas hacer?"
+              placeholder={t('tasks.taskTitlePlaceholder')}
               className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent"
               required
             />
@@ -144,12 +146,12 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <FileText className="w-4 h-4 inline mr-1" />
-              Descripción
+              {t('tasks.taskDescription')}
             </label>
             <textarea
               value={formData.description}
               onChange={(e) => handleInputChange('description', e.target.value)}
-              placeholder="Detalles adicionales..."
+              placeholder={t('tasks.taskDescriptionPlaceholder')}
               rows={3}
               className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue focus:border-transparent resize-none"
             />
@@ -159,7 +161,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <Calendar className="w-4 h-4 inline mr-1" />
-              Fecha
+              {t('tasks.taskDate')}
             </label>
             <input
               type="date"
@@ -173,11 +175,11 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <Clock className="w-4 h-4 inline mr-1" />
-              Horario *
+              {t('tasks.taskTime')} *
             </label>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Hora inicio *</label>
+                <label className="block text-xs text-gray-500 mb-1">{t('tasks.startTime')} *</label>
                 <input
                   type="time"
                   value={formData.startTime}
@@ -187,7 +189,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Hora fin *</label>
+                <label className="block text-xs text-gray-500 mb-1">{t('tasks.endTime')} *</label>
                 <input
                   type="time"
                   value={formData.endTime}
@@ -201,7 +203,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
             {/* Required time message */}
             {(!formData.startTime || !formData.endTime) && (
               <div className="mt-2 text-xs text-gray-500">
-                * El horario es obligatorio
+                * {t('tasks.required')}
               </div>
             )}
             
@@ -218,11 +220,11 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
                                     (startHour * 60 + parseInt(formData.startTime.split(':')[1]))
                      
                      if (duration <= 0) {
-                       return "La hora de fin debe ser posterior a la hora de inicio"
+                       return t('tasks.invalidTimeRange')
                      } else if (duration > 24 * 60) {
-                       return "La duración no puede ser mayor a 24 horas"
+                       return t('tasks.durationError')
                      } else {
-                       return "Formato de horario inválido"
+                       return t('tasks.invalidTimeFormat')
                      }
                    })()
                   }
@@ -234,7 +236,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
             {timeConflict && (
               <div className="mt-2 flex items-center space-x-2 text-red-600 bg-red-50 p-2 rounded-lg">
                 <AlertCircle className="w-4 h-4" />
-                <span className="text-sm">Este horario ya está ocupado</span>
+                <span className="text-sm">{t('tasks.timeConflict')}</span>
               </div>
             )}
           </div>
@@ -242,7 +244,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
           {/* Sphere */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              Esfera de vida
+              {t('tasks.taskSphere')}
             </label>
             <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
               {spheres.map((sphere) => (
@@ -276,14 +278,14 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
               onClick={onClose}
               className="flex-1 px-4 py-2 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
-              Cancelar
+              {t('app.cancel')}
             </button>
             <button
               type="submit"
               disabled={!formData.title.trim() || !formData.startTime || !formData.endTime || timeConflict || invalidTimeRange}
               className="flex-1 px-4 py-2 bg-soft-blue text-white rounded-lg hover:bg-blue-400 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {task ? 'Actualizar' : 'Crear'}
+              {task ? t('app.save') : t('app.add')}
             </button>
           </div>
         </form>

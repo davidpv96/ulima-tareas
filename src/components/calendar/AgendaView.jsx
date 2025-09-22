@@ -1,7 +1,9 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { Check, Circle, Edit, Trash2, Clock } from 'lucide-react'
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
+  const { t } = useLanguage()
   const [currentTime, setCurrentTime] = useState(new Date())
 
   // Actualizar tiempo cada minuto
@@ -75,8 +77,9 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
 
   const formatMonthYear = (month, year) => {
     const months = [
-      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+      t('months.january'), t('months.february'), t('months.march'), t('months.april'), 
+      t('months.may'), t('months.june'), t('months.july'), t('months.august'), 
+      t('months.september'), t('months.october'), t('months.november'), t('months.december')
     ]
     return `${months[month]} ${year}`
   }
@@ -85,7 +88,11 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     // Crear fecha sin problemas de zona horaria
     const [year, month, day] = dateStr.split('-').map(Number)
     const date = new Date(year, month - 1, day) // month - 1 porque los meses van de 0-11
-    const days = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB']
+    const days = [
+      t('days.sun').toUpperCase(), t('days.mon').toUpperCase(), t('days.tue').toUpperCase(), 
+      t('days.wed').toUpperCase(), t('days.thu').toUpperCase(), t('days.fri').toUpperCase(), 
+      t('days.sat').toUpperCase()
+    ]
     const dayName = days[date.getDay()]
     const dayNumber = date.getDate()
     return { dayName, dayNumber }
@@ -114,13 +121,13 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     
     if (diffHours > 24) {
       const days = Math.floor(diffHours / 24)
-      return `En ${days} día${days > 1 ? 's' : ''}`
+      return `${t('tasks.inDays')} ${days} ${days > 1 ? t('tasks.days') : t('tasks.day')}`
     } else if (diffHours > 0) {
-      return `En ${diffHours}h ${diffMinutes}m`
+      return `${t('tasks.in')} ${diffHours}h ${diffMinutes}m`
     } else if (diffMinutes > 0) {
-      return `En ${diffMinutes} min`
+      return `${t('tasks.in')} ${diffMinutes} ${t('tasks.minutes')}`
     } else {
-      return '¡Ahora!'
+      return t('tasks.now')
     }
   }
 
@@ -135,15 +142,12 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     const dateStr = date.toISOString().split('T')[0]
     
     if (dateStr === todayStr) {
-      return 'Hoy'
+      return t('app.today')
     } else if (dateStr === tomorrowStr) {
-      return 'Mañana'
+      return t('app.tomorrow')
     } else {
-      const months = [
-        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-      ]
-      return `${date.getDate()} de ${months[date.getMonth()]}`
+      const monthName = t(`months.${['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][date.getMonth()]}`)
+      return `${date.getDate()} de ${monthName}`
     }
   }
 
@@ -154,8 +158,8 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
           <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
             <Circle className="w-12 h-12 text-gray-400" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No hay tareas programadas</h3>
-          <p className="text-gray-500">Toca el botón + para agregar una nueva tarea</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">{t('tasks.noTasksToday')}</h3>
+          <p className="text-gray-500">{t('tasks.addTaskMessage')}</p>
         </div>
       </div>
     )

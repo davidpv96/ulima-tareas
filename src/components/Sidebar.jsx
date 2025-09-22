@@ -16,22 +16,25 @@ import {
   BarChart3,
   Home
 } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
+  const { t } = useLanguage()
+  
   const viewOptions = [
-    { id: 'inicio', label: 'Inicio', icon: Home },
-    { id: 'agenda', label: 'Agenda', icon: Calendar },
-    { id: 'día', label: 'Día', icon: CalendarDays },
-    { id: 'semana', label: 'Semana', icon: CalendarRange },
-    { id: 'mes', label: 'Mes', icon: Grid3X3 },
-    { id: 'estadísticas', label: 'Estadísticas', icon: BarChart3 }
+    { id: 'inicio', label: t('navigation.home'), icon: Home },
+    { id: 'agenda', label: t('navigation.agenda'), icon: Calendar },
+    { id: 'día', label: t('navigation.day'), icon: CalendarDays },
+    { id: 'semana', label: t('navigation.week'), icon: CalendarRange },
+    { id: 'mes', label: t('navigation.month'), icon: Grid3X3 },
+    { id: 'estadísticas', label: t('navigation.statistics'), icon: BarChart3 }
   ]
 
   const customButtons = [
     { 
       id: 'metas', 
-      label: 'My World on Top', 
-      sublabel: 'Metas 2025',
+      label: t('navigation.goals'), 
+      sublabel: t('goals.subtitle'),
       icon: Target,
       iconColor: 'bg-soft-blue',
       bgColor: 'bg-blue-50',
@@ -40,7 +43,7 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
     },
     { 
       id: 'planner', 
-      label: 'Semana Planner',
+      label: t('navigation.planner'),
       icon: BookOpen,
       iconColor: 'bg-pastel-lilac',
       bgColor: 'bg-purple-50',
@@ -49,7 +52,7 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
     },
     { 
       id: 'motivacion', 
-      label: 'Motivación',
+      label: t('navigation.motivation'),
       icon: Heart,
       iconColor: 'bg-soft-pink',
       bgColor: 'bg-pink-50',
@@ -57,17 +60,8 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
       hoverColor: 'hover:bg-pink-100'
     },
     { 
-      id: 'actividades', 
-      label: 'Sugerencia Actividades',
-      icon: Lightbulb,
-      iconColor: 'bg-soft-orange',
-      bgColor: 'bg-orange-50',
-      textColor: 'text-orange-800',
-      hoverColor: 'hover:bg-orange-100'
-    },
-    { 
       id: 'visionboard', 
-      label: 'My Visionboard',
+      label: t('navigation.visionBoard'),
       icon: Image,
       iconColor: 'bg-light-green',
       bgColor: 'bg-green-50',
@@ -120,7 +114,7 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
               {/* View Options */}
               <div className="mb-8">
                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-                  Vistas
+                  {t('sidebar.views')}
                 </h2>
                 <div className="space-y-1">
                   {viewOptions.map((option) => {
@@ -152,7 +146,7 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
               {/* Custom Buttons */}
               <div className="mb-8">
                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-                  Herramientas
+                  {t('sidebar.tools')}
                 </h2>
                 <div className="space-y-2">
                   {customButtons.map((button) => {
@@ -209,8 +203,8 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
                     <User className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">Usuario</p>
-                    <p className="text-sm text-gray-500">usuario@ejemplo.com</p>
+                    <p className="font-medium text-gray-900">{t('sidebar.user')}</p>
+                    <p className="text-sm text-gray-500">{t('sidebar.email')}</p>
                   </div>
                 </div>
 
@@ -223,7 +217,7 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
                     className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left text-gray-700 hover:bg-gray-100 transition-colors"
                   >
                     <Settings className="w-5 h-5" />
-                    <span className="font-medium">Ajustes</span>
+                    <span className="font-medium">{t('header.settings')}</span>
                   </button>
                   
                   <button
@@ -231,7 +225,7 @@ const Sidebar = ({ isOpen, onClose, currentView, onViewChange }) => {
                     className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left text-gray-700 hover:bg-gray-100 transition-colors"
                   >
                     <LogOut className="w-5 h-5" />
-                    <span className="font-medium">Cerrar sesión</span>
+                    <span className="font-medium">{t('header.logout')}</span>
                   </button>
                 </div>
               </div>

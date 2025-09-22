@@ -1,15 +1,21 @@
 import React, { useMemo } from 'react'
 import { Check, Circle, Plus, Edit, Trash2, Clock } from 'lucide-react'
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }) => {
+  const { t } = useLanguage()
   const { dayTasks, dateInfo } = useMemo(() => {
     const dateStr = selectedDate.toISOString().split('T')[0]
     const dayTasks = tasks.filter(task => task.date === dateStr)
     
-    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+    const days = [
+      t('days.sunday'), t('days.monday'), t('days.tuesday'), t('days.wednesday'), 
+      t('days.thursday'), t('days.friday'), t('days.saturday')
+    ]
     const months = [
-      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+      t('months.january'), t('months.february'), t('months.march'), t('months.april'), 
+      t('months.may'), t('months.june'), t('months.july'), t('months.august'), 
+      t('months.september'), t('months.october'), t('months.november'), t('months.december')
     ]
     
     const dateInfo = {
@@ -100,10 +106,10 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }
               <Plus className="w-12 h-12 text-gray-400" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              Nada planeado
+              {t('tasks.noTasksToday')}
             </h3>
             <p className="text-gray-500 mb-4">
-              Toca el botón + para añadir una nueva tarea
+              {t('tasks.addTaskMessage')}
             </p>
           </div>
         ) : (
@@ -208,18 +214,18 @@ const DayView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask }
         {/* Progress Summary */}
         {dayTasks.length > 0 && (
           <div className="mt-6 p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-            <h4 className="font-medium text-gray-900 mb-2">Resumen del día</h4>
+            <h4 className="font-medium text-gray-900 mb-2">{t('tasks.daySummary')}</h4>
             <div className="flex items-center space-x-4 text-sm">
               <div className="flex items-center space-x-1">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 <span className="text-gray-600">
-                  {dayTasks.filter(t => t.completed).length} completadas
+                  {dayTasks.filter(t => t.completed).length} {t('tasks.completed')}
                 </span>
               </div>
               <div className="flex items-center space-x-1">
                 <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
                 <span className="text-gray-600">
-                  {dayTasks.filter(t => !t.completed).length} pendientes
+                  {dayTasks.filter(t => !t.completed).length} {t('tasks.pending')}
                 </span>
               </div>
             </div>

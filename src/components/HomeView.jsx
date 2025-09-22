@@ -10,6 +10,7 @@ import {
   Grid3X3,
   BarChart3
 } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const HomeView = ({ 
   tasks, 
@@ -18,8 +19,9 @@ const HomeView = ({
   onViewChange, 
   onNewTask,
   onEditTask,
-  onToggleTask 
+  onToggleTask
 }) => {
+  const { t, formatDateShort } = useLanguage()
   const stats = useMemo(() => {
     const today = new Date()
     const todayStr = today.toISOString().split('T')[0]
@@ -129,14 +131,11 @@ const HomeView = ({
     const dateStrOnly = dateStr
     
     if (dateStrOnly === todayStr) {
-      return 'Hoy'
+      return t('app.today')
     } else if (dateStrOnly === tomorrowStr) {
-      return 'Mañana'
+      return t('app.tomorrow')
     } else {
-      return date.toLocaleDateString('es-ES', { 
-        day: 'numeric', 
-        month: 'short' 
-      })
+      return formatDateShort(date)
     }
   }
 
@@ -148,37 +147,37 @@ const HomeView = ({
   const quickActions = [
     {
       id: 'agenda',
-      label: 'Agenda',
+      label: t('navigation.agenda'),
       icon: Calendar,
-      description: 'Ver todas las tareas',
+      description: t('home.viewAllTasks'),
       color: 'bg-blue-500 hover:bg-blue-600'
     },
     {
       id: 'día',
-      label: 'Día',
+      label: t('navigation.day'),
       icon: CalendarDays,
-      description: 'Vista diaria',
+      description: t('home.dailyView'),
       color: 'bg-green-500 hover:bg-green-600'
     },
     {
       id: 'semana',
-      label: 'Semana',
+      label: t('navigation.week'),
       icon: CalendarRange,
-      description: 'Vista semanal',
+      description: t('home.weeklyView'),
       color: 'bg-purple-500 hover:bg-purple-600'
     },
     {
       id: 'mes',
-      label: 'Mes',
+      label: t('navigation.month'),
       icon: Grid3X3,
-      description: 'Vista mensual',
+      description: t('home.monthlyView'),
       color: 'bg-orange-500 hover:bg-orange-600'
     },
     {
       id: 'estadísticas',
-      label: 'Estadísticas',
+      label: t('navigation.statistics'),
       icon: BarChart3,
-      description: 'Ver progreso',
+      description: t('home.viewProgress'),
       color: 'bg-pink-500 hover:bg-pink-600'
     }
   ]
@@ -187,8 +186,8 @@ const HomeView = ({
     <div className="h-full bg-cream p-4 space-y-6 overflow-y-auto">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">¡Bienvenido a Sphere!</h1>
-        <p className="text-gray-600">Tu calendario y gestor de metas personal</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('home.welcome')} Sphere!</h1>
+        <p className="text-gray-600">{t('home.subtitle')}</p>
       </div>
 
       {/* Stats Cards */}
@@ -200,7 +199,7 @@ const HomeView = ({
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.totalTasks}</p>
-              <p className="text-sm text-gray-500">Total tareas</p>
+              <p className="text-sm text-gray-500">{t('statistics.totalTasks')}</p>
             </div>
           </div>
         </div>
@@ -212,7 +211,7 @@ const HomeView = ({
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.completedTasks}</p>
-              <p className="text-sm text-gray-500">Completadas</p>
+              <p className="text-sm text-gray-500">{t('statistics.completedTasks')}</p>
             </div>
           </div>
         </div>
@@ -224,7 +223,7 @@ const HomeView = ({
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.pendingTasks}</p>
-              <p className="text-sm text-gray-500">Pendientes</p>
+              <p className="text-sm text-gray-500">{t('statistics.pendingTasks')}</p>
             </div>
           </div>
         </div>
@@ -236,7 +235,7 @@ const HomeView = ({
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.todayTasks}</p>
-              <p className="text-sm text-gray-500">Hoy</p>
+              <p className="text-sm text-gray-500">{t('app.today')}</p>
             </div>
           </div>
         </div>
@@ -245,11 +244,11 @@ const HomeView = ({
       {/* Today's Progress */}
       {stats.todayTasks > 0 && (
         <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Progreso de hoy</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('home.todayProgress')}</h2>
           <div className="flex items-center space-x-4">
             <div className="flex-1">
               <div className="flex justify-between text-sm text-gray-600 mb-1">
-                <span>Tareas completadas</span>
+                <span>{t('statistics.completedTasks')}</span>
                 <span>{stats.todayCompleted}/{stats.todayTasks}</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
@@ -271,7 +270,7 @@ const HomeView = ({
       {/* Upcoming Tasks */}
       {stats.upcomingTasks.length > 0 && (
         <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Próximas tareas</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('home.upcomingTasks')}</h2>
           <div className="space-y-3">
             {stats.upcomingTasks.map((task) => (
               <div
@@ -300,7 +299,7 @@ const HomeView = ({
       {/* Top Spheres */}
       {stats.topSpheres.length > 0 && (
         <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Esferas más activas</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('home.mostActiveSpheres')}</h2>
           <div className="space-y-3">
             {stats.topSpheres.map((sphere) => (
               <div key={sphere.sphere} className="flex items-center justify-between">
@@ -310,7 +309,7 @@ const HomeView = ({
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-medium">{sphere.completed}/{sphere.total}</p>
-                  <p className="text-xs text-gray-500">{sphere.completionRate}% completado</p>
+                  <p className="text-xs text-gray-500">{sphere.completionRate}% {t('tasks.completed')}</p>
                 </div>
               </div>
             ))}
@@ -320,7 +319,7 @@ const HomeView = ({
 
       {/* Quick Actions */}
       <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Acciones rápidas</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('home.quickActions')}</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {quickActions.map((action) => (
             <button

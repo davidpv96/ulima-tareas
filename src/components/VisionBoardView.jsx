@@ -7,8 +7,10 @@ import {
   X,
   Download
 } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const VisionBoardView = () => {
+  const { t, formatDateShort } = useLanguage()
   const [images, setImages] = useState([])
   const [isUploading, setIsUploading] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
@@ -41,7 +43,7 @@ const VisionBoardView = () => {
     if (!file) return
     
     if (images.length >= MAX_IMAGES) {
-      alert(`Solo puedes subir máximo ${MAX_IMAGES} imágenes.`)
+      alert(`${t('visionBoard.maxImagesError')} ${MAX_IMAGES} ${t('visionBoard.imageCount')}.`)
       return
     }
 
@@ -73,13 +75,13 @@ const VisionBoardView = () => {
       
       reader.onerror = () => {
         console.error('Error al leer el archivo:', file.name)
-        alert('Error al cargar la imagen. Intenta de nuevo.')
+        alert(t('visionBoard.imageLoadError'))
         setIsProcessing(false)
       }
       
       reader.readAsDataURL(file)
     } else {
-      alert('Solo se permiten archivos de imagen (JPG, PNG, GIF, etc.)')
+      alert(t('visionBoard.invalidFileType'))
     }
   }
 
@@ -94,7 +96,7 @@ const VisionBoardView = () => {
   // Función para abrir modal de subida
   const openUploadModal = () => {
     if (images.length >= MAX_IMAGES) {
-      alert(`Has alcanzado el límite máximo de ${MAX_IMAGES} imágenes.`)
+      alert(`${t('visionBoard.maxImagesReached')} ${MAX_IMAGES} ${t('visionBoard.imageCount')}.`)
       return
     }
     setShowUploadModal(true)
@@ -123,13 +125,13 @@ const VisionBoardView = () => {
     <div className="h-full bg-cream p-4 space-y-6 overflow-y-auto">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">My Vision Board 2025</h1>
-        <p className="text-gray-600 text-lg">Visualiza tus metas y sueños</p>
+        <h1 className="text-4xl font-bold text-gray-900 mb-3">{t('visionBoard.title')}</h1>
+        <p className="text-gray-600 text-lg">{t('visionBoard.subtitle')}</p>
         {images.length > 0 && (
           <div className="mt-6 inline-flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-200">
             <ImageIcon className="w-4 h-4 text-soft-blue" />
             <span className="text-sm font-medium text-gray-700">
-              {images.length} / {MAX_IMAGES} imágenes
+              {images.length} / {MAX_IMAGES} {t('visionBoard.imageCount')}
             </span>
           </div>
         )}
@@ -144,7 +146,7 @@ const VisionBoardView = () => {
             className="inline-flex items-center space-x-2 bg-soft-blue text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
           >
             <Plus className="w-5 h-5" />
-            <span>Agregar Imagen</span>
+            <span>{t('visionBoard.addImage')}</span>
           </button>
         </div>
       )}
@@ -197,17 +199,17 @@ const VisionBoardView = () => {
             <ImageIcon className="w-16 h-16 text-white" />
           </div>
           <h3 className="text-2xl font-bold text-gray-900 mb-3">
-            Crea tu Vision Board 2025
+            {t('visionBoard.createVisionBoard')}
           </h3>
           <p className="text-gray-600 mb-8 max-w-md mx-auto text-lg">
-            Visualiza tus metas y sueños con imágenes que te inspiren cada día
+            {t('visionBoard.createMessage')}
           </p>
           <button
             onClick={openUploadModal}
             className="inline-flex items-center space-x-2 bg-soft-blue text-white px-8 py-4 rounded-lg hover:bg-blue-600 transition-colors font-medium text-lg shadow-lg hover:shadow-xl"
           >
             <Plus className="w-6 h-6" />
-            <span>Comenzar mi Vision Board</span>
+            <span>{t('visionBoard.startVisionBoard')}</span>
           </button>
         </div>
       )}
@@ -218,7 +220,7 @@ const VisionBoardView = () => {
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-900">
-                Agregar Imagen
+                {t('visionBoard.addImage')}
               </h2>
               <button
                 onClick={() => setShowUploadModal(false)}
@@ -337,7 +339,7 @@ const VisionBoardView = () => {
                 </div>
 
                 <div className="text-sm text-gray-500">
-                  Subida el: {new Date(selectedImage.uploadedAt).toLocaleDateString('es-ES')}
+                  Subida el: {formatDateShort(new Date(selectedImage.uploadedAt))}
                 </div>
               </div>
 

@@ -1,7 +1,9 @@
 import React from 'react'
 import { TrendingUp, Target, CheckCircle, Clock, BarChart3 } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const Statistics = ({ tasks }) => {
+  const { t } = useLanguage()
   const stats = React.useMemo(() => {
     const total = tasks.length
     const completed = tasks.filter(t => t.completed).length
@@ -81,8 +83,8 @@ const Statistics = ({ tasks }) => {
   return (
     <div className="p-4 space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Estadísticas</h2>
-        <p className="text-gray-600">Tu progreso en las diferentes esferas de vida</p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('statistics.title')}</h2>
+        <p className="text-gray-600">{t('statistics.subtitle')}</p>
       </div>
 
       {/* Overview Cards */}
@@ -94,7 +96,7 @@ const Statistics = ({ tasks }) => {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.completed}</p>
-              <p className="text-sm text-gray-600">Completadas</p>
+              <p className="text-sm text-gray-600">{t('statistics.completedTasks')}</p>
             </div>
           </div>
         </div>
@@ -106,7 +108,7 @@ const Statistics = ({ tasks }) => {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.pending}</p>
-              <p className="text-sm text-gray-600">Pendientes</p>
+              <p className="text-sm text-gray-600">{t('statistics.pendingTasks')}</p>
             </div>
           </div>
         </div>
@@ -139,12 +141,12 @@ const Statistics = ({ tasks }) => {
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
               <p className="text-2xl font-bold text-gray-900">{stats.completionRate}%</p>
-              <p className="text-xs text-gray-600">Completado</p>
+              <p className="text-xs text-gray-600">{t('statistics.completed')}</p>
             </div>
           </div>
         </div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-1">Progreso general</h3>
-        <p className="text-sm text-gray-600">{stats.completed} de {stats.total} tareas completadas</p>
+        <h3 className="text-lg font-semibold text-gray-900 mb-1">{t('statistics.generalProgress')}</h3>
+        <p className="text-sm text-gray-600">{stats.completed} {t('statistics.of')} {stats.total} {t('statistics.tasksCompleted')}</p>
       </div>
 
       {/* Sphere Statistics */}
@@ -152,7 +154,7 @@ const Statistics = ({ tasks }) => {
         <div className="p-4 border-b border-gray-100">
           <div className="flex items-center space-x-2">
             <BarChart3 className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-semibold text-gray-900">Por esferas</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('statistics.bySpheres')}</h3>
           </div>
         </div>
         
@@ -160,7 +162,7 @@ const Statistics = ({ tasks }) => {
           {stats.sphereStats.length === 0 ? (
             <div className="text-center py-8">
               <Target className="w-12 h-12 text-gray-300 mx-auto mb-2" />
-              <p className="text-gray-500">No hay tareas para mostrar estadísticas</p>
+              <p className="text-gray-500">{t('statistics.noTasksMessage')}</p>
             </div>
           ) : (
             stats.sphereStats.map((sphere, index) => (
@@ -173,7 +175,7 @@ const Statistics = ({ tasks }) => {
                   <div>
                     <p className="font-medium text-gray-900 capitalize">{sphere.sphere}</p>
                     <p className="text-sm text-gray-600">
-                      {sphere.completed} de {sphere.total} completadas
+                      {sphere.completed} {t('statistics.of')} {sphere.total} {t('statistics.completed')}
                     </p>
                   </div>
                 </div>
@@ -201,18 +203,18 @@ const Statistics = ({ tasks }) => {
           <TrendingUp className="w-8 h-8 mx-auto mb-2" />
           <h4 className="font-semibold mb-1">
             {stats.completionRate >= 80 
-              ? '¡Excelente trabajo! 🎉' 
+              ? t('statistics.excellentWork') 
               : stats.completionRate >= 50 
-              ? '¡Vas por buen camino! 💪' 
-              : '¡Sigue así! 🌟'
+              ? t('statistics.goodProgress') 
+              : t('statistics.keepGoing')
             }
           </h4>
           <p className="text-sm opacity-90">
             {stats.completionRate >= 80 
-              ? 'Estás dominando tus objetivos'
+              ? t('statistics.dominatingGoals')
               : stats.completionRate >= 50 
-              ? 'Mantén el ritmo y sigue progresando'
-              : 'Cada paso cuenta hacia tus metas'
+              ? t('statistics.keepRythm')
+              : t('statistics.everyStepCounts')
             }
           </p>
         </div>

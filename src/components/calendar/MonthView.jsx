@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react'
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react'
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask, onDateChange, onViewChange }) => {
+  const { t } = useLanguage()
   const { calendarDays, monthName, year } = useMemo(() => {
     const year = selectedDate.getFullYear()
     const month = selectedDate.getMonth()
@@ -27,8 +29,9 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask
     }
     
     const months = [
-      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+      t('months.january'), t('months.february'), t('months.march'), t('months.april'), 
+      t('months.may'), t('months.june'), t('months.july'), t('months.august'), 
+      t('months.september'), t('months.october'), t('months.november'), t('months.december')
     ]
     
     return {
@@ -72,7 +75,10 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask
     return date.getMonth() === selectedDate.getMonth()
   }
 
-  const weekDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+  const weekDays = [
+    t('days.sun'), t('days.mon'), t('days.tue'), t('days.wed'), 
+    t('days.thu'), t('days.fri'), t('days.sat')
+  ]
 
   const formatTime = (timeStr) => {
     if (!timeStr) return ''

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { X, Search, Calendar, Clock, Check, Circle, Edit, Trash2 } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggleTask }) => {
+  const { t, formatDateShort } = useLanguage()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
 
@@ -65,14 +67,11 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
     tomorrow.setDate(tomorrow.getDate() + 1)
     
     if (date.toDateString() === today.toDateString()) {
-      return 'Hoy'
+      return t('app.today')
     } else if (date.toDateString() === tomorrow.toDateString()) {
-      return 'Mañana'
+      return t('app.tomorrow')
     } else {
-      return date.toLocaleDateString('es-ES', { 
-        day: 'numeric', 
-        month: 'short' 
-      })
+      return formatDateShort(date)
     }
   }
 
@@ -100,7 +99,7 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <h2 className="text-xl font-semibold text-gray-900">Buscar tareas</h2>
+          <h2 className="text-xl font-semibold text-gray-900">{t('app.search')} {t('tasks.noTasks').toLowerCase()}</h2>
           <button
             onClick={handleClose}
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -115,7 +114,7 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
-              placeholder="Buscar por título, descripción o esfera..."
+              placeholder={t('header.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-3 bg-gray-50 rounded-lg border border-gray-200 focus:ring-2 focus:ring-soft-blue focus:border-transparent"
@@ -129,19 +128,19 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
           {searchQuery.trim() === '' ? (
             <div className="text-center py-12">
               <Search className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Buscar tareas</h3>
-              <p className="text-gray-500">Escribe algo para buscar en tus tareas</p>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">{t('app.search')} {t('tasks.noTasks').toLowerCase()}</h3>
+              <p className="text-gray-500">{t('search.typeToSearch')}</p>
             </div>
           ) : searchResults.length === 0 ? (
             <div className="text-center py-12">
               <Search className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Sin resultados</h3>
-              <p className="text-gray-500">No se encontraron tareas que coincidan con tu búsqueda</p>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">{t('search.noResults')}</h3>
+              <p className="text-gray-500">{t('search.noResultsMessage')}</p>
             </div>
           ) : (
             <div className="space-y-3">
               <p className="text-sm text-gray-600 mb-4">
-                {searchResults.length} resultado{searchResults.length !== 1 ? 's' : ''} encontrado{searchResults.length !== 1 ? 's' : ''}
+                {searchResults.length} {t('search.resultsFound')}
               </p>
               
               {searchResults.map((task, index) => (
@@ -179,14 +178,14 @@ const SearchModal = ({ isOpen, onClose, tasks, onEditTask, onDeleteTask, onToggl
                         <button
                           onClick={() => onEditTask(task)}
                           className="p-1 rounded hover:bg-gray-100 transition-colors"
-                          title="Editar"
+                          title={t('app.edit')}
                         >
                           <Edit className="w-4 h-4 text-gray-500" />
                         </button>
                         <button
                           onClick={() => onDeleteTask(task.id)}
                           className="p-1 rounded hover:bg-red-100 transition-colors"
-                          title="Eliminar"
+                          title={t('app.delete')}
                         >
                           <Trash2 className="w-4 h-4 text-red-500" />
                         </button>

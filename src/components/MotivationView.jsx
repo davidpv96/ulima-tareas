@@ -11,113 +11,14 @@ import {
   Clock,
   Sun
 } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const MotivationView = () => {
+  const { t, formatDate, language } = useLanguage()
   const [currentQuote, setCurrentQuote] = useState(null)
   const [lastUpdateDate, setLastUpdateDate] = useState(null)
 
-  const motivationalQuotes = [
-    {
-      text: "El éxito no es la clave de la felicidad. La felicidad es la clave del éxito.",
-      author: "Albert Schweitzer",
-      category: "Éxito"
-    },
-    {
-      text: "No te preocupes por los fracasos, preocúpate por las oportunidades que pierdes cuando ni siquiera lo intentas.",
-      author: "Jack Canfield",
-      category: "Perseverancia"
-    },
-    {
-      text: "El futuro pertenece a aquellos que creen en la belleza de sus sueños.",
-      author: "Eleanor Roosevelt",
-      category: "Sueños"
-    },
-    {
-      text: "La única forma de hacer un gran trabajo es amar lo que haces.",
-      author: "Steve Jobs",
-      category: "Pasión"
-    },
-    {
-      text: "No hay atajos para llegar a cualquier lugar que valga la pena.",
-      author: "Beverly Sills",
-      category: "Esfuerzo"
-    },
-    {
-      text: "La vida es lo que pasa mientras estás ocupado haciendo otros planes.",
-      author: "John Lennon",
-      category: "Vida"
-    },
-    {
-      text: "El optimismo es la fe que lleva al logro. Nada puede hacerse sin esperanza y confianza.",
-      author: "Helen Keller",
-      category: "Optimismo"
-    },
-    {
-      text: "La mejor manera de predecir el futuro es creándolo.",
-      author: "Peter Drucker",
-      category: "Futuro"
-    },
-    {
-      text: "No importa lo lento que vayas, siempre y cuando no te detengas.",
-      author: "Confucio",
-      category: "Persistencia"
-    },
-    {
-      text: "La única persona que está destinada a ser es la persona que decides ser.",
-      author: "Ralph Waldo Emerson",
-      category: "Decisión"
-    },
-    {
-      text: "El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
-      author: "Robert Collier",
-      category: "Constancia"
-    },
-    {
-      text: "No hay nada imposible, la palabra misma dice 'soy posible'.",
-      author: "Audrey Hepburn",
-      category: "Posibilidades"
-    },
-    {
-      text: "La motivación te ayuda a empezar. El hábito te ayuda a continuar.",
-      author: "Jim Ryun",
-      category: "Hábitos"
-    },
-    {
-      text: "Cada día es una nueva oportunidad para cambiar tu vida.",
-      author: "Anónimo",
-      category: "Oportunidad"
-    },
-    {
-      text: "La diferencia entre lo ordinario y lo extraordinario es ese pequeño extra.",
-      author: "Jimmy Johnson",
-      category: "Excelencia"
-    },
-    {
-      text: "No esperes el momento perfecto, toma el momento y hazlo perfecto.",
-      author: "Anónimo",
-      category: "Acción"
-    },
-    {
-      text: "La confianza en ti mismo es el primer secreto del éxito.",
-      author: "Ralph Waldo Emerson",
-      category: "Confianza"
-    },
-    {
-      text: "El único modo de hacer un gran trabajo es amar lo que haces.",
-      author: "Steve Jobs",
-      category: "Amor al trabajo"
-    },
-    {
-      text: "La vida es 10% lo que te pasa y 90% cómo reaccionas a ello.",
-      author: "Charles R. Swindoll",
-      category: "Actitud"
-    },
-    {
-      text: "Los ganadores nunca se rinden y los que se rinden nunca ganan.",
-      author: "Vince Lombardi",
-      category: "Determinación"
-    }
-  ]
+  const motivationalQuotes = t('motivationalQuotes')
 
   // Función para obtener una frase aleatoria
   const getRandomQuote = () => {
@@ -136,8 +37,10 @@ const MotivationView = () => {
     const today = new Date().toDateString()
     const savedQuote = localStorage.getItem('sphere-daily-quote')
     const savedDate = localStorage.getItem('sphere-daily-quote-date')
+    const savedLanguage = localStorage.getItem('sphere-language')
 
-    if (savedQuote && savedDate === today) {
+    // Verificar si es el mismo día Y el mismo idioma
+    if (savedQuote && savedDate === today && savedLanguage === language) {
       // Usar la frase guardada del día
       setCurrentQuote(JSON.parse(savedQuote))
       setLastUpdateDate(savedDate)
@@ -165,10 +68,10 @@ const MotivationView = () => {
     localStorage.setItem('sphere-daily-quote-date', today)
   }
 
-  // Cargar frase al montar el componente
+  // Cargar frase al montar el componente y cuando cambie el idioma
   useEffect(() => {
     loadDailyQuote()
-  }, [])
+  }, [t, language])
 
   // Verificar si es un nuevo día cada minuto
   useEffect(() => {
@@ -183,52 +86,44 @@ const MotivationView = () => {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      'Éxito': Star,
-      'Perseverancia': Target,
-      'Sueños': Sparkles,
-      'Pasión': Heart,
-      'Esfuerzo': Zap,
-      'Vida': Calendar,
-      'Optimismo': Sun,
-      'Futuro': Clock,
-      'Persistencia': Target,
-      'Decisión': Zap,
-      'Constancia': Star,
-      'Posibilidades': Sparkles,
-      'Hábitos': Target,
-      'Oportunidad': Star,
-      'Excelencia': Sparkles,
-      'Acción': Zap,
-      'Confianza': Heart,
-      'Amor al trabajo': Heart,
-      'Actitud': Star,
-      'Determinación': Target
+      'Éxito': Star, 'Success': Star,
+      'Perseverancia': Target, 'Perseverance': Target,
+      'Sueños': Sparkles, 'Dreams': Sparkles,
+      'Pasión': Heart, 'Passion': Heart,
+      'Esfuerzo': Zap, 'Effort': Zap,
+      'Vida': Calendar, 'Life': Calendar,
+      'Optimismo': Sun, 'Optimism': Sun,
+      'Futuro': Clock, 'Future': Clock,
+      'Persistencia': Target, 'Persistence': Target,
+      'Decisión': Zap, 'Decision': Zap,
+      'Constancia': Star, 'Consistency': Star,
+      'Posibilidades': Sparkles, 'Possibilities': Sparkles,
+      'Hábitos': Target, 'Habits': Target,
+      'Oportunidad': Star, 'Opportunity': Star,
+      'Excelencia': Sparkles, 'Excellence': Sparkles,
+      'Acción': Zap, 'Action': Zap
     }
     return icons[category] || Star
   }
 
   const getCategoryColor = (category) => {
     const colors = {
-      'Éxito': 'bg-yellow-100 text-yellow-800',
-      'Perseverancia': 'bg-blue-100 text-blue-800',
-      'Sueños': 'bg-purple-100 text-purple-800',
-      'Pasión': 'bg-red-100 text-red-800',
-      'Esfuerzo': 'bg-orange-100 text-orange-800',
-      'Vida': 'bg-green-100 text-green-800',
-      'Optimismo': 'bg-yellow-100 text-yellow-800',
-      'Futuro': 'bg-indigo-100 text-indigo-800',
-      'Persistencia': 'bg-blue-100 text-blue-800',
-      'Decisión': 'bg-pink-100 text-pink-800',
-      'Constancia': 'bg-gray-100 text-gray-800',
-      'Posibilidades': 'bg-purple-100 text-purple-800',
-      'Hábitos': 'bg-green-100 text-green-800',
-      'Oportunidad': 'bg-yellow-100 text-yellow-800',
-      'Excelencia': 'bg-red-100 text-red-800',
-      'Acción': 'bg-orange-100 text-orange-800',
-      'Confianza': 'bg-blue-100 text-blue-800',
-      'Amor al trabajo': 'bg-red-100 text-red-800',
-      'Actitud': 'bg-green-100 text-green-800',
-      'Determinación': 'bg-purple-100 text-purple-800'
+      'Éxito': 'bg-yellow-100 text-yellow-800', 'Success': 'bg-yellow-100 text-yellow-800',
+      'Perseverancia': 'bg-blue-100 text-blue-800', 'Perseverance': 'bg-blue-100 text-blue-800',
+      'Sueños': 'bg-purple-100 text-purple-800', 'Dreams': 'bg-purple-100 text-purple-800',
+      'Pasión': 'bg-red-100 text-red-800', 'Passion': 'bg-red-100 text-red-800',
+      'Esfuerzo': 'bg-orange-100 text-orange-800', 'Effort': 'bg-orange-100 text-orange-800',
+      'Vida': 'bg-green-100 text-green-800', 'Life': 'bg-green-100 text-green-800',
+      'Optimismo': 'bg-yellow-100 text-yellow-800', 'Optimism': 'bg-yellow-100 text-yellow-800',
+      'Futuro': 'bg-indigo-100 text-indigo-800', 'Future': 'bg-indigo-100 text-indigo-800',
+      'Persistencia': 'bg-blue-100 text-blue-800', 'Persistence': 'bg-blue-100 text-blue-800',
+      'Decisión': 'bg-pink-100 text-pink-800', 'Decision': 'bg-pink-100 text-pink-800',
+      'Constancia': 'bg-gray-100 text-gray-800', 'Consistency': 'bg-gray-100 text-gray-800',
+      'Posibilidades': 'bg-purple-100 text-purple-800', 'Possibilities': 'bg-purple-100 text-purple-800',
+      'Hábitos': 'bg-green-100 text-green-800', 'Habits': 'bg-green-100 text-green-800',
+      'Oportunidad': 'bg-yellow-100 text-yellow-800', 'Opportunity': 'bg-yellow-100 text-yellow-800',
+      'Excelencia': 'bg-red-100 text-red-800', 'Excellence': 'bg-red-100 text-red-800',
+      'Acción': 'bg-orange-100 text-orange-800', 'Action': 'bg-orange-100 text-orange-800'
     }
     return colors[category] || 'bg-gray-100 text-gray-800'
   }
@@ -237,8 +132,8 @@ const MotivationView = () => {
     <div className="h-full bg-cream p-4 space-y-6 overflow-y-auto">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Motivación</h1>
-        <p className="text-gray-600">Tu dosis diaria de inspiración</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('navigation.motivation')}</h1>
+        <p className="text-gray-600">{t('motivation.subtitle')}</p>
       </div>
 
       {/* Daily Quote Card */}
@@ -278,9 +173,9 @@ const MotivationView = () => {
       {/* Actions */}
       <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
         <div className="text-center space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">¿Necesitas más motivación?</h2>
+          <h2 className="text-lg font-semibold text-gray-900">{t('motivation.needMoreMotivation')}</h2>
           <p className="text-gray-600">
-            La frase cambia automáticamente cada día, pero puedes obtener una nueva cuando quieras.
+            {t('motivation.motivationMessage')}
           </p>
           
           <button
@@ -288,7 +183,7 @@ const MotivationView = () => {
             className="inline-flex items-center space-x-2 bg-soft-blue text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium"
           >
             <RefreshCw className="w-5 h-5" />
-            <span>Nueva frase</span>
+            <span>{t('motivation.newQuote')}</span>
           </button>
         </div>
       </div>
@@ -296,35 +191,30 @@ const MotivationView = () => {
       {/* Daily Info */}
       <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
         <div className="text-center space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">Frase del día</h2>
+          <h2 className="text-lg font-semibold text-gray-900">{t('motivation.dailyQuote')}</h2>
           <div className="flex items-center justify-center space-x-2 text-gray-600">
             <Calendar className="w-5 h-5" />
             <span>
-              {lastUpdateDate ? new Date(lastUpdateDate).toLocaleDateString('es-ES', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              }) : 'Cargando...'}
+              {lastUpdateDate ? formatDate(new Date(lastUpdateDate)) : t('app.loading')}
             </span>
           </div>
           <p className="text-sm text-gray-500">
-            Esta frase se mantendrá hasta mañana, cuando se actualizará automáticamente.
+            {t('motivation.dailyQuoteMessage')}
           </p>
         </div>
       </div>
 
       {/* Motivational Tips */}
       <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Consejos de motivación</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">{t('motivation.tips')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex items-start space-x-3 p-4 bg-blue-50 rounded-lg">
             <div className="p-2 bg-blue-100 rounded-lg">
               <Target className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <h3 className="font-medium text-blue-900 mb-1">Establece metas claras</h3>
-              <p className="text-sm text-blue-700">Define objetivos específicos y medibles para mantenerte enfocado.</p>
+              <h3 className="font-medium text-blue-900 mb-1">{t('motivation.tip1Title')}</h3>
+              <p className="text-sm text-blue-700">{t('motivation.tip1Content')}</p>
             </div>
           </div>
 
@@ -333,8 +223,8 @@ const MotivationView = () => {
               <Star className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <h3 className="font-medium text-green-900 mb-1">Celebra los pequeños logros</h3>
-              <p className="text-sm text-green-700">Reconoce cada paso hacia tu objetivo, por pequeño que sea.</p>
+              <h3 className="font-medium text-green-900 mb-1">{t('motivation.tip2Title')}</h3>
+              <p className="text-sm text-green-700">{t('motivation.tip2Content')}</p>
             </div>
           </div>
 
@@ -343,8 +233,8 @@ const MotivationView = () => {
               <Heart className="w-5 h-5 text-purple-600" />
             </div>
             <div>
-              <h3 className="font-medium text-purple-900 mb-1">Mantén una actitud positiva</h3>
-              <p className="text-sm text-purple-700">La mentalidad positiva atrae resultados positivos.</p>
+              <h3 className="font-medium text-purple-900 mb-1">{t('motivation.tip3Title')}</h3>
+              <p className="text-sm text-purple-700">{t('motivation.tip3Content')}</p>
             </div>
           </div>
 
@@ -353,8 +243,8 @@ const MotivationView = () => {
               <Zap className="w-5 h-5 text-orange-600" />
             </div>
             <div>
-              <h3 className="font-medium text-orange-900 mb-1">Toma acción diaria</h3>
-              <p className="text-sm text-orange-700">Pequeñas acciones consistentes llevan a grandes resultados.</p>
+              <h3 className="font-medium text-orange-900 mb-1">{t('motivation.tip4Title')}</h3>
+              <p className="text-sm text-orange-700">{t('motivation.tip4Content')}</p>
             </div>
           </div>
         </div>
