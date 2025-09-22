@@ -10,7 +10,7 @@ const CalendarView = ({
   currentView, 
   selectedDate, 
   onDateChange, 
-  tasks, 
+  tasks: allCalendarItems, 
   onEditTask, 
   onToggleTask,
   onDeleteTask,
@@ -93,8 +93,8 @@ const CalendarView = ({
       case 'agenda':
         return (
           <AgendaView 
-            selectedDate={localDate}
-            tasks={tasks}
+            selectedDate={localDate} 
+            tasks={allCalendarItems} 
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
             onDeleteTask={onDeleteTask}
@@ -104,7 +104,7 @@ const CalendarView = ({
         return (
           <DayView 
             selectedDate={localDate}
-            tasks={tasks}
+            tasks={allCalendarItems}
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
             onDeleteTask={onDeleteTask}
@@ -114,7 +114,7 @@ const CalendarView = ({
         return (
           <WeekView 
             selectedDate={localDate}
-            tasks={tasks}
+            tasks={allCalendarItems}
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
             onDeleteTask={onDeleteTask}
@@ -126,7 +126,7 @@ const CalendarView = ({
         return (
           <MonthView 
             selectedDate={localDate}
-            tasks={tasks}
+            tasks={allCalendarItems}
             onEditTask={onEditTask}
             onToggleTask={onToggleTask}
             onDeleteTask={onDeleteTask}
@@ -135,9 +135,9 @@ const CalendarView = ({
           />
         )
       case 'estadísticas':
-        return <Statistics tasks={tasks} />
+        return <Statistics tasks={allCalendarItems} />
       default:
-        return <MonthView selectedDate={localDate} tasks={tasks} onEditTask={onEditTask} onToggleTask={onToggleTask} onDeleteTask={onDeleteTask} onDateChange={onDateChange} onViewChange={onViewChange} />
+        return <MonthView selectedDate={localDate} tasks={allCalendarItems} onEditTask={onEditTask} onToggleTask={onToggleTask} onDeleteTask={onDeleteTask} onDateChange={onDateChange} onViewChange={onViewChange} />
     }
   }
 

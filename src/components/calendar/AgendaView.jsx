@@ -22,11 +22,13 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
     const currentYear = selectedDate.getFullYear()
     
     const filteredTasks = tasks.filter(task => {
-      const taskDate = new Date(task.date)
-      return taskDate >= new Date(currentYear, currentMonth, 1)
+      // Comparar strings de fecha directamente
+      const taskDateStr = task.date
+      const currentMonthStart = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-01`
+      return taskDateStr >= currentMonthStart
     }).sort((a, b) => {
       // Ordenar por fecha y luego por hora
-      const dateCompare = new Date(a.date) - new Date(b.date)
+      const dateCompare = a.date.localeCompare(b.date)
       if (dateCompare !== 0) return dateCompare
       
       if (a.startTime && b.startTime) {
@@ -37,10 +39,12 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
 
     // Agrupar tareas por día
     const grouped = filteredTasks.reduce((acc, task) => {
-      const taskDate = new Date(task.date)
-      const dayKey = formatDateToString(taskDate)
+      const dayKey = task.date // Usar la fecha directamente como string
       
       if (!acc[dayKey]) {
+        // Crear fecha solo para el objeto, pero usar el string para la clave
+        const [year, month, day] = task.date.split('-').map(Number)
+        const taskDate = new Date(year, month - 1, day)
         acc[dayKey] = {
           date: taskDate,
           tasks: []
@@ -86,16 +90,18 @@ const AgendaView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTas
   }
 
   const formatTaskDate = (dateStr) => {
-    // Crear fecha sin problemas de zona horaria
+    // Parsear la fecha sin problemas de timezone
     const [year, month, day] = dateStr.split('-').map(Number)
-    const date = new Date(year, month - 1, day) // month - 1 porque los meses van de 0-11
+    
+    // Calcular el día de la semana usando una fórmula matemática
+    const date = new Date(year, month - 1, day)
     const days = [
       t('days.sun').toUpperCase(), t('days.mon').toUpperCase(), t('days.tue').toUpperCase(), 
       t('days.wed').toUpperCase(), t('days.thu').toUpperCase(), t('days.fri').toUpperCase(), 
       t('days.sat').toUpperCase()
     ]
     const dayName = days[date.getDay()]
-    const dayNumber = date.getDate()
+    const dayNumber = day // Usar el día directamente del string parseado
     return { dayName, dayNumber }
   }
 

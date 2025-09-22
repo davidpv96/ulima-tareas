@@ -15,13 +15,13 @@ import DownloadPrompt from './components/DownloadPrompt'
 import SphereDetailView from './components/SphereDetailView'
 import Toast from './components/Toast'
 import { useTasks } from './hooks/useTasks'
-import { useGoals } from './hooks/useGoals'
+import { useGoalsContext, GoalsProvider } from './contexts/GoalsContext'
 import { getSpheresArray } from './data/spheres'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { formatDateToString } from './utils/dateUtils'
 import './App.css'
 
-function App() {
+function AppContent() {
   const [showSplash, setShowSplash] = useState(true)
   const [showDownloadPrompt, setShowDownloadPrompt] = useState(false)
   const [isPWA, setIsPWA] = useState(false)
@@ -35,7 +35,7 @@ function App() {
   const [toast, setToast] = useState(null)
   
   const { tasks, addTask, updateTask, deleteTask, hasTimeConflict, searchTasks } = useTasks()
-  const { goals, getGoalsAsTasks } = useGoals()
+  const { goals, getGoalsAsTasks } = useGoalsContext()
 
   // Detectar si estamos en PWA al cargar
   useEffect(() => {
@@ -262,6 +262,7 @@ function App() {
           />
         )}
         
+
         {/* Toast notification */}
         {toast && (
           <Toast
@@ -273,6 +274,14 @@ function App() {
         
       </div>
     </LanguageProvider>
+  )
+}
+
+function App() {
+  return (
+    <GoalsProvider>
+      <AppContent />
+    </GoalsProvider>
   )
 }
 
