@@ -244,6 +244,397 @@ export const translations = {
         text: "No esperes el momento perfecto, toma el momento y hazlo perfecto.",
         author: "Anónimo",
         category: "Acción"
+      },
+      // DEPORTISTAS
+      {
+        text: "Siempre creí que si trabajas duro, las cosas buenas van a pasar",
+        author: "Lionel Messi",
+        category: "Deportistas"
+      },
+      {
+        text: "No se trata de ser el mejor, se trata de ser mejor cada día",
+        author: "Lionel Messi",
+        category: "Deportistas"
+      },
+      {
+        text: "Los obstáculos no me deben parar. Si encuentro una pared, no me doy por vencido",
+        author: "Lionel Messi",
+        category: "Deportistas"
+      },
+      {
+        text: "El talento sin trabajo duro no es nada",
+        author: "Cristiano Ronaldo",
+        category: "Deportistas"
+      },
+      {
+        text: "Sueña, cree, consigue",
+        author: "Cristiano Ronaldo",
+        category: "Deportistas"
+      },
+      {
+        text: "El éxito no es un accidente. Es trabajo duro, perseverancia, aprendizaje y sacrificio",
+        author: "Pelé",
+        category: "Deportistas"
+      },
+      {
+        text: "Entre más difícil la victoria, mayor es la felicidad al ganar",
+        author: "Pelé",
+        category: "Deportistas"
+      },
+      {
+        text: "He fallado más de 9000 tiros en mi carrera. He perdido casi 300 juegos. En 26 ocasiones confiaron en mí para tomar el tiro que ganaba el juego y lo perdí. He fracasado una y otra vez en mi vida. Por eso tengo éxito",
+        author: "Michael Jordan",
+        category: "Deportistas"
+      },
+      {
+        text: "Si te rindes una vez, se convierte en hábito. Nunca te rindas",
+        author: "Michael Jordan",
+        category: "Deportistas"
+      },
+      {
+        text: "Los obstáculos no tienen que detenerte. Si te encuentras con una pared, no te des la vuelta y te rindas. Encuentra la manera de escalarla, atravesarla o rodearla",
+        author: "Michael Jordan",
+        category: "Deportistas"
+      },
+      {
+        text: "Tengo que confiar en mi habilidad y trabajar duro para conseguir lo que quiero",
+        author: "Serena Williams",
+        category: "Deportistas"
+      },
+      {
+        text: "El éxito no se trata de grandeza. Se trata de consistencia",
+        author: "Serena Williams",
+        category: "Deportistas"
+      },
+      {
+        text: "Puedes hacer dos cosas: puedes hacer excusas, o puedes encontrar una manera",
+        author: "Michael Phelps",
+        category: "Deportistas"
+      },
+      {
+        text: "Si quieres ser el mejor, tienes que hacer cosas que otros no están dispuestos a hacer",
+        author: "Michael Phelps",
+        category: "Deportistas"
+      },
+      {
+        text: "La mentalidad Mamba significa obsesionarse constantemente por ser mejor",
+        author: "Kobe Bryant",
+        category: "Deportistas"
+      },
+      {
+        text: "Los grandes no nacen grandes, se vuelven grandes",
+        author: "Kobe Bryant",
+        category: "Deportistas"
+      },
+      // DESARROLLADORES DE SOFTWARE
+      {
+        text: "La innovación distingue entre un líder y un seguidor",
+        author: "Steve Jobs",
+        category: "Desarrolladores"
+      },
+      {
+        text: "Mantente hambriento, mantente tonto",
+        author: "Steve Jobs",
+        category: "Desarrolladores"
+      },
+      {
+        text: "No se trata de dinero. Se trata de las personas con las que trabajas, de lo que construyes y de cuánto cambias las cosas",
+        author: "Steve Jobs",
+        category: "Desarrolladores"
+      },
+      {
+        text: "La simplicidad es la máxima sofisticación",
+        author: "Steve Jobs",
+        category: "Desarrolladores"
+      },
+      {
+        text: "Tu cliente más molesto es tu mejor fuente de aprendizaje",
+        author: "Bill Gates",
+        category: "Desarrolladores"
+      },
+      {
+        text: "El éxito es un mal maestro. Seduce a la gente inteligente para pensar que no pueden perder",
+        author: "Bill Gates",
+        category: "Desarrolladores"
+      },
+      {
+        text: "La mayoría de la gente sobreestima lo que puede hacer en un año y subestima lo que puede hacer en diez años",
+        author: "Bill Gates",
+        category: "Desarrolladores"
+      },
+      {
+        text: "El mayor riesgo es no correr ningún riesgo",
+        author: "Mark Zuckerberg",
+        category: "Desarrolladores"
+      },
+      {
+        text: "Muévete rápido y rompe cosas. Si no estás rompiendo cosas, no te mueves lo suficientemente rápido",
+        author: "Mark Zuckerberg",
+        category: "Desarrolladores"
+      },
+      {
+        text: "Cuando algo es lo suficientemente importante, lo haces incluso si las probabilidades no están a tu favor",
+        author: "Elon Musk",
+        category: "Desarrolladores"
+      },
+      {
+        text: "La persistencia es muy importante. No debes rendirte a menos que estés obligado a hacerlo",
+        author: "Elon Musk",
+        category: "Desarrolladores"
+      },
+      {
+        text: "El fracaso es una opción aquí. Si las cosas no están fallando, no estás innovando lo suficiente",
+        author: "Elon Musk",
+        category: "Desarrolladores"
+      },
+      // FILOSOFÍA Y PENSADORES
+      {
+        text: "Solo sé que no sé nada",
+        author: "Sócrates",
+        category: "Filosofía"
+      },
+      {
+        text: "Una vida sin examen no vale la pena vivirse",
+        author: "Sócrates",
+        category: "Filosofía"
+      },
+      {
+        text: "Somos lo que hacemos repetidamente. La excelencia no es un acto, sino un hábito",
+        author: "Aristóteles",
+        category: "Filosofía"
+      },
+      {
+        text: "El ignorante afirma, el sabio duda y reflexiona",
+        author: "Aristóteles",
+        category: "Filosofía"
+      },
+      {
+        text: "El hombre que mueve montañas comienza cargando pequeñas piedras",
+        author: "Confucio",
+        category: "Filosofía"
+      },
+      {
+        text: "Elige un trabajo que ames y no tendrás que trabajar ni un día de tu vida",
+        author: "Confucio",
+        category: "Filosofía"
+      },
+      {
+        text: "No importa qué tan lento vayas mientras no te detengas",
+        author: "Confucio",
+        category: "Filosofía"
+      },
+      {
+        text: "El viaje de mil millas comienza con un solo paso",
+        author: "Lao Tse",
+        category: "Filosofía"
+      },
+      {
+        text: "Quien domina a otros es fuerte; quien se domina a sí mismo es poderoso",
+        author: "Lao Tse",
+        category: "Filosofía"
+      },
+      {
+        text: "Muy poco se necesita para hacer una vida feliz; todo está dentro de ti, en tu forma de pensar",
+        author: "Marco Aurelio",
+        category: "Filosofía"
+      },
+      {
+        text: "Tienes poder sobre tu mente, no sobre los eventos externos. Date cuenta de esto y encontrarás fortaleza",
+        author: "Marco Aurelio",
+        category: "Filosofía"
+      },
+      {
+        text: "Todo le puede ser arrebatado a una persona menos una cosa: la última de las libertades humanas, la capacidad de elegir la actitud de uno ante cualquier circunstancia",
+        author: "Viktor Frankl",
+        category: "Filosofía"
+      },
+      {
+        text: "Los que tienen un 'por qué' para vivir, pueden soportar casi cualquier 'cómo'",
+        author: "Viktor Frankl",
+        category: "Filosofía"
+      },
+      // MODA Y ESTILO
+      {
+        text: "La moda pasa, el estilo es eterno",
+        author: "Coco Chanel",
+        category: "Moda"
+      },
+      {
+        text: "Para ser irreemplazable, uno debe ser siempre diferente",
+        author: "Coco Chanel",
+        category: "Moda"
+      },
+      {
+        text: "El lujo debe ser cómodo, de lo contrario no es lujo",
+        author: "Coco Chanel",
+        category: "Moda"
+      },
+      {
+        text: "La elegancia es rechazo",
+        author: "Coco Chanel",
+        category: "Moda"
+      },
+      {
+        text: "La simplicidad es la clave de la verdadera elegancia",
+        author: "Coco Chanel",
+        category: "Moda"
+      },
+      {
+        text: "La elegancia no es ser notado, es ser recordado",
+        author: "Giorgio Armani",
+        category: "Moda"
+      },
+      {
+        text: "El lujo está en cada detalle",
+        author: "Karl Lagerfeld",
+        category: "Moda"
+      },
+      // EMPRENDEDORES TECH
+      {
+        text: "Si duplicas el número de experimentos que haces por año, duplicarás tu inventiva",
+        author: "Jeff Bezos",
+        category: "Emprendedores"
+      },
+      {
+        text: "No tengas miedo de ser incomprendido por largos períodos de tiempo",
+        author: "Jeff Bezos",
+        category: "Emprendedores"
+      },
+      {
+        text: "Tu marca es lo que otras personas dicen de ti cuando no estás en la habitación",
+        author: "Jeff Bezos",
+        category: "Emprendedores"
+      },
+      {
+        text: "No tengas miedo de cancelar un show. Tenle miedo a no ser lo suficientemente audaz",
+        author: "Reed Hastings",
+        category: "Emprendedores"
+      },
+      {
+        text: "El mayor riesgo es evitar el riesgo",
+        author: "Reed Hastings",
+        category: "Emprendedores"
+      },
+      {
+        text: "Construye algo que 100 personas amen, no algo que a 1 millón les guste",
+        author: "Brian Chesky",
+        category: "Emprendedores"
+      },
+      {
+        text: "Los emprendedores son artistas que usan el negocio como su lienzo",
+        author: "Brian Chesky",
+        category: "Emprendedores"
+      },
+      {
+        text: "Prefiero estar en el lugar correcto en el momento correcto que ser inteligente",
+        author: "Daniel Ek",
+        category: "Emprendedores"
+      },
+      {
+        text: "La mejor forma de predecir el futuro es construirlo",
+        author: "Daniel Ek",
+        category: "Emprendedores"
+      },
+      {
+        text: "No tengas miedo de lo que no sabes. Puede ser tu mayor fortaleza",
+        author: "Sara Blakely",
+        category: "Emprendedores"
+      },
+      {
+        text: "La diferencia entre la gente exitosa y la que no lo es, es que la gente exitosa falla más",
+        author: "Sara Blakely",
+        category: "Emprendedores"
+      },
+      // FRASES DE INSPIRACIÓN GENERAL
+      {
+        text: "El aprendizaje nunca termina. Cada día es una oportunidad de crecer",
+        author: "Anónimo",
+        category: "Crecimiento Personal"
+      },
+      {
+        text: "Tus límites comienzan donde termina tu zona de confort",
+        author: "Anónimo",
+        category: "Crecimiento Personal"
+      },
+      {
+        text: "El fracaso no es lo opuesto al éxito, es parte del camino hacia él",
+        author: "Anónimo",
+        category: "Crecimiento Personal"
+      },
+      {
+        text: "No esperes a sentirte motivado para actuar. Actúa y la motivación vendrá",
+        author: "Anónimo",
+        category: "Crecimiento Personal"
+      },
+      {
+        text: "La versión más fuerte de ti mismo está del otro lado de tus miedos",
+        author: "Anónimo",
+        category: "Crecimiento Personal"
+      },
+      {
+        text: "No gestiones el tiempo, gestiona tu energía",
+        author: "Anónimo",
+        category: "Productividad"
+      },
+      {
+        text: "La disciplina de hoy es la libertad de mañana",
+        author: "Anónimo",
+        category: "Productividad"
+      },
+      {
+        text: "Pequeños pasos consistentes crean grandes transformaciones",
+        author: "Anónimo",
+        category: "Productividad"
+      },
+      {
+        text: "La perfección es enemiga del progreso",
+        author: "Anónimo",
+        category: "Productividad"
+      },
+      {
+        text: "Haz algo hoy que tu yo del futuro te agradezca",
+        author: "Anónimo",
+        category: "Productividad"
+      },
+      {
+        text: "El equilibrio no es algo que encuentras, es algo que creas",
+        author: "Anónimo",
+        category: "Balance de Vida"
+      },
+      {
+        text: "Cuida de ti mismo como cuidarías de alguien que amas",
+        author: "Anónimo",
+        category: "Balance de Vida"
+      },
+      {
+        text: "El descanso no es una recompensa por el trabajo terminado, es un requisito para el trabajo efectivo",
+        author: "Anónimo",
+        category: "Balance de Vida"
+      },
+      {
+        text: "El éxito no es la clave de la felicidad. La felicidad es la clave del éxito",
+        author: "Anónimo",
+        category: "Mentalidad de Éxito"
+      },
+      {
+        text: "No se trata de tener tiempo, se trata de crear tiempo",
+        author: "Anónimo",
+        category: "Mentalidad de Éxito"
+      },
+      {
+        text: "La diferencia entre lo ordinario y lo extraordinario es ese 'extra'",
+        author: "Anónimo",
+        category: "Mentalidad de Éxito"
+      },
+      {
+        text: "Los ganadores se enfocan en ganar, los perdedores se enfocan en los ganadores",
+        author: "Anónimo",
+        category: "Mentalidad de Éxito"
+      },
+      {
+        text: "Tu única competencia eres tú mismo de ayer",
+        author: "Anónimo",
+        category: "Mentalidad de Éxito"
       }
     ],
 
@@ -782,6 +1173,397 @@ export const translations = {
         text: "Don't wait for the perfect moment, take the moment and make it perfect.",
         author: "Anonymous",
         category: "Action"
+      },
+      // ATHLETES
+      {
+        text: "I always believed that if you work hard, good things will happen",
+        author: "Lionel Messi",
+        category: "Athletes"
+      },
+      {
+        text: "It's not about being the best, it's about being better every day",
+        author: "Lionel Messi",
+        category: "Athletes"
+      },
+      {
+        text: "Obstacles shouldn't stop me. If I find a wall, I don't give up",
+        author: "Lionel Messi",
+        category: "Athletes"
+      },
+      {
+        text: "Talent without hard work is nothing",
+        author: "Cristiano Ronaldo",
+        category: "Athletes"
+      },
+      {
+        text: "Dream, believe, achieve",
+        author: "Cristiano Ronaldo",
+        category: "Athletes"
+      },
+      {
+        text: "Success is no accident. It is hard work, perseverance, learning, studying, sacrifice and most of all, love of what you are doing or learning to do",
+        author: "Pelé",
+        category: "Athletes"
+      },
+      {
+        text: "The more difficult the victory, the greater the happiness in winning",
+        author: "Pelé",
+        category: "Athletes"
+      },
+      {
+        text: "I've missed more than 9000 shots in my career. I've lost almost 300 games. 26 times, I've been trusted to take the game winning shot and missed. I've failed over and over and over again in my life. And that is why I succeed",
+        author: "Michael Jordan",
+        category: "Athletes"
+      },
+      {
+        text: "If you quit once it becomes a habit. Never quit",
+        author: "Michael Jordan",
+        category: "Athletes"
+      },
+      {
+        text: "Obstacles don't have to stop you. If you run into a wall, don't turn around and give up. Figure out how to climb it, go through it, or work around it",
+        author: "Michael Jordan",
+        category: "Athletes"
+      },
+      {
+        text: "I have to trust my ability and work hard to get what I want",
+        author: "Serena Williams",
+        category: "Athletes"
+      },
+      {
+        text: "Success isn't about greatness. It's about consistency",
+        author: "Serena Williams",
+        category: "Athletes"
+      },
+      {
+        text: "You can do two things: you can make excuses, or you can find a way",
+        author: "Michael Phelps",
+        category: "Athletes"
+      },
+      {
+        text: "If you want to be the best, you have to do things that other people aren't willing to do",
+        author: "Michael Phelps",
+        category: "Athletes"
+      },
+      {
+        text: "Mamba mentality means obsessing constantly about being better",
+        author: "Kobe Bryant",
+        category: "Athletes"
+      },
+      {
+        text: "Great things don't come from great people, they come from great circumstances",
+        author: "Kobe Bryant",
+        category: "Athletes"
+      },
+      // SOFTWARE DEVELOPERS
+      {
+        text: "Innovation distinguishes between a leader and a follower",
+        author: "Steve Jobs",
+        category: "Developers"
+      },
+      {
+        text: "Stay hungry, stay foolish",
+        author: "Steve Jobs",
+        category: "Developers"
+      },
+      {
+        text: "It's not about money. It's about the people you work with, what you build, and how much you change things",
+        author: "Steve Jobs",
+        category: "Developers"
+      },
+      {
+        text: "Simplicity is the ultimate sophistication",
+        author: "Steve Jobs",
+        category: "Developers"
+      },
+      {
+        text: "Your most unhappy customers are your greatest source of learning",
+        author: "Bill Gates",
+        category: "Developers"
+      },
+      {
+        text: "Success is a lousy teacher. It seduces smart people into thinking they can't lose",
+        author: "Bill Gates",
+        category: "Developers"
+      },
+      {
+        text: "Most people overestimate what they can do in one year and underestimate what they can do in ten years",
+        author: "Bill Gates",
+        category: "Developers"
+      },
+      {
+        text: "The biggest risk is not taking any risk",
+        author: "Mark Zuckerberg",
+        category: "Developers"
+      },
+      {
+        text: "Move fast and break things. If you're not breaking things, you're not moving fast enough",
+        author: "Mark Zuckerberg",
+        category: "Developers"
+      },
+      {
+        text: "When something is important enough, you do it even if the odds are not in your favor",
+        author: "Elon Musk",
+        category: "Developers"
+      },
+      {
+        text: "Persistence is very important. You should not give up unless you are forced to give up",
+        author: "Elon Musk",
+        category: "Developers"
+      },
+      {
+        text: "Failure is an option here. If things are not failing, you are not innovating enough",
+        author: "Elon Musk",
+        category: "Developers"
+      },
+      // PHILOSOPHY AND THINKERS
+      {
+        text: "I know that I know nothing",
+        author: "Socrates",
+        category: "Philosophy"
+      },
+      {
+        text: "An unexamined life is not worth living",
+        author: "Socrates",
+        category: "Philosophy"
+      },
+      {
+        text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit",
+        author: "Aristotle",
+        category: "Philosophy"
+      },
+      {
+        text: "The ignorant assert, the wise doubt and reflect",
+        author: "Aristotle",
+        category: "Philosophy"
+      },
+      {
+        text: "The man who moves a mountain begins by carrying away small stones",
+        author: "Confucius",
+        category: "Philosophy"
+      },
+      {
+        text: "Choose a job you love, and you will never have to work a day in your life",
+        author: "Confucius",
+        category: "Philosophy"
+      },
+      {
+        text: "It does not matter how slowly you go as long as you do not stop",
+        author: "Confucius",
+        category: "Philosophy"
+      },
+      {
+        text: "The journey of a thousand miles begins with one step",
+        author: "Lao Tzu",
+        category: "Philosophy"
+      },
+      {
+        text: "He who conquers others is strong; he who conquers himself is mighty",
+        author: "Lao Tzu",
+        category: "Philosophy"
+      },
+      {
+        text: "Very little is needed to make a happy life; it is all within yourself, in your way of thinking",
+        author: "Marcus Aurelius",
+        category: "Philosophy"
+      },
+      {
+        text: "You have power over your mind, not outside events. Realize this, and you will find strength",
+        author: "Marcus Aurelius",
+        category: "Philosophy"
+      },
+      {
+        text: "Everything can be taken from a man but one thing: the last of the human freedoms—to choose one's attitude in any given set of circumstances",
+        author: "Viktor Frankl",
+        category: "Philosophy"
+      },
+      {
+        text: "Those who have a 'why' to live, can bear with almost any 'how'",
+        author: "Viktor Frankl",
+        category: "Philosophy"
+      },
+      // FASHION AND STYLE
+      {
+        text: "Fashion passes, style remains",
+        author: "Coco Chanel",
+        category: "Fashion"
+      },
+      {
+        text: "To be irreplaceable, one must always be different",
+        author: "Coco Chanel",
+        category: "Fashion"
+      },
+      {
+        text: "Luxury must be comfortable, otherwise it is not luxury",
+        author: "Coco Chanel",
+        category: "Fashion"
+      },
+      {
+        text: "Elegance is refusal",
+        author: "Coco Chanel",
+        category: "Fashion"
+      },
+      {
+        text: "Simplicity is the keynote of all true elegance",
+        author: "Coco Chanel",
+        category: "Fashion"
+      },
+      {
+        text: "Elegance is not being noticed, it's being remembered",
+        author: "Giorgio Armani",
+        category: "Fashion"
+      },
+      {
+        text: "Luxury lies in every detail",
+        author: "Karl Lagerfeld",
+        category: "Fashion"
+      },
+      // TECH ENTREPRENEURS
+      {
+        text: "If you double the number of experiments you do per year you're going to double your inventiveness",
+        author: "Jeff Bezos",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "Don't be afraid of being misunderstood for long periods of time",
+        author: "Jeff Bezos",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "Your brand is what people say about you when you're not in the room",
+        author: "Jeff Bezos",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "Don't be afraid of canceling a show. Be afraid of not being bold enough",
+        author: "Reed Hastings",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "The biggest risk is avoiding risk",
+        author: "Reed Hastings",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "Build something that 100 people love, not something that 1 million people kind of like",
+        author: "Brian Chesky",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "Entrepreneurs are artists that use business as their canvas",
+        author: "Brian Chesky",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "I'd rather be in the right place at the right time than be smart",
+        author: "Daniel Ek",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "The best way to predict the future is to build it",
+        author: "Daniel Ek",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "Don't be afraid of what you don't know. It could be your greatest strength",
+        author: "Sara Blakely",
+        category: "Entrepreneurs"
+      },
+      {
+        text: "The difference between successful people and unsuccessful people is that successful people fail more",
+        author: "Sara Blakely",
+        category: "Entrepreneurs"
+      },
+      // GENERAL INSPIRATION QUOTES
+      {
+        text: "Learning never ends. Every day is an opportunity to grow",
+        author: "Anonymous",
+        category: "Personal Growth"
+      },
+      {
+        text: "Your limits begin where your comfort zone ends",
+        author: "Anonymous",
+        category: "Personal Growth"
+      },
+      {
+        text: "Failure is not the opposite of success, it's part of the path to it",
+        author: "Anonymous",
+        category: "Personal Growth"
+      },
+      {
+        text: "Don't wait to feel motivated to act. Act and motivation will come",
+        author: "Anonymous",
+        category: "Personal Growth"
+      },
+      {
+        text: "The strongest version of yourself is on the other side of your fears",
+        author: "Anonymous",
+        category: "Personal Growth"
+      },
+      {
+        text: "Don't manage time, manage your energy",
+        author: "Anonymous",
+        category: "Productivity"
+      },
+      {
+        text: "Today's discipline is tomorrow's freedom",
+        author: "Anonymous",
+        category: "Productivity"
+      },
+      {
+        text: "Small consistent steps create great transformations",
+        author: "Anonymous",
+        category: "Productivity"
+      },
+      {
+        text: "Perfection is the enemy of progress",
+        author: "Anonymous",
+        category: "Productivity"
+      },
+      {
+        text: "Do something today that your future self will thank you for",
+        author: "Anonymous",
+        category: "Productivity"
+      },
+      {
+        text: "Balance is not something you find, it's something you create",
+        author: "Anonymous",
+        category: "Life Balance"
+      },
+      {
+        text: "Take care of yourself as you would take care of someone you love",
+        author: "Anonymous",
+        category: "Life Balance"
+      },
+      {
+        text: "Rest is not a reward for finished work, it's a requirement for effective work",
+        author: "Anonymous",
+        category: "Life Balance"
+      },
+      {
+        text: "Success is not the key to happiness. Happiness is the key to success",
+        author: "Anonymous",
+        category: "Success Mindset"
+      },
+      {
+        text: "It's not about having time, it's about creating time",
+        author: "Anonymous",
+        category: "Success Mindset"
+      },
+      {
+        text: "The difference between ordinary and extraordinary is that little extra",
+        author: "Anonymous",
+        category: "Success Mindset"
+      },
+      {
+        text: "Winners focus on winning, losers focus on winners",
+        author: "Anonymous",
+        category: "Success Mindset"
+      },
+      {
+        text: "Your only competition is yourself from yesterday",
+        author: "Anonymous",
+        category: "Success Mindset"
       }
     ],
 
