@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Download, X, Smartphone, Monitor, Share } from 'lucide-react'
+import { Download, X, Smartphone, Monitor } from 'lucide-react'
 
 const DownloadPrompt = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -75,7 +75,7 @@ const DownloadPrompt = ({ onClose }) => {
           </div>
           
           <p className="text-blue-100">
-            ¡Instala la app para una mejor experiencia!
+            ¡Instala la app!
           </p>
         </div>
 
@@ -102,15 +102,6 @@ const DownloadPrompt = ({ onClose }) => {
               </div>
             </div>
             
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                <Share className="w-5 h-5 text-purple-600" />
-              </div>
-              <div>
-                <h3 className="font-medium text-gray-900">Notificaciones</h3>
-                <p className="text-sm text-gray-600">Recordatorios de tareas</p>
-              </div>
-            </div>
           </div>
 
           {/* Instructions */}
