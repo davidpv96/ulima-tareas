@@ -29,27 +29,32 @@ const HomeView = ({
     const today = new Date()
     const todayStr = formatDateToString(today)
     
-    const totalTasks = tasks.length
-    const completedTasks = tasks.filter(t => t.completed).length
+    // Filtrar solo tareas reales (excluir metas)
+    const realTasks = tasks.filter(task => !task.isGoal)
+    const totalTasks = realTasks.length
+    const completedTasks = realTasks.filter(t => t.completed).length
     const pendingTasks = totalTasks - completedTasks
     
-    // Tareas de hoy
+    // Tareas de hoy (excluir metas)
     const todayTasks = tasks.filter(task => {
-      return task.date === todayStr
+      return !task.isGoal && task.date === todayStr
     })
     
     const todayCompleted = todayTasks.filter(t => t.completed).length
     const todayPending = todayTasks.length - todayCompleted
     
-    // Próximas tareas (próximas 3)
+    // Próximas tareas (próximas 3, excluir metas)
     const upcomingTasks = tasks
-      .filter(task => !task.completed && task.date >= todayStr)
+      .filter(task => !task.isGoal && !task.completed && task.date >= todayStr)
       .sort((a, b) => a.date.localeCompare(b.date))
       .slice(0, 3)
     
-    // Tareas por esfera
+    // Tareas por esfera (excluir metas)
     const sphereStats = {}
     tasks.forEach(task => {
+      // Excluir metas (tienen isGoal: true)
+      if (task.isGoal) return
+      
       if (!sphereStats[task.sphere]) {
         sphereStats[task.sphere] = { total: 0, completed: 0 }
       }

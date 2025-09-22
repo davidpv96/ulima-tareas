@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import HomeView from './components/HomeView'
@@ -46,15 +46,24 @@ function AppContent() {
     setIsPWA(pwaCheck)
     
     // Si NO es PWA, mostrar download prompt inmediatamente
-    // Comentado para desarrollo
-    // if (!pwaCheck) {
-    //   setShowDownloadPrompt(true)
-    // }
+    if (!pwaCheck) {
+      setShowDownloadPrompt(true)
+    }
   }, [])
 
   // Combinar tareas y metas para el calendario
-  const goalsAsTasks = getGoalsAsTasks()
-  const allCalendarItems = [...tasks, ...goalsAsTasks]
+  const goalsAsTasks = useMemo(() => {
+    return getGoalsAsTasks()
+  }, [goals])
+  
+  const allCalendarItems = useMemo(() => {
+    return [...tasks, ...goalsAsTasks]
+  }, [tasks, goalsAsTasks])
+  
+  // Key para forzar re-renderizado cuando cambien las metas
+  const calendarKey = useMemo(() => {
+    return `calendar-${tasks.length}-${goals.length}-${Date.now()}`
+  }, [tasks.length, goals.length])
 
 
   const handleAddTask = () => {
@@ -228,6 +237,7 @@ function AppContent() {
             <GoalsView />
           ) : (
             <CalendarView 
+              key={calendarKey}
               currentView={currentView}
               selectedDate={selectedDate}
               onDateChange={setSelectedDate}

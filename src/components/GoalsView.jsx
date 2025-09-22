@@ -10,7 +10,7 @@ import {
   ArrowUp,
   Clock
 } from 'lucide-react'
-import { useGoalsContext, GoalsProvider } from '../contexts/GoalsContext'
+import { useGoalsContext } from '../contexts/GoalsContext'
 import { useLanguage } from '../contexts/LanguageContext'
 
 const GoalsViewContent = () => {
@@ -390,11 +390,7 @@ const GoalsViewContent = () => {
 }
 
 const GoalsView = () => {
-  return (
-    <GoalsProvider>
-      <GoalsViewContent />
-    </GoalsProvider>
-  )
+  return <GoalsViewContent />
 }
 
 export default GoalsView

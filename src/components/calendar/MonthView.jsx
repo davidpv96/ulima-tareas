@@ -42,10 +42,12 @@ const MonthView = ({ selectedDate, tasks, onEditTask, onToggleTask, onDeleteTask
     }
   }, [selectedDate])
 
-  const getTasksForDate = (date) => {
-    const dateStr = formatDateToString(date)
-    return tasks.filter(task => task.date === dateStr)
-  }
+  const getTasksForDate = useMemo(() => {
+    return (date) => {
+      const dateStr = formatDateToString(date)
+      return tasks.filter(task => task.date === dateStr)
+    }
+  }, [tasks])
 
   const getSphereColor = (sphere) => {
     const colors = {
