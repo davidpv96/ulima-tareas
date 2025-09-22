@@ -92,7 +92,9 @@ export const translations = {
       now: "¡Ahora!",
       taskTitlePlaceholder: "¿Qué necesitas hacer?",
       taskDescriptionPlaceholder: "Detalles adicionales...",
-      invalidTimeFormat: "Formato de horario inválido"
+      invalidTimeFormat: "Formato de horario inválido",
+      taskSaved: "¡Tarea guardada exitosamente!",
+      taskUpdated: "¡Tarea actualizada exitosamente!"
     },
 
     // Goals
@@ -628,7 +630,9 @@ export const translations = {
       now: "Now!",
       taskTitlePlaceholder: "What do you need to do?",
       taskDescriptionPlaceholder: "Additional details...",
-      invalidTimeFormat: "Invalid time format"
+      invalidTimeFormat: "Invalid time format",
+      taskSaved: "Task saved successfully!",
+      taskUpdated: "Task updated successfully!"
     },
 
     // Goals

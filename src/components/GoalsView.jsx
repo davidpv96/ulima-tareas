@@ -10,12 +10,12 @@ import {
   ArrowUp,
   Clock
 } from 'lucide-react'
-import { useGoals } from '../hooks/useGoals'
+import { useGoalsContext, GoalsProvider } from '../contexts/GoalsContext'
 import { useLanguage } from '../contexts/LanguageContext'
 
-const GoalsView = () => {
+const GoalsViewContent = () => {
   const { t } = useLanguage()
-  const { goals, addGoal, deleteGoal, addStep, deleteStep, toggleStep } = useGoals()
+  const { goals, addGoal, deleteGoal, addStep, deleteStep, toggleStep } = useGoalsContext()
   const [selectedGoal, setSelectedGoal] = useState(null)
   const [showAddGoal, setShowAddGoal] = useState(false)
   const [showAddStep, setShowAddStep] = useState(false)
@@ -29,7 +29,13 @@ const GoalsView = () => {
       return
     }
 
-    addGoal(newGoal)
+    // Usar la fecha tal como viene del input (sin conversión)
+    const goalData = {
+      ...newGoal,
+      date: newGoal.date
+    }
+
+    addGoal(goalData)
     setNewGoal({ title: '', date: '', description: '' })
     setShowAddGoal(false)
   }
@@ -66,12 +72,13 @@ const GoalsView = () => {
 
   // Función para formatear fecha
   const formatDate = (dateString) => {
-    const date = new Date(dateString)
+    // Parsear la fecha sin problemas de timezone
+    const [year, month, day] = dateString.split('-').map(Number)
     const months = [
       'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO',
       'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'
     ]
-    return `${months[date.getMonth()]} ${date.getDate()} | ${date.getFullYear()}`
+    return `${months[month - 1]} ${day} | ${year}`
   }
 
   // Función para obtener el progreso de una meta
@@ -110,7 +117,7 @@ const GoalsView = () => {
 
           <div className="space-y-4">
             {goals
-              .sort((a, b) => new Date(a.date) - new Date(b.date))
+              .sort((a, b) => a.date.localeCompare(b.date))
               .map((goal) => (
               <div
                 key={goal.id}
@@ -379,6 +386,14 @@ const GoalsView = () => {
         </div>
       )}
     </div>
+  )
+}
+
+const GoalsView = () => {
+  return (
+    <GoalsProvider>
+      <GoalsViewContent />
+    </GoalsProvider>
   )
 }
 

@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react'
 import { formatDateToString } from '../utils/dateUtils'
 
-export const useGoals = () => {
-  const [goals, setGoals] = useState([])
-
-  // Cargar metas guardadas al montar el componente
-  useEffect(() => {
+// Función para cargar metas desde localStorage
+const loadGoalsFromStorage = () => {
+  try {
     const savedGoals = localStorage.getItem('sphere-goals-2025')
-    if (savedGoals) {
-      try {
-        setGoals(JSON.parse(savedGoals))
-      } catch (error) {
-        console.error('Error loading goals:', error)
-      }
-    }
-  }, [])
+    return savedGoals ? JSON.parse(savedGoals) : []
+  } catch (error) {
+    console.error('Error loading goals from localStorage:', error)
+    return []
+  }
+}
 
+export const useGoals = () => {
+  const [goals, setGoals] = useState(() => loadGoalsFromStorage())
+  
   // Guardar metas cuando cambien
   useEffect(() => {
     localStorage.setItem('sphere-goals-2025', JSON.stringify(goals))
@@ -26,7 +25,7 @@ export const useGoals = () => {
     const goal = {
       id: Date.now().toString(),
       title: goalData.title,
-      date: goalData.date, // Usar la fecha tal como viene, igual que en tareas
+      date: goalData.date,
       description: goalData.description,
       steps: [],
       completed: false,

@@ -95,9 +95,9 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!formData.title.trim()) return
-    if (!formData.startTime || !formData.endTime) return // Horario obligatorio
-    if (timeConflict) return // No permitir guardar si hay conflicto
-    if (invalidTimeRange) return // No permitir guardar si el rango de horarios es inválido
+    if (!formData.startTime || !formData.endTime) return
+    if (timeConflict) return
+    if (invalidTimeRange) return
     
     onSave(formData)
   }
@@ -169,6 +169,7 @@ const TaskModal = ({ task, onSave, onClose, hasTimeConflict }) => {
             <X className="w-5 h-5 text-gray-500" />
           </button>
         </div>
+
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6 overflow-y-auto flex-1">

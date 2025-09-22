@@ -13,6 +13,7 @@ import FloatingButton from './components/FloatingButton'
 import SplashScreen from './components/SplashScreen'
 import DownloadPrompt from './components/DownloadPrompt'
 import SphereDetailView from './components/SphereDetailView'
+import Toast from './components/Toast'
 import { useTasks } from './hooks/useTasks'
 import { useGoals } from './hooks/useGoals'
 import { getSpheresArray } from './data/spheres'
@@ -31,6 +32,7 @@ function App() {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
   const [editingTask, setEditingTask] = useState(null)
+  const [toast, setToast] = useState(null)
   
   const { tasks, addTask, updateTask, deleteTask, hasTimeConflict, searchTasks } = useTasks()
   const { goals, getGoalsAsTasks } = useGoals()
@@ -44,13 +46,16 @@ function App() {
     setIsPWA(pwaCheck)
     
     // Si NO es PWA, mostrar download prompt inmediatamente
-    if (!pwaCheck) {
-      setShowDownloadPrompt(true)
-    }
+    // Comentado para desarrollo
+    // if (!pwaCheck) {
+    //   setShowDownloadPrompt(true)
+    // }
   }, [])
 
   // Combinar tareas y metas para el calendario
-  const allCalendarItems = [...tasks, ...getGoalsAsTasks()]
+  const goalsAsTasks = getGoalsAsTasks()
+  const allCalendarItems = [...tasks, ...goalsAsTasks]
+
 
   const handleAddTask = () => {
     setEditingTask({
@@ -72,10 +77,18 @@ function App() {
   }
 
   const handleSaveTask = (taskData) => {
-    if (editingTask) {
+    if (editingTask && !editingTask.isNewTask) {
       updateTask(editingTask.id, taskData)
+      setToast({
+        message: '¡Tarea actualizada exitosamente!',
+        type: 'success'
+      })
     } else {
       addTask(taskData)
+      setToast({
+        message: '¡Tarea guardada exitosamente!',
+        type: 'success'
+      })
     }
     handleCloseTaskModal()
   }
@@ -246,6 +259,15 @@ function App() {
             onEditTask={handleEditTask}
             onDeleteTask={deleteTask}
             onToggleTask={handleToggleTask}
+          />
+        )}
+        
+        {/* Toast notification */}
+        {toast && (
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
           />
         )}
         
