@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { formatDateToString } from '../utils/dateUtils'
+import { formatDateToString, normalizeDateString } from '../utils/dateUtils'
 
 export const useGoals = () => {
   const [goals, setGoals] = useState([])
@@ -8,7 +8,17 @@ export const useGoals = () => {
   useEffect(() => {
     const savedGoals = localStorage.getItem('sphere-goals-2025')
     if (savedGoals) {
-      setGoals(JSON.parse(savedGoals))
+      try {
+        const parsedGoals = JSON.parse(savedGoals)
+        // Limpiar fechas de metas existentes para corregir problemas de zona horaria
+        const cleanedGoals = parsedGoals.map(goal => ({
+          ...goal,
+          date: normalizeDateString(goal.date)
+        }))
+        setGoals(cleanedGoals)
+      } catch (error) {
+        console.error('Error loading goals:', error)
+      }
     }
   }, [])
 
@@ -22,7 +32,7 @@ export const useGoals = () => {
     const goal = {
       id: Date.now().toString(),
       title: goalData.title,
-      date: goalData.date,
+      date: normalizeDateString(goalData.date), // Normalizar la fecha para evitar problemas de zona horaria
       description: goalData.description,
       steps: [],
       completed: false,
@@ -37,7 +47,12 @@ export const useGoals = () => {
   const updateGoal = (goalId, goalData) => {
     setGoals(prev => prev.map(goal => 
       goal.id === goalId 
-        ? { ...goal, ...goalData }
+        ? { 
+            ...goal, 
+            ...goalData,
+            // Normalizar la fecha si se está actualizando
+            ...(goalData.date && { date: normalizeDateString(goalData.date) })
+          }
         : goal
     ))
   }

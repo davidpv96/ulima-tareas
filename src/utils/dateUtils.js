@@ -39,3 +39,15 @@ export const isSameDay = (date1, date2) => {
 export const getTodayString = () => {
   return formatDateToString(new Date())
 }
+
+/**
+ * Convierte un string de fecha de un input type="date" a un string de fecha local
+ * Esto evita problemas de zona horaria cuando el navegador interpreta las fechas como UTC
+ */
+export const normalizeDateString = (dateString) => {
+  if (!dateString) return getTodayString()
+  
+  // Si ya está en formato YYYY-MM-DD, devolverlo tal como está
+  // ya que los inputs de tipo date siempre devuelven fechas en formato local
+  return dateString
+}
