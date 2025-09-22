@@ -45,8 +45,15 @@ function AppContent() {
     
     setIsPWA(pwaCheck)
     
-    // Si NO es PWA, mostrar download prompt inmediatamente
-    if (!pwaCheck) {
+    // Detectar si es móvil
+    const isMobile = window.navigator.userAgent.includes('Mobile') ||
+                     window.navigator.userAgent.includes('Android') ||
+                     window.navigator.userAgent.includes('iPhone') ||
+                     window.navigator.userAgent.includes('iPad')
+    
+    // Solo NO mostrar si es PWA móvil
+    // Mostrar en: web (todos dispositivos) y PWA desktop
+    if (!(pwaCheck && isMobile)) {
       setShowDownloadPrompt(true)
     }
   }, [])

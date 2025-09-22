@@ -17,12 +17,19 @@ const DownloadPrompt = ({ onClose }) => {
     // Detectar si el navegador soporta PWA
     const supportsPWA = 'serviceWorker' in navigator
 
-    // Solo mostrar en web, nunca en PWA
-    if (!pwaCheck) {
-      // En web: mostrar siempre
+    // Detectar si es móvil
+    const isMobile = window.navigator.userAgent.includes('Mobile') ||
+                     window.navigator.userAgent.includes('Android') ||
+                     window.navigator.userAgent.includes('iPhone') ||
+                     window.navigator.userAgent.includes('iPad')
+
+    // Solo NO mostrar si es PWA móvil
+    // Mostrar en: web (todos dispositivos) y PWA desktop
+    if (!(pwaCheck && isMobile)) {
+      // En web (todos) y PWA desktop: mostrar siempre
       setIsVisible(true)
     }
-    // En PWA: nunca mostrar
+    // Solo en PWA móvil: nunca mostrar
 
     // Escuchar el evento beforeinstallprompt
     const handleBeforeInstallPrompt = (e) => {
