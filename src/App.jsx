@@ -44,10 +44,9 @@ function App() {
     setIsPWA(pwaCheck)
     
     // Si NO es PWA, mostrar download prompt inmediatamente
-    // COMENTADO PARA DESARROLLO
-    // if (!pwaCheck) {
-    //   setShowDownloadPrompt(true)
-    // }
+    if (!pwaCheck) {
+      setShowDownloadPrompt(true)
+    }
   }, [])
 
   // Combinar tareas y metas para el calendario
