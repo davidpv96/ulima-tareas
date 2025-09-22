@@ -34,7 +34,7 @@ export const spheres = {
     id: 'thrive',
     name: 'Thrive',
     color: '#FFD700', // Yellow
-    emoji: '⬆️',
+    emoji: '🔝',
     hasSubcategories: true,
     subcategories: {
       'Desarrollo Académico': [
@@ -42,7 +42,8 @@ export const spheres = {
         'Formar grupos de estudio interdisciplinarios - Conectar con otras carreras 👥',
         'Asistir a conferencias académicas mensuales - Ampliar perspectiva profesional 🎓',
         'Crear un portafolio digital de proyectos - Documentar crecimiento académico 💼',
-        'Hacer una investigación personal por ciclo - Profundizar en temas de interés 🔬'
+        'Hacer una investigación personal por ciclo - Profundizar en temas de interés 🔬',
+        'Avanzar proyecto de tesis progresivamente - Planificar desde ciclos tempranos 📝'
       ],
       'Preparación Profesional': [
         'Conseguir una práctica pre-profesional relevante - Experiencia real de trabajo 💼',
