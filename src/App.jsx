@@ -20,6 +20,7 @@ import './App.css'
 function App() {
   const [showSplash, setShowSplash] = useState(true)
   const [showDownloadPrompt, setShowDownloadPrompt] = useState(false)
+  const [isPWA, setIsPWA] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentView, setCurrentView] = useState('inicio')
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -29,6 +30,20 @@ function App() {
   
   const { tasks, addTask, updateTask, deleteTask, hasTimeConflict, searchTasks } = useTasks()
   const { goals, getGoalsAsTasks } = useGoals()
+
+  // Detectar si estamos en PWA al cargar
+  useEffect(() => {
+    const pwaCheck = window.matchMedia('(display-mode: standalone)').matches || 
+                     window.navigator.standalone === true ||
+                     document.referrer.includes('android-app://')
+    
+    setIsPWA(pwaCheck)
+    
+    // Si NO es PWA, mostrar download prompt inmediatamente
+    if (!pwaCheck) {
+      setShowDownloadPrompt(true)
+    }
+  }, [])
 
   // Combinar tareas y metas para el calendario
   const allCalendarItems = [...tasks, ...getGoalsAsTasks()]
@@ -74,14 +89,20 @@ function App() {
 
   const handleSplashFinish = () => {
     setShowSplash(false)
-    // Mostrar download prompt después del splash (solo si no es PWA)
-    setTimeout(() => {
-      setShowDownloadPrompt(true)
-    }, 500)
+    // El download prompt ya se maneja en el useEffect inicial
   }
 
   const handleDownloadPromptClose = () => {
     setShowDownloadPrompt(false)
+  }
+
+  // Si hay download prompt, mostrarlo con prioridad absoluta
+  if (showDownloadPrompt) {
+    return (
+      <LanguageProvider>
+        <DownloadPrompt onClose={handleDownloadPromptClose} />
+      </LanguageProvider>
+    )
   }
 
   if (showSplash) {
@@ -163,9 +184,6 @@ function App() {
           />
         )}
         
-        {showDownloadPrompt && (
-          <DownloadPrompt onClose={handleDownloadPromptClose} />
-        )}
       </div>
     </LanguageProvider>
   )
