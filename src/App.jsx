@@ -12,6 +12,7 @@ import SearchModal from './components/SearchModal'
 import FloatingButton from './components/FloatingButton'
 import SplashScreen from './components/SplashScreen'
 import DownloadPrompt from './components/DownloadPrompt'
+import AdminContactOverlay from './components/AdminContactOverlay'
 import SphereDetailView from './components/SphereDetailView'
 import Toast from './components/Toast'
 import { useTasks } from './hooks/useTasks'
@@ -24,6 +25,7 @@ import './App.css'
 function AppContent() {
   const [showSplash, setShowSplash] = useState(true)
   const [showDownloadPrompt, setShowDownloadPrompt] = useState(false)
+  const [showAdminContact, setShowAdminContact] = useState(false)
   const [isPWA, setIsPWA] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentView, setCurrentView] = useState('inicio')
@@ -51,7 +53,12 @@ function AppContent() {
                      window.navigator.userAgent.includes('iPhone') ||
                      window.navigator.userAgent.includes('iPad')
     
-    // Solo NO mostrar si es PWA móvil
+    // Mostrar overlay de contacto con administrador solo en móviles
+    if (isMobile) {
+      setShowAdminContact(true)
+    }
+    
+    // Solo NO mostrar download prompt si es PWA móvil
     // Mostrar en: web (todos dispositivos) y PWA desktop
     if (!(pwaCheck && isMobile)) {
       setShowDownloadPrompt(true)
@@ -133,6 +140,10 @@ function AppContent() {
     setShowDownloadPrompt(false)
   }
 
+  const handleAdminContactClose = () => {
+    setShowAdminContact(false)
+  }
+
   const handleSphereClick = (sphereId) => {
     console.log('Sphere clicked:', sphereId)
     
@@ -164,6 +175,15 @@ function AppContent() {
     }
     setIsTaskModalOpen(true)
     // No cambiar selectedSphere para mantener la página actual
+  }
+
+  // Si hay overlay de contacto con administrador, mostrarlo con prioridad absoluta
+  if (showAdminContact) {
+    return (
+      <LanguageProvider>
+        <AdminContactOverlay onClose={handleAdminContactClose} />
+      </LanguageProvider>
+    )
   }
 
   // Si hay download prompt, mostrarlo con prioridad absoluta
