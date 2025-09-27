@@ -140,9 +140,6 @@ function AppContent() {
     setShowDownloadPrompt(false)
   }
 
-  const handleAdminContactClose = () => {
-    setShowAdminContact(false)
-  }
 
   const handleSphereClick = (sphereId) => {
     console.log('Sphere clicked:', sphereId)
@@ -181,7 +178,7 @@ function AppContent() {
   if (showAdminContact) {
     return (
       <LanguageProvider>
-        <AdminContactOverlay onClose={handleAdminContactClose} />
+        <AdminContactOverlay />
       </LanguageProvider>
     )
   }

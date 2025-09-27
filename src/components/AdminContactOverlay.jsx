@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Phone, Mail, MessageCircle, X } from 'lucide-react'
+import { Phone, Mail, MessageCircle } from 'lucide-react'
 
-const AdminContactOverlay = ({ onClose }) => {
+const AdminContactOverlay = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -25,12 +25,6 @@ const AdminContactOverlay = ({ onClose }) => {
       <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden animate-in fade-in zoom-in duration-300">
         {/* Header */}
         <div className="relative bg-gradient-to-br from-red-500 to-red-600 p-6 text-white">
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
           
           <div className="flex items-center space-x-3 mb-4">
             <img 
@@ -59,7 +53,7 @@ const AdminContactOverlay = ({ onClose }) => {
               Contacta al administrador
             </h3>
             <p className="text-gray-600 text-sm">
-              Estamos experimentando algunos problemas técnicos. 
+              Esta aplicación no está disponible en dispositivos móviles. 
               Por favor contacta al administrador para obtener asistencia.
             </p>
           </div>
@@ -93,31 +87,7 @@ const AdminContactOverlay = ({ onClose }) => {
             </a>
           </div>
 
-          {/* Info */}
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <div className="flex items-start space-x-3">
-              <div className="w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center mt-0.5">
-                <span className="text-yellow-800 text-xs font-bold">!</span>
-              </div>
-              <div>
-                <p className="text-sm text-yellow-800 font-medium">
-                  Información importante
-                </p>
-                <p className="text-xs text-yellow-700 mt-1">
-                  Esta pantalla solo aparece en dispositivos móviles. 
-                  La aplicación funciona normalmente en computadoras.
-                </p>
-              </div>
-            </div>
-          </div>
 
-          {/* Close Button */}
-          <button
-            onClick={onClose}
-            className="w-full mt-4 bg-gray-200 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors"
-          >
-            Entendido
-          </button>
         </div>
       </div>
     </div>
