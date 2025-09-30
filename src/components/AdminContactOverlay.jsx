@@ -1,31 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Phone, Mail, MessageCircle, X } from 'lucide-react'
 
 const AdminContactOverlay = ({ onClose }) => {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    // Detectar si es móvil
-    const isMobile = window.navigator.userAgent.includes('Mobile') ||
-                     window.navigator.userAgent.includes('Android') ||
-                     window.navigator.userAgent.includes('iPhone') ||
-                     window.navigator.userAgent.includes('iPad') ||
-                     window.innerWidth <= 768 // Fallback para dispositivos táctiles
-
-    // Solo mostrar en dispositivos móviles
-    if (isMobile) {
-      setIsVisible(true)
-    }
-  }, [])
-
   const handleClose = () => {
-    setIsVisible(false)
     if (onClose) {
       onClose()
     }
   }
-
-  if (!isVisible) return null
 
   return (
     <div className="fixed top-4 right-4 z-[9999] max-w-sm w-full animate-in slide-in-from-right duration-300">

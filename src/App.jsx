@@ -53,11 +53,6 @@ function AppContent() {
                      window.navigator.userAgent.includes('iPhone') ||
                      window.navigator.userAgent.includes('iPad')
     
-    // Mostrar overlay de contacto con administrador solo en móviles
-    if (isMobile) {
-      setShowAdminContact(true)
-    }
-    
     // Solo NO mostrar download prompt si es PWA móvil
     // Mostrar en: web (todos dispositivos) y PWA desktop
     if (!(pwaCheck && isMobile)) {
