@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Phone, Mail, MessageCircle } from 'lucide-react'
+import { Phone, Mail, MessageCircle, X } from 'lucide-react'
 
-const AdminContactOverlay = () => {
+const AdminContactOverlay = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -18,13 +18,27 @@ const AdminContactOverlay = () => {
     }
   }, [])
 
+  const handleClose = () => {
+    setIsVisible(false)
+    if (onClose) {
+      onClose()
+    }
+  }
+
   if (!isVisible) return null
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden animate-in fade-in zoom-in duration-300">
+    <div className="fixed top-4 right-4 z-[9999] max-w-sm w-full animate-in slide-in-from-right duration-300">
+      <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
         {/* Header */}
         <div className="relative bg-gradient-to-br from-red-500 to-red-600 p-6 text-white">
+          {/* Close button */}
+          <button
+            onClick={handleClose}
+            className="absolute top-4 right-4 w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
           
           <div className="flex items-center space-x-3 mb-4">
             <img 
@@ -86,8 +100,6 @@ const AdminContactOverlay = () => {
               </div>
             </a>
           </div>
-
-
         </div>
       </div>
     </div>

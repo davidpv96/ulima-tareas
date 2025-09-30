@@ -174,13 +174,8 @@ function AppContent() {
     // No cambiar selectedSphere para mantener la página actual
   }
 
-  // Si hay overlay de contacto con administrador, mostrarlo con prioridad absoluta
-  if (showAdminContact) {
-    return (
-      <LanguageProvider>
-        <AdminContactOverlay />
-      </LanguageProvider>
-    )
+  const handleAdminContactClose = () => {
+    setShowAdminContact(false)
   }
 
   // Si hay download prompt, mostrarlo con prioridad absoluta
@@ -213,6 +208,11 @@ function AppContent() {
             onClose={handleCloseTaskModal}
             hasTimeConflict={hasTimeConflict}
           />
+        )}
+        
+        {/* Admin contact popup */}
+        {showAdminContact && (
+          <AdminContactOverlay onClose={handleAdminContactClose} />
         )}
       </LanguageProvider>
     )
@@ -304,6 +304,11 @@ function AppContent() {
             type={toast.type}
             onClose={() => setToast(null)}
           />
+        )}
+        
+        {/* Admin contact popup */}
+        {showAdminContact && (
+          <AdminContactOverlay onClose={handleAdminContactClose} />
         )}
         
       </div>
