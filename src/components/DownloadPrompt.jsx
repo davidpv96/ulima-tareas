@@ -23,13 +23,8 @@ const DownloadPrompt = ({ onClose }) => {
                      window.navigator.userAgent.includes('iPhone') ||
                      window.navigator.userAgent.includes('iPad')
 
-    // Solo NO mostrar si es PWA móvil
-    // Mostrar en: web (todos dispositivos) y PWA desktop
-    if (!(pwaCheck && isMobile)) {
-      // En web (todos) y PWA desktop: mostrar siempre
-      setIsVisible(true)
-    }
-    // Solo en PWA móvil: nunca mostrar
+    // Mostrar siempre (web, PWA desktop y PWA móvil)
+    setIsVisible(true)
 
     // Escuchar el evento beforeinstallprompt
     const handleBeforeInstallPrompt = (e) => {
@@ -55,9 +50,8 @@ const DownloadPrompt = ({ onClose }) => {
   }
 
   const handleClose = () => {
-    // En web no se puede cerrar (esta función no debería ejecutarse nunca en web)
-    // Solo para casos edge o si alguien modifica el código
-    console.log('Close attempted but not allowed in web version')
+    // No se puede cerrar en ningún caso (web, PWA desktop ni PWA móvil)
+    console.log('Close attempted but not allowed')
   }
 
   if (!isVisible) return null
@@ -67,7 +61,7 @@ const DownloadPrompt = ({ onClose }) => {
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
         {/* Header */}
         <div className="relative bg-gradient-to-br from-soft-blue to-blue-400 p-6 text-white">
-          {/* No botón de cerrar en web */}
+          {/* No botón de cerrar - no se puede cerrar en ningún caso */}
           
           <div className="flex items-center space-x-3 mb-4">
             <img 
@@ -133,7 +127,7 @@ const DownloadPrompt = ({ onClose }) => {
               </button>
             )}
             
-            {/* No botón de cerrar en web */}
+            {/* No botón de cerrar - no se puede cerrar en ningún caso */}
           </div>
         </div>
       </div>

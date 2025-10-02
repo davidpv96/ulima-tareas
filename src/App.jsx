@@ -53,11 +53,8 @@ function AppContent() {
                      window.navigator.userAgent.includes('iPhone') ||
                      window.navigator.userAgent.includes('iPad')
     
-    // Solo NO mostrar download prompt si es PWA móvil
-    // Mostrar en: web (todos dispositivos) y PWA desktop
-    if (!(pwaCheck && isMobile)) {
-      setShowDownloadPrompt(true)
-    }
+    // Mostrar download prompt siempre (web, PWA desktop y PWA móvil)
+    setShowDownloadPrompt(true)
   }, [])
 
   // Combinar tareas y metas para el calendario
