@@ -11,7 +11,6 @@ import TaskModal from './components/TaskModal'
 import SearchModal from './components/SearchModal'
 import FloatingButton from './components/FloatingButton'
 import SplashScreen from './components/SplashScreen'
-import DownloadPrompt from './components/DownloadPrompt'
 import AdminContactOverlay from './components/AdminContactOverlay'
 import SphereDetailView from './components/SphereDetailView'
 import Toast from './components/Toast'
@@ -24,9 +23,7 @@ import './App.css'
 
 function AppContent() {
   const [showSplash, setShowSplash] = useState(true)
-  const [showDownloadPrompt, setShowDownloadPrompt] = useState(false)
   const [showAdminContact, setShowAdminContact] = useState(false)
-  const [isPWA, setIsPWA] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentView, setCurrentView] = useState('inicio')
   const [selectedSphere, setSelectedSphere] = useState(null)
@@ -39,23 +36,6 @@ function AppContent() {
   const { tasks, addTask, updateTask, deleteTask, hasTimeConflict, searchTasks } = useTasks()
   const { goals, getGoalsAsTasks } = useGoalsContext()
 
-  // Detectar si estamos en PWA al cargar
-  useEffect(() => {
-    const pwaCheck = window.matchMedia('(display-mode: standalone)').matches || 
-                     window.navigator.standalone === true ||
-                     document.referrer.includes('android-app://')
-    
-    setIsPWA(pwaCheck)
-    
-    // Detectar si es móvil
-    const isMobile = window.navigator.userAgent.includes('Mobile') ||
-                     window.navigator.userAgent.includes('Android') ||
-                     window.navigator.userAgent.includes('iPhone') ||
-                     window.navigator.userAgent.includes('iPad')
-    
-    // Mostrar download prompt siempre (web, PWA desktop y PWA móvil)
-    setShowDownloadPrompt(true)
-  }, [])
 
   // Combinar tareas y metas para el calendario
   const goalsAsTasks = useMemo(() => {
@@ -125,12 +105,8 @@ function AppContent() {
 
   const handleSplashFinish = () => {
     setShowSplash(false)
-    // El download prompt ya se maneja en el useEffect inicial
   }
 
-  const handleDownloadPromptClose = () => {
-    setShowDownloadPrompt(false)
-  }
 
 
   const handleSphereClick = (sphereId) => {
@@ -170,14 +146,6 @@ function AppContent() {
     setShowAdminContact(false)
   }
 
-  // Si hay download prompt, mostrarlo con prioridad absoluta
-  if (showDownloadPrompt) {
-    return (
-      <LanguageProvider>
-        <DownloadPrompt onClose={handleDownloadPromptClose} />
-      </LanguageProvider>
-    )
-  }
 
   if (showSplash) {
     return <SplashScreen onFinish={handleSplashFinish} />
