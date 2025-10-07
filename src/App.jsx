@@ -180,7 +180,7 @@ function AppContent() {
 
   return (
     <LanguageProvider>
-      <div className="App min-h-screen bg-cream">
+      {/* <div className="App min-h-screen bg-cream">
         <Header 
           onMenuClick={() => setSidebarOpen(!sidebarOpen)}
           currentView={currentView}
@@ -197,9 +197,9 @@ function AppContent() {
           currentView={currentView}
           onViewChange={setCurrentView}
           onSphereClick={handleSphereClick}
-        />
+        /> */}
         
-        <main className="flex-1 pt-20">
+        {/* <main className="flex-1 pt-20">
           {currentView === 'inicio' ? (
             <HomeView 
               tasks={allCalendarItems}
@@ -232,7 +232,7 @@ function AppContent() {
               onViewChange={setCurrentView}
             />
           )}
-        </main>
+        </main> */}
         
         <FloatingButton onClick={handleAddTask} />
         
