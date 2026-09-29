@@ -276,12 +276,12 @@ function AppContent() {
   )
 }
 
-// function App() {
-//   return (
-//     <GoalsProvider>
-//       <AppContent />
-//     </GoalsProvider>
-//   )
-// }
+function App() {
+  return (
+    <GoalsProvider>
+      <AppContent />
+    </GoalsProvider>
+  )
+}
 
-// export default App
+export default App
